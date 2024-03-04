@@ -8,7 +8,7 @@ public class NightmareCard implements CardInterface {
     }
 
     public boolean isNightmare() {
-        return true;
+        returns True;
     }
 
     public boolean isJump() {

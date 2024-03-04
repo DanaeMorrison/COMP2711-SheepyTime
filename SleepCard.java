@@ -12,7 +12,7 @@ public class SleepCard implements CardInterface {
         this.bothConditions = bothConditions;
     }
     public boolean isNightmare() {
-        return false;
+        return False;
     }
 
     public int getMoves() {
