@@ -17,4 +17,8 @@ public class Deck {
         deck.remove(0);
         return card;
     }
+
+    public void addCard(CardInterface card){
+        deck.add(card);
+    }
 }
