@@ -2,7 +2,7 @@ public class ZToken {
     private boolean isInfinite;
     private Player owner;
 
-    public ZToken(boolean isInf, Player owner){
+    public ZToken(boolean isInfinite, Player owner){
         this.isInfinite = isInfinite;
         this.owner = owner;
     }

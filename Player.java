@@ -1,4 +1,4 @@
-public class Player /*implements Character*/{
+public class Player{
     private String name;
     private BoardInterface board;
     private boolean isScared;
