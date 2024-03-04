@@ -12,6 +12,7 @@ public class PlayerBoard implements BoardInterface{
         for(int i = 0; i < board.length; i++){
             board[i] = false;
         }
+        board[0] = true;
     }
 
     public boolean occupied(int i){
@@ -41,5 +42,12 @@ public class PlayerBoard implements BoardInterface{
     public void jump(int n){
         emptyBoard();
         board[(n % 10)] = true;
+    }
+
+    public boolean isCrossing(int n){
+        if((getIndex() + n) >= 10){
+            return true;
+        }
+        return false;
     }
 }

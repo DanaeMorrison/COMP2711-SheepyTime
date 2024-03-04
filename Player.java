@@ -1,15 +1,15 @@
-public class Player implements Character{
+public class Player /*implements Character*/{
     private String name;
-    private Board board;
+    private BoardInterface board;
     private boolean isScared;
     private int winks;
 
     public Player(String name){
         BoardFactory factory = new BoardFactory();
-        BoardInterface board = factory.createBoard("Player");
+        board = factory.createBoard("Player");
         this.name = name;
         winks = 0;
-        calm();
+        setBrave();
     }
 
     public String getName(){
@@ -28,11 +28,15 @@ public class Player implements Character{
         return isScared;
     }
 
-    public void scare(){
+    public void setScare(){
         isScared = true;
     }
 
-    public void calm(){
+    public void setBrave(){
         isScared = false;
+    }
+
+    public BoardInterface getBoard(){
+        return board;
     }
 }
