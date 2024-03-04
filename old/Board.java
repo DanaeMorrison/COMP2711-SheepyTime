@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class BoardOld {
+public class Board {
     private ArrayList<Character>[] board;
 
     public Board(){

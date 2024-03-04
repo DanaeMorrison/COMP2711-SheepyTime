@@ -55,6 +55,15 @@ public class Card {
     public int getJumpPos() {
         return jumpPos;
     }
+
+    public boolean getBothConditions(){
+        return bothConditions;
+    }
+
+    public boolean isNightmare(){
+        return isNightmare;
+    }
+
     public static class Builder {
         private final boolean bothConditions;
         private final boolean isNightmare;

@@ -2,9 +2,9 @@ public class NightmareBoard implements BoardInterface{
     private boolean[] board;
 
     public NightmareBoard(){
+        board = new boolean[10];
         emptyBoard();
         board[0] = true;
-        board = new boolean[10];
     }
 
     public void emptyBoard(){
@@ -26,14 +26,18 @@ public class NightmareBoard implements BoardInterface{
         return -1;
     }
 
-    public int[] advance(int n){
-        int[] traveledSpaces = new int[n];
+    public void advance(int n){
         int startingPos = getIndex();
         board[startingPos] = false;
+        board[(startingPos + n) % 10] = true;
+    }
+
+    public int[] traveledSpaces(int n){
+        int[] traveledSpaces = new int[n];
+        int startingPos = getIndex();
         for(int i = 0; i < n; i++){
             traveledSpaces[i] = (startingPos + i) % 10;
         }
-        board[(startingPos + n) % 10] = true;
         return traveledSpaces;
     }
 

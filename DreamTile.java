@@ -19,6 +19,10 @@ public class DreamTile{
         tokens.add(token);
     }
 
+    public void addToken(Player player, boolean isInfinite){
+        tokens.add(new ZToken(isInfinite, player));
+    }
+
     public void removePlayerAccess(Player player){
         if(!tokens.isEmpty()){
             int index = -1;
