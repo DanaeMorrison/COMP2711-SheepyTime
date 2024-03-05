@@ -3,13 +3,19 @@ public class Player{
     private BoardInterface board;
     private boolean isScared;
     private int winks;
+    private Score scoreboard;
 
     public Player(String name){
         BoardFactory factory = new BoardFactory();
         board = factory.createBoard("Player");
         this.name = name;
         winks = 0;
+        scoreboard = new Score(this);
         setBrave();
+    }
+
+    public Score getScoreboard(){
+        return scoreboard;
     }
 
     public String getName(){
@@ -28,12 +34,16 @@ public class Player{
         return isScared;
     }
 
-    public void setScare(){
+    public void setScared(){
         isScared = true;
     }
 
     public void setBrave(){
         isScared = false;
+    }
+
+    public void setScoreboard(Score in){
+        scoreboard = in;
     }
 
     public BoardInterface getBoard(){
