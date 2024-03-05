@@ -66,6 +66,14 @@ public class Card {
         return spiderMove;
     }
 
+    public boolean isNightmare() {
+        return isNightmare;
+    }
+
+    public boolean bothConditions() {
+        return bothConditions;
+    }
+
     public static class Builder {
         private final boolean bothConditions;
         private final boolean isNightmare;
