@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Deck {
-    private ArrayList<CardInterface> deck;
+    private ArrayList<Card> deck;
     
     public Deck(){
         deck = new ArrayList<>();
@@ -12,13 +12,13 @@ public class Deck {
         Collections.shuffle(deck);
     }
 
-    public CardInterface takeCard(){
-        CardInterface card = deck.get(0);
+    public Card takeCard(){
+        Card card = deck.get(0);
         deck.remove(0);
         return card;
     }
 
-    public void addCard(CardInterface card){
+    public void add(Card card){
         deck.add(card);
     }
 }
