@@ -2,8 +2,16 @@ import java.util.ArrayList;
 
 public class DreamTile{
     private ArrayList<ZToken> tokens;
-    public DreamTile(){
+    private String tileName;
+    //private String rule;
+
+    public DreamTile(String name){
         tokens = new ArrayList<>();
+        tileName = name;
+    }
+
+    public String getTileName() {
+        return tileName;
     }
 
     public boolean canUse(Player player){
