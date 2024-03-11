@@ -14,4 +14,8 @@ public class Nightmare{
     public boolean isNightmare() {
         return true;
     }
+
+    public BoardInterface getBoard(){
+        return board;
+    }
 }

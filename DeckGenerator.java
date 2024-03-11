@@ -14,7 +14,7 @@ public class DeckGenerator {
     //Solo and 2 player information
     private ArrayList<Boolean> isNightmarePlayer2 = new ArrayList<>();
     private ArrayList<Boolean> bothConditionsPlayer2 = new ArrayList<>();
-    private int[] movesListPlayerTwo = {{2}, {3}, {4}, {4}, {1, 2}, {1, 2}, {6}, {5}, {4}, {4}, {4}, {4}, {6}, {1}, {4}, {6}, {3}, {3}, {3}, {2}, {2}, 
+    private int[][] movesListPlayerTwo = {{2}, {3}, {4}, {4}, {1, 2}, {1, 2}, {6}, {5}, {4}, {4}, {4}, {4}, {6}, {1}, {4}, {6}, {3}, {3}, {3}, {2}, {2}, 
                                     {3}, {3}, {1, 5}, {1, 5}, {7}, {7}, {3}, {5}, {1}};
     private ArrayList<Integer> movesPlayer2 = new ArrayList<Integer>(Arrays.asList(movesListPlayerTwo));
     private ArrayList<Integer> ZtokensPlayer2 = new ArrayList<Integer>(Arrays.asList(2, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 

@@ -65,7 +65,7 @@ public class Player{
         scoreboard = in;
     }
 
-    public BoardInterface getBoard(){
-        return board;
+    public PlayerBoard getBoard(){
+        return (PlayerBoard) board;
     }
 }

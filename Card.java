@@ -64,10 +64,6 @@ public class Card {
         return isNightmare;
     }
 
-    public boolean isNightmare() {
-        return isNightmare;
-    }
-
     public boolean bothConditions() {
         return bothConditions;
     }

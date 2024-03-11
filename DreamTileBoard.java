@@ -13,7 +13,9 @@ public class DreamTileBoard /*implements BoardInterface*/{
     }
 
     public void emptyBoard(){
-        board = new DreamTile[10];
+        for(int i = 0; i < board.length; i++){
+            board[i] = null;
+        }
     }
 
     public boolean addTile(int index, DreamTile tile){
