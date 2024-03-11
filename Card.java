@@ -5,26 +5,28 @@ public class Card {
     private final boolean bothConditions;
     private final boolean isNightmare;
 
-    private ArrayList<Integer> moves;
+    private int[] moves;
     private int Ztokens;
     private int winks;
     private int jumpPos;
+    private int spiderMove;
 
     private Card(boolean bothConditions, boolean isNightmare) {
         this.bothConditions = bothConditions;
         this.isNightmare = isNightmare;
     }
 
-    public Card (boolean bothConditions, boolean isNightmare, ArrayList<Integer> moves, int Ztokens, int winks, int jumpPos) {
+    public Card (boolean bothConditions, boolean isNightmare, int[] moves, int Ztokens, int winks, int jumpPos, int spiderMove) {
         this.bothConditions = bothConditions;
         this.isNightmare = isNightmare;
         this.moves = moves;
         this.Ztokens = Ztokens;
         this.winks = winks;
         this.jumpPos = jumpPos;
+        this.spiderMove = spiderMove;
     }
     
-    public void setMoves(ArrayList<Integer> moves) {
+    public void setMoves(int[] moves) {
         this.moves = moves;
     }
 
@@ -40,7 +42,11 @@ public class Card {
         this.jumpPos = jumpPos;
     }
 
-    public ArrayList<Integer> getMoves() {
+    public void setSpiderMove(int spiderMove) {
+        this.spiderMove = spiderMove;
+    }
+
+    public int[] getMoves() {
         return moves;
     }
 
@@ -56,12 +62,8 @@ public class Card {
         return jumpPos;
     }
 
-    public boolean getBothConditions(){
-        return bothConditions;
-    }
-
-    public boolean isNightmare(){
-        return isNightmare;
+    public int getSpiderMove() {
+        return spiderMove;
     }
 
     public boolean bothConditions() {
@@ -72,17 +74,18 @@ public class Card {
         private final boolean bothConditions;
         private final boolean isNightmare;
 
-        private ArrayList<Integer> moves = new ArrayList<Integer>();
+        private int[] moves;
         private int Ztokens = 0;
         private int winks = 0;
         private int jumpPos = 0;
+        private int spiderMove = 0;
 
         public Builder (boolean bothConditions, boolean isNightmare) {
             this.bothConditions = bothConditions;
             this.isNightmare = isNightmare;
         }
 
-        public Builder withMoves(ArrayList<Integer> moves) {
+        public Builder withMoves(int[] moves) {
             this.moves = moves;
             return this;
         }
@@ -102,14 +105,19 @@ public class Card {
             return this;
         }
 
+        public Builder withSpiderMove(int spiderMove) {
+            this.spiderMove = spiderMove;
+            return this;
+        }
+
         public Card build() {
             Card card = new Card(bothConditions, isNightmare);
             card.setMoves(moves);
             card.setZtokens(Ztokens);
             card.setWinks(winks);
             card.setJumpPos(jumpPos);
+            card.setSpiderMove(spiderMove);
             return card;
         }
     }
-    
 }

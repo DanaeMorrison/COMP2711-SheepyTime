@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javax.smartcardio.Card;
+// import javax.smartcardio.Card;
 
 public class DeckGenerator {
     private static final int NIGHTMARELEN = 10;
@@ -14,9 +14,9 @@ public class DeckGenerator {
     //Solo and 2 player information
     private ArrayList<Boolean> isNightmarePlayer2 = new ArrayList<>();
     private ArrayList<Boolean> bothConditionsPlayer2 = new ArrayList<>();
-    private int[][] movesListPlayerTwo = {{2}, {3}, {4}, {4}, {1, 2}, {1, 2}, {6}, {5}, {4}, {4}, {4}, {4}, {6}, {1}, {4}, {6}, {3}, {3}, {3}, {2}, {2}, 
+    private int[][] movesPlayer2 = {{2}, {3}, {4}, {4}, {1, 2}, {1, 2}, {6}, {5}, {4}, {4}, {4}, {4}, {6}, {1}, {4}, {6}, {3}, {3}, {3}, {2}, {2}, 
                                     {3}, {3}, {1, 5}, {1, 5}, {7}, {7}, {3}, {5}, {1}};
-    private ArrayList<Integer> movesPlayer2 = new ArrayList<Integer>(Arrays.asList(movesListPlayerTwo));
+    //private ArrayList<Integer> movesPlayer2 = new ArrayList<Integer>(Arrays.asList(movesListPlayerTwo));
     private ArrayList<Integer> ZtokensPlayer2 = new ArrayList<Integer>(Arrays.asList(2, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 
                                                                                 0, 1, 1, 1, 2, 2, 1, 1, 0, 0, 0, 0, 1, 0, 1));
     private ArrayList<Integer> winksPlayer2 = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 3, 0, 0, 3, 0, 0, 0, 0, 0, 
@@ -35,7 +35,7 @@ public class DeckGenerator {
     //private ArrayList<Integer> spiderMoveZero = new ArrayList<Integer>();
     
     //Wolf
-    private ArrayList<Integer> movesWolf = new ArrayList<Integer>(Arrays.asList(1, 1, 1, 1, 2, 2, 2, 2, 10, 10));
+    private int[][] movesWolf = {{1}, {1}, {1}, {1}, {2}, {2}, {2}, {2}, {10}, {10}};
     
 
     //Bump
@@ -107,7 +107,7 @@ public class DeckGenerator {
 
         for (int i = 0; i < PLAYERTWOLEN; i++) {
             Card newCard = new Card.Builder(isNightmarePlayer2.get(i), bothConditionsPlayer2.get(i))
-                .withMoves(movesPlayerTwo.get(i))
+                .withMoves(movesPlayer2[i])
                 .withZtokens(ZtokensPlayer2.get(i))
                 .withWinks(winksPlayer2.get(i))
                 .build();
@@ -117,7 +117,7 @@ public class DeckGenerator {
         if (nightmare == 1) {
             for (int i = 0; i < NIGHTMARELEN; i++) {
                 Card newCard = new Card.Builder(isNightmareReal.get(i), bothConditionsFalse.get(i))
-                    .withMoves(movesWolf.get(i))
+                    .withMoves(movesWolf[i])
                     .build();
                 deck.add(newCard);
             }
