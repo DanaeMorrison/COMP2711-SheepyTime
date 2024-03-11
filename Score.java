@@ -7,7 +7,7 @@ public class Score {
     public Score(Player player){
         this.player = player;
         playerPos = 0;
-        pillowPos = 0;
+        pillowPos = 40;
         pillowMod = 0;
     }
 

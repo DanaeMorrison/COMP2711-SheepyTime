@@ -29,7 +29,9 @@ public class Initializer {
     public static void main(String[] args) {
         Initializer init = new Initializer();
         int playerCount = init.generateParams();
-        System.out.println(playerCount);
         ArrayList<Player> players = init.generatePlayers(playerCount);
+
+        RacingPhase racingPhase = new RacingPhase(players);
+        racingPhase.startPhase();
     }
 }

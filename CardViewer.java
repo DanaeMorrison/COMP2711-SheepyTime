@@ -19,7 +19,7 @@ public class CardViewer implements CardViewerInterface {
                 System.out.println("            ");
 
                 if (card.getMoves() != 10) {
-                    System.out.println("Move nightmare by " + str(card.getMoves()) + " spaces");
+                    System.out.println("Move nightmare by " + card.getMoves() + " spaces");
                 } else {
                     System.out.println("All players on and adjacent to the nightmare get scared");
                 }
@@ -31,7 +31,7 @@ public class CardViewer implements CardViewerInterface {
                 System.out.println("            ");
 
                 if (card.getJumpPos() > 1) {
-                    System.out.println("Jump nightmare " + str(card.getJumpPos()) + " spaces forward");
+                    System.out.println("Jump nightmare " + card.getJumpPos() + " spaces forward");
                 } else if (card.getJumpPos() == 1) {
                     System.out.println("Jump nightmare 1 space forward");
                 } else if (card.getJumpPos() == -2) {
@@ -47,7 +47,7 @@ public class CardViewer implements CardViewerInterface {
                 System.out.println("            ");
 
                 System.out.println("Jump nightmare to web token");
-                System.out.println("If nightmare doesn't move, move web token forward by " + str(card.getSpiderMove()) + " spaces");
+                System.out.println("If nightmare doesn't move, move web token forward by " + card.getSpiderMove() + " spaces");
             }
 
         } else {
@@ -66,12 +66,12 @@ public class CardViewer implements CardViewerInterface {
 
             if (card.getWinks() != 0) {
                 System.out.println("    OR      ");
-                System.out.println("Gain " + str(card.getWinks()) + " Wink");
+                System.out.println("Gain " + card.getWinks() + " Wink");
             }
            
             if (card.getZtokens() != 0) {
                 System.out.println("    OR      ");
-                System.out.println("Catch " + str(card.getZtokens()) + " Zzz");
+                System.out.println("Catch " + card.getZtokens() + " Zzz");
             }
             
         }
