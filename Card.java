@@ -70,6 +70,10 @@ public class Card {
         return bothConditions;
     }
 
+    public boolean isNightmare(){
+        return isNightmare;
+    }
+
     public static class Builder {
         private final boolean bothConditions;
         private final boolean isNightmare;
