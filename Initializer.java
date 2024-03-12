@@ -30,20 +30,20 @@ public class Initializer {
         Initializer init = new Initializer();
         int playerCount = init.generateParams();
         ArrayList<Player> players = init.generatePlayers(playerCount);
-        Nightmare nightmare = new Nightmare("Wolf"); //eventually ask for nightmare
-        int nightmareType = 1; //maybe make this an instance variable of nightmare? maybe like a factory sort of thing
+        
+        Nightmare nightmare = new Nightmare("Wolf", 1); //eventually ask for nightmare
 
         Deck deck = new Deck();
         
-        init.generateCards(deck, players);
+        init.generateCards(deck, players, nightmare);
 
         RacingPhase racingPhase = new RacingPhase(players, deck);
         racingPhase.startPhase();
     }
 
-    public void generateCards(Deck deck, ArrayList<Player> players){
+    public void generateCards(Deck deck, ArrayList<Player> players, Nightmare nightmare){
         int playerCount = players.size();
-        DeckGenerator deckGenerator = new DeckGenerator(deck, playerCount, 1);
+        DeckGenerator deckGenerator = new DeckGenerator(deck, playerCount, nightmare.getType());
         deckGenerator.makeDeck();
         deck.shuffle();
 

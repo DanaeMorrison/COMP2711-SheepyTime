@@ -6,7 +6,9 @@ public class Player{
     private ArrayList<Card> hand;
     private BoardInterface board;
     private boolean isScared;
+    private boolean isAwake;
     private int winks;
+    private int zTokens;
     private Score scoreboard;
 
     public Player(String name, int orderPosition){
@@ -16,9 +18,19 @@ public class Player{
         hand = new ArrayList<>();
         this.name = name;
         this.orderPosition = orderPosition;
+        isAwake = false;
         winks = 0;
+        zTokens = 0;
         scoreboard = new Score(this);
         setBrave();
+    }
+
+    public boolean isAwake(){
+        return isAwake;
+    }
+
+    public void setAwake(boolean isAwake){
+        this.isAwake = isAwake;
     }
 
     public int getOrderPosition(){
@@ -67,5 +79,13 @@ public class Player{
 
     public PlayerBoard getBoard(){
         return (PlayerBoard) board;
+    }
+
+    public int getZtokens(){
+        return zTokens;
+    }
+
+    public void setZtokens(int zTokens){
+        this.zTokens = zTokens;
     }
 }
