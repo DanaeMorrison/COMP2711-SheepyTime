@@ -19,13 +19,14 @@ public class RacingPhase {
         ArrayList<Integer> nightmareCardIndices = new ArrayList<>();
         CardViewer cardViewer;
         boolean nightmareFound;
+
         for(int i = 0; i < playerCount; i++){
             nightmareCardIndices.clear();
             nightmareFound = false;
 
             curr = players.get(i);
             ArrayList<Card> hand = curr.getHand();
-            
+
             for(int j = 0; j < hand.size(); j++){
                 System.out.println(curr.getName() + "'s card #" + j);
 
@@ -41,7 +42,7 @@ public class RacingPhase {
             Scanner scanner = new Scanner(System.in); //maybe move all this to a turnviewer class? idk, mvc smells
             System.out.println("Input which card you would like to use from your hand (integer)");
             if(nightmareFound){
-                System.out.println("Uh oh! You have one or more nightmare cards in your hand! Use one of the following indices: " + Arrays.asList(nightmareCardIndices));
+                System.out.println("Uh oh! You have one or more nightmare cards in your hand! Use one of the following indices (or else!): " + Arrays.asList(nightmareCardIndices));
             }
             picked = hand.get(scanner.nextInt());
         }

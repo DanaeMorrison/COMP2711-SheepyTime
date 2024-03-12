@@ -81,7 +81,7 @@ public class Card {
         private int[] moves;
         private int Ztokens = 0;
         private int winks = 0;
-        private int jumpPos = 0;
+        private int jumpPos = -1;
         private int spiderMove = 0;
 
         public Builder (boolean bothConditions, boolean isNightmare) {
