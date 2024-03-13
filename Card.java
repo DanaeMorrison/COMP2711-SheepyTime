@@ -155,36 +155,80 @@ public class Card {
         private int jumpPos = 0;
         private int spiderMove = 0;
 
+        /**
+         * This constructor creates a Builder object to be used to get the values that are required for a
+         * Card object to be built
+         * @param bothConditions says whether a card requires both conditions to be done i.e., an AND card
+         * @param isNightmare says whether a card is a nightmare or not
+         */
         public Builder (boolean bothConditions, boolean isNightmare) {
             this.bothConditions = bothConditions;
             this.isNightmare = isNightmare;
         }
 
+        /**
+         * This method allows a value other than the default one to be set for the variable containing the moves
+         * associated with a card so that a controller can know whether or not a card should be displayed
+         * with options to move
+         * @param moves contains the number of spaces a player or wolf nightmare should traverse on the board
+         * @return the Builder object that contains the moves to be associated with a card
+         */
         public Builder withMoves(int[] moves) {
             this.moves = moves;
             return this;
         }
-
+        /**
+         * This method allows a value other than the default one to be set for the variable containing the Ztokens
+         * associated with a card so that a controller can know whether or not a card should be displayed
+         * with options to catch tokens
+         * @param Ztokens contains the number of Ztokens that a player can catch if a card contains the option
+         * @return
+         */
         public Builder withZtokens(int Ztokens) {
             this.Ztokens = Ztokens;
             return this;
         }
 
+        /**
+         * This method allows a value other than the default one to be set for the variable containing the winks
+         * associated with a card so that a controller can know whether or not a card should be displayed
+         * with options to gain winks
+         * @param winks contains the number of winks that a player can gain if a card contains the option
+         * @return
+         */
         public Builder withWinks(int winks) {
             this.winks = winks;
             return this;
         }
-
+        /**
+         * This method allows a value other than the default one to be set for the variable containing the jump position
+         * associated with a card so that a controller can know whether or not a card should be displayed
+         * with details of a bump nightmare
+         * @param jumpPos contains the board position a bump nightmare will jump to
+         * @return
+         */
         public Builder withJumpPos(int jumpPos) {
             this.jumpPos = jumpPos;
             return this;
         }
 
+        /**
+         * This method allows a value other than the default one to be set for the variable containing the moves
+         * associated with a spider nightmare so that a controller can know whether or not a card should be displayed
+         * with options to move
+         * @param spiderMove contains the number of positions a spider nightmare's web token would be moved forward
+         * @return
+         */
         public Builder withSpiderMove(int spiderMove) {
             this.spiderMove = spiderMove;
             return this;
         }
 
+        /**
+         * This method handles the building of the Card object with all of the variables that are associated with a card
+         * object
+         * @return a Card built with specific features
+         */
         public Card build() {
             Card card = new Card(bothConditions, isNightmare);
             card.setMoves(moves);
