@@ -1,3 +1,7 @@
+/**
+ * @author Danae Morrison
+ */
+
 public class DreamTileViewer {
     
     public void printRule(String tileName) {
