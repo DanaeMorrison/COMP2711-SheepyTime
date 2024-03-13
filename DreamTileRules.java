@@ -13,7 +13,7 @@ public class DreamTileRules {
         if (tileName.equals("action hero")) {
             //System.out.println("if you are scared, gain 3 winks");
 
-            if (curPlayer.isScared()) {
+            if (curPlayer.isScared() >= 1) {
                 curPlayer.getScoreboard().setPlayerPos(curPlayer.getScoreboard().getPlayerPos() + 3);
                 curPlayer.setWinks(curPlayer.getScoreboard().getPlayerPos());
             }
@@ -22,7 +22,7 @@ public class DreamTileRules {
         if (tileName.equals("final sprint")) {
             //ystem.out.println("if you are scared, move forward 7 spaces");
 
-            if (curPlayer.isScared()) {
+            if (curPlayer.isScared() >= 1) {
                 curPlayer.getBoard().advance(7);
             }
         }

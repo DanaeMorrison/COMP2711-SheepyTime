@@ -5,7 +5,7 @@ public class Player{
     private int orderPosition;
     private ArrayList<Card> hand;
     private BoardInterface board;
-    private boolean isScared;
+    private int scaredStatus;
     private boolean isAwake;
     private int winks;
     private int zTokens;
@@ -61,16 +61,16 @@ public class Player{
         winks = in;
     }
 
-    public boolean isScared(){
-        return isScared;
+    public int isScared(){
+        return scaredStatus;
     }
 
-    public void setScared(){
-        isScared = true;
+    public void setScaredStatus(int status){
+        scaredStatus = status;
     }
 
     public void setBrave(){
-        isScared = false;
+        scaredStatus = 0;
     }
 
     public void setScoreboard(Score in){

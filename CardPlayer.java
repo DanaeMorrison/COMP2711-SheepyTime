@@ -2,11 +2,16 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class CardPlayer {
+    /**
+     * Plays a card and performs the appropriate operations specified by a card for the given player.
+     * 
+     * @param card Card to be played.
+     * @param player Player playing the card.
+     */
     public void playCard(Card card, Player player){
         Scanner scanner = new Scanner(System.in);
         PlayerBoard board = player.getBoard();
         if(!card.bothConditions()){ //"OR" card
-
             System.out.println("You've picked an OR card. Which ability do you want to use? (Don't lie or this'll break...)");
             System.out.println("1 - Move");
             System.out.println("2 - Catch Winks");
@@ -43,6 +48,12 @@ public class CardPlayer {
         //
     }
 
+    /**
+     * Returns the amount of moves from a given int[] taken from a card, depending on user input.
+     * 
+     * @param moves Array of moves from a card.
+     * @return Returns the appropriate amount of moves depending on user input.
+     */
     private int multiMoveOptions(int[] moves){
         System.out.println("How many steps would you like to move? Input the corresponding number to the amount of steps.");
         for(int i = 0; i < moves.length; i++){
@@ -53,6 +64,11 @@ public class CardPlayer {
         return selectedMoves;
     }
 
+    /**
+     * Deals with and resolves a player crossing the fence by adding 5 winks to the player, and allows the player to wake up if desired.
+     * 
+     * @param player Player crossing fence
+     */
     public void resolveFenceCrossing(Player player){
         player.setWinks(player.getWinks() + 5);
         System.out.println("You've crossed the fence. Would you like to call it a night, or keep playing?");

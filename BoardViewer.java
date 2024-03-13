@@ -12,6 +12,7 @@ public class BoardViewer{
             if(nightmare.getBoard().occupied(i)){
                 System.out.println(nightmare.getName());
             }
+            //add dream tile functionality
         }
     }
 }
