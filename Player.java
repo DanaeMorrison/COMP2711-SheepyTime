@@ -9,6 +9,7 @@ public class Player{
     private boolean isAwake;
     private int winks;
     private int zTokens;
+    private int infiniteZTokens;
     private Score scoreboard;
 
     public Player(String name, int orderPosition){

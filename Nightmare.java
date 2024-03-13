@@ -1,12 +1,12 @@
 public class Nightmare{
     private String name;
     private int type;
-    private BoardInterface board;
+    private NightmareBoard board;
 
     public Nightmare(String name, int type){
         this.name = name;
         this.type = type;
-        board = new BoardFactory().createBoard("Nightmare");
+        board = (NightmareBoard) new BoardFactory().createBoard("Nightmare");
     }
 
     public void setType(int type){
@@ -25,7 +25,7 @@ public class Nightmare{
         return true;
     }
 
-    public BoardInterface getBoard(){
+    public NightmareBoard getBoard(){
         return board;
     }
 }

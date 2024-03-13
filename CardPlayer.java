@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -8,7 +9,7 @@ public class CardPlayer {
      * @param card Card to be played.
      * @param player Player playing the card.
      */
-    public void playCard(Card card, Player player){
+    public void playCard(Card card, Player player, Nightmare nightmare){
         Scanner scanner = new Scanner(System.in);
         PlayerBoard board = player.getBoard();
         if(!card.bothConditions()){ //"OR" card
@@ -24,7 +25,7 @@ public class CardPlayer {
                     if(board.isCrossing(moveAmount)){
                         resolveFenceCrossing(player);
                     }
-                    board.advance(getMoveAmount(card.getMoves()));
+                    board.advance(moveAmount);
                 case 2:
                     player.setWinks(player.getWinks() + card.getWinks());
                 case 3:
@@ -37,15 +38,55 @@ public class CardPlayer {
             if(board.isCrossing(moveAmount)){
                 resolveFenceCrossing(player);
             }
+
             board.advance(moveAmount);
-            
             player.setWinks(player.getWinks() + card.getWinks());
             //player.setZtokens(player.getZtokens() + card.getZtokens()); need to add proper ztoken functionality still
+
+            if(board.getIndex() == nightmare.getBoard().getIndex()){
+                nightmareCollision(player);
+            }   
         }
     }
 
-    public void playNightmareCard(Card card, Nightmare nightmare){
-        //
+    /**
+     * Handles "collisions" between a Nightmare and Player, and scares the player appropriately.
+     * 
+     * @param player Player to get scared!
+     */
+    public void nightmareCollision(Player player){
+        player.setScaredStatus(player.isScared() + 1);
+        if(player.isScared() > 1){
+            player.setAwake(true);
+        }
+    }
+
+    /**
+     * Deals with playing Nightmare cards, and executes all the given moves from given card.
+     * 
+     * @param card nightmare card
+     * @param nightmare nightmare
+     * @param players players to scare
+     */
+    public void playNightmareCard(Card card, Nightmare nightmare, ArrayList<Player> players){
+        int moves = card.getMoves()[0]; //nightmare cards only have 1 move option
+        if(moves > 0){
+            int[] path = nightmare.getBoard().traveledSpaces(moves);
+
+            PlayerBoard playerBoard;
+            for(Player p : players){
+                playerBoard = p.getBoard();
+                for(int i = 0; i < path.length; i++){
+                    if(playerBoard.occupied(i)){
+                        nightmareCollision(p);
+                    }
+                }
+            }
+        }
+
+        nightmare.getBoard().jump(card.getJumpPos());
+        //something something spider token
+        
     }
 
     /**
@@ -79,6 +120,12 @@ public class CardPlayer {
         }
     }
 
+    /**
+     * Gets a move amount from a user depending on the card's specifications.
+     * 
+     * @param in Move array from card
+     * @return Final move amount
+     */
     public int getMoveAmount(int[] in){
         if(in.length > 1){
             return multiMoveOptions(in);

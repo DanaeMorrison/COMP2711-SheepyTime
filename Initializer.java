@@ -3,6 +3,12 @@ import java.util.Scanner;
 
 public class Initializer {
 
+    /**
+     * This method generates n new players, and prompts the users to get a name.
+     * 
+     * @param n Player count.
+     * @return ArrayList of newly generated players.
+     */
     public ArrayList<Player> generatePlayers(int n){
         ArrayList<Player> players = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
@@ -17,6 +23,11 @@ public class Initializer {
         return players;
     }
 
+    /**
+     * Prompts the user for how many players they'd like.
+     * 
+     * @return amount of players to be generated.
+     */
     public int generateParams(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("How many players would you like?");
@@ -30,17 +41,25 @@ public class Initializer {
         Initializer init = new Initializer();
         int playerCount = init.generateParams();
         ArrayList<Player> players = init.generatePlayers(playerCount);
-        
+
         Nightmare nightmare = new Nightmare("Wolf", 1); //eventually ask for nightmare
 
         Deck deck = new Deck();
         
         init.generateCards(deck, players, nightmare);
 
-        RacingPhase racingPhase = new RacingPhase(players, deck);
+        RacingPhase racingPhase = new RacingPhase(players, deck, nightmare);
         racingPhase.startPhase();
+        init.resetScaredStatus(players);
     }
 
+    /**
+     * Initializes a given deck and assigns players appropriate cards for their hand.
+     * 
+     * @param deck Deck that cards will be taken from.
+     * @param players Players to initialize a hand.
+     * @param nightmare Nightmare to generate appropriate nightmare cards.
+     */
     public void generateCards(Deck deck, ArrayList<Player> players, Nightmare nightmare){
         int playerCount = players.size();
         DeckGenerator deckGenerator = new DeckGenerator(deck, playerCount, nightmare.getType());
@@ -53,6 +72,13 @@ public class Initializer {
             for(int j = 0; j < 3; j++){
                 curr.getHand().add(deck.takeCard());
             }
+        }
+    }
+
+    public void resetScaredStatus(ArrayList<Player> players){
+        for(Player p: players){
+            p.setAwake(false);
+            p.setScaredStatus(0);
         }
     }
 }

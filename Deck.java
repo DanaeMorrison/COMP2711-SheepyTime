@@ -15,6 +15,10 @@ public class Deck {
         Collections.shuffle(deck);
     }
 
+    public boolean isEmpty(){
+        return deck.isEmpty();
+    }
+
     /**
      * Returns the top card in deck.
      * 
