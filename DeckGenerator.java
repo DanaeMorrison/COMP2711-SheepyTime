@@ -1,9 +1,19 @@
+/**
+ * @author Danae Morrison
+ */
+
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
-// import javax.smartcardio.Card;
-
 public class DeckGenerator {
+    /**
+     * This class is responsible for generating the cards that are to be added to the deck for an instantiation of
+     * the game according to the number of players and the chosen nightmare.
+     * It contains lists that store specific numbers associated with different cards for the same area of information,
+     * e.g., the number of moves associated with all two player cards, so that loops can be used to add the information
+     * to a specific card and add it to a deck. 
+     */
     private static final int NIGHTMARELEN = 10;
     private static final int PLAYERTWOLEN = 30;
     
@@ -45,6 +55,13 @@ public class DeckGenerator {
     //Spider
     private ArrayList<Integer> spiderMove = new ArrayList<Integer>(Arrays.asList(3, 3, 3, 3, 3, 3, 2, 2, 2, 2));
     
+    /**
+     * This constructor creates a DeckGenerator that will be used to make the cards needed for an instantiation of
+     * a game and add them to the deck for the game
+     * @param deck stores the cards (player and nightmare) that will be used in a game
+     * @param players stores the number of players for a given game
+     * @param nightmare stores the int associated with the chosen nightmare for a game
+     */
     public DeckGenerator (Deck deck, int players, int nightmare) {
         this.deck = deck;
         this.players = players;
@@ -94,7 +111,9 @@ public class DeckGenerator {
         return cards;
     }
 
-
+    /**
+     * This method cretaes and add cards to the deck for the game
+     */
     public void makeDeck() {
         //private ArrayList<Boolean> nightmarePlayer2 = new ArrayList<>();
         isNightmarePlayer2 = fillFalse(isNightmarePlayer2);

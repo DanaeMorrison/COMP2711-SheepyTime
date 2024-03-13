@@ -1,3 +1,7 @@
+/**
+ * @author Danae Morrison
+ */
+
 public interface ScoreboardInterface {
     
     public int getPillowPos(int player);

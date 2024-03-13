@@ -1,12 +1,28 @@
+/**
+ * @author Danae Morrison
+ */
+
+
 public class CardViewer implements CardViewerInterface {
+    /**
+     * This class prints off the details of a given card
+     */
     private Card card;
     private int nightmare;
 
+    /**
+     * This constructor creates a CardViewer that takes in a card and the int associated with the chosen nightmare.
+     * This allows all cards of a certain nightmare type to be printed with the same name
+     * @param card a specific card that is drawn from a deck or in a player's hand
+     * @param nightmare the int associated with the chosen nightmare for a game
+     */
     public CardViewer (Card card, int nightmare) {
         this.card = card;
         this.nightmare = nightmare;
     }
-
+    /**
+     * This method prints the information on a card to be displayed to the user
+     */
     public void rulePrint() {
         System.out.println("            ");
         System.out.println("____________");

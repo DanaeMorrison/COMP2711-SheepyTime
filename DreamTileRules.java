@@ -1,4 +1,12 @@
+/**
+ * @author Danae Morrison
+ */
+
+
 public class DreamTileRules {
+    /**
+     * This class carries out the rules of a dreamtile upon being chosen by a player who is eligible to use it
+     */
     private String tileName;
     private Player curPlayer;
     //private Score curPlayerScore;
