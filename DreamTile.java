@@ -23,6 +23,11 @@ public class DreamTile{
         return false;
     }
 
+    /**
+     * Adds a z token to the tile.
+     * 
+     * @param token token to be added to tile
+     */
     public void addToken(ZToken token){
         tokens.add(token);
     }

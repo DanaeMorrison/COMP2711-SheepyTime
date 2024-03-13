@@ -69,14 +69,19 @@ public class Initializer {
         Player curr;
         for(int i = 0; i < playerCount; i++){
             curr = players.get(i);
-            for(int j = 0; j < 3; j++){
+            for(int j = 0; j < 2; j++){
                 curr.getHand().add(deck.takeCard());
             }
         }
     }
 
+    /**
+     * Resets all players' scared status and awake-ness to default (0 and false).
+     * 
+     * @param players players to reset
+     */
     public void resetScaredStatus(ArrayList<Player> players){
-        for(Player p: players){
+        for(Player p : players){
             p.setAwake(false);
             p.setScaredStatus(0);
         }
