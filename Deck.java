@@ -1,18 +1,22 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class Deck {
     private ArrayList<Card> deck;
+    private Random random;
+    private int nextIndex;
     
     public Deck(){
         deck = new ArrayList<>();
+
     }
     
     /**
      * Shuffles the cards.
      */
     public void shuffle(){
-        Collections.shuffle(deck);
+        nextIndex = random.nextInt(deck.size());
     }
 
     public boolean isEmpty(){
@@ -25,8 +29,9 @@ public class Deck {
      * @return top card in deck.
      */
     public Card takeCard(){
-        Card card = deck.get(0);
-        deck.remove(0);
+        shuffle();
+        Card card = deck.get(nextIndex);
+        deck.remove(nextIndex);
         return card;
     }
 
