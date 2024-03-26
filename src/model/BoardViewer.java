@@ -1,8 +1,5 @@
-package view;
+package model;
 import java.util.ArrayList;
-
-import model.Nightmare;
-import model.Player;
 
 public class BoardViewer{
     public static void showBoard(ArrayList<Player> players, Nightmare nightmare){
