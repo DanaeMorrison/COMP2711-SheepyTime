@@ -1,3 +1,5 @@
+import model.CardInterface;
+
 public class SleepCard implements CardInterface {
     
     private int moves;

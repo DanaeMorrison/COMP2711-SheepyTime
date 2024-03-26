@@ -1,3 +1,5 @@
+import model.CardInterface;
+
 public class NightmareCard implements CardInterface {
     private int moves;
     // says whether or not the nightmare jumps to a given position
