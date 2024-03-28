@@ -7,8 +7,7 @@ import model.Card;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
-import org.junit.After;
-import org.junit.Before;
+
 public class CardTest {
 
     @Test

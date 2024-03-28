@@ -8,7 +8,6 @@ import model.Deck;
 import model.Nightmare;
 import model.Player;
 import model.RacingPhase;
-import model.Card.Builder;
 
 import static org.junit.Assert.assertEquals;
 
@@ -25,7 +24,7 @@ public class RacingPhaseTest {
     private Deck deck;
 
     @Before
-    void setUp() {
+    public void setUp() {
         players = new ArrayList<>();
         players.add(new Player("Player 1", 1));
         players.add(new Player("Player 2", 2));
@@ -35,7 +34,7 @@ public class RacingPhaseTest {
     }
 
     @Test
-    void testStartPhase() {
+    public void testStartPhase() {
         List<Card> hand = new ArrayList<>();
         hand.add(new Card.Builder(false, false).build());
         hand.add(new Card.Builder(true, true).build());

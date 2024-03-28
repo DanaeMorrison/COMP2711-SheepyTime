@@ -5,7 +5,7 @@ package model;
  */
 
 public class DreamTileGenerator {
-    private String[] tileNames = {"action hero""final sprint", "cool kids club", "bounce ahead", };
+    private String[] tileNames = {"action hero", "final sprint", "cool kids club", "bounce ahead"};
     //private DreamTileCollection tileCollection;
 
     public void makeDreamTiles(DreamTileCollection tileCollection) {
