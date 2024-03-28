@@ -1,15 +1,14 @@
 package junit;
 
-
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.After;
+import org.junit.Test;
 
 import model.Card;
 import view.CardViewer;
 
-import org.junit.jupiter.api.Assertions;
+import static org.junit.Assert.assertTrue;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 /**
@@ -24,17 +23,12 @@ public class CardViewerTest
     private ByteArrayOutputStream outputStream;
     private PrintStream originalOutput;
 
-    @BeforeEach
+    @Before
     public void setUp() {
         card = new Card(true, false, new int[]{1, 2}, 3, 4, 5, 6);
         outputStream = new ByteArrayOutputStream();
         originalOutput = System.out;
         System.setOut(new PrintStream(outputStream));
-    }
-
-    @AfterEach
-    public void tearDown() {
-        System.setOut(originalOutput);
     }
 
     @Test
@@ -51,7 +45,7 @@ public class CardViewerTest
                                 "            \n" +
                                 "            \n" +
                                 "____________\n";
-        Assertions.assertTrue(outputStream.toString().contains(expectedOutput.trim()));
+        assertTrue(outputStream.toString().contains(expectedOutput.trim()));
     }
 
     @Test
@@ -68,7 +62,7 @@ public class CardViewerTest
                                 "            \n" +
                                 "            \n" +
                                 "____________\n";
-        Assertions.assertTrue(outputStream.toString().contains(expectedOutput.trim()));
+        assertTrue(outputStream.toString().contains(expectedOutput.trim()));
     }
 
     @Test
@@ -86,7 +80,7 @@ public class CardViewerTest
                                 "            \n" +
                                 "            \n" +
                                 "____________\n";
-        Assertions.assertTrue(outputStream.toString().contains(expectedOutput.trim()));
+        assertTrue(outputStream.toString().contains(expectedOutput.trim()));
     }
 
     @Test
@@ -109,7 +103,13 @@ public class CardViewerTest
                                 "            \n" +
                                 "            \n" +
                                 "____________\n";
-        Assertions.assertTrue(outputStream.toString().contains(expectedOutput.trim()));
+        assertTrue(outputStream.toString().contains(expectedOutput.trim()));
+    }
+
+    
+    @After
+    public void tearDown() {
+        System.setOut(originalOutput);
     }
 }
 // not working, checkback and fix 

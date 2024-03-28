@@ -1,12 +1,16 @@
 package junit;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import model.Card;
 import model.Deck;
+import model.Nightmare;
 import model.Player;
 import model.RacingPhase;
 import model.Card.Builder;
+
+import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -14,36 +18,34 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.Assertions;
+
 public class RacingPhaseTest {
     private RacingPhase racingPhase;
     private ArrayList<Player> players;
     private Deck deck;
 
-    @BeforeEach
+    @Before
     void setUp() {
         players = new ArrayList<>();
         players.add(new Player("Player 1", 1));
         players.add(new Player("Player 2", 2));
         deck = new Deck();
-        racingPhase = new RacingPhase(players, deck);
+        Nightmare nightmare = new Nightmare("wolf", 1);
+        racingPhase = new RacingPhase(players, deck, nightmare);
     }
 
     @Test
     void testStartPhase() {
         List<Card> hand = new ArrayList<>();
         hand.add(new Card.Builder(false, false).build());
-        hand.add(new Card.Builder(true,true).build());
+        hand.add(new Card.Builder(true, true).build());
         hand.add(new Card.Builder(false, true).build());
-
 
         // Set player 1's hand
         players.get(0).setHand(new ArrayList<>(hand));
 
         // Created to simulate user input
         InputStream inputStream = new ByteArrayInputStream("1".getBytes());
-
 
         System.setIn(inputStream);
 
@@ -60,7 +62,7 @@ public class RacingPhaseTest {
                 "Input which card you would like to use from your hand (integer)\n";
         assertEquals(expectedOutput, getOutput());
     }
-    
+
     private String getOutput() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PrintStream printStream = new PrintStream(outputStream);

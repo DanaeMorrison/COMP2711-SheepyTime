@@ -1,52 +1,28 @@
 package junit;
 
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import model.NightmareBoard;
 
 /**
  * The test class NightmareBoardTest.
  *
- * @author  (your name)
+ * @author (your name)
  * @version (a version number or a date)
  */
-public class NightmareBoardTest
-{
-    /**
-     * Default constructor for test class NightmareBoardTest
-     */
-    public NightmareBoardTest()
-    {
-    }
+public class NightmareBoardTest {
 
-    /**
-     * Sets up the test fixture.
-     *
-     * Called before every test case method.
-     */
-    @BeforeEach
-    /*public void setUp()
-    {
-    }*/
 
-    /**
-     * Tears down the test fixture.
-     *
-     * Called after every test case method.
-     */
-    @AfterEach
-    public void tearDown()
-    {
-    }
-    
-    
     private NightmareBoard nightmareBoard;
 
-    @BeforeEach
+    @Before
     public void setUp() {
         nightmareBoard = new NightmareBoard();
     }
@@ -90,7 +66,7 @@ public class NightmareBoardTest
     @Test
     public void testTraveledSpaces() {
         int n = 4;
-        int[] expectedSpaces = {0, 1, 2, 3};
+        int[] expectedSpaces = { 0, 1, 2, 3 };
         int[] actualSpaces = nightmareBoard.traveledSpaces(n);
         assertArrayEquals(expectedSpaces, actualSpaces);
     }
@@ -108,4 +84,3 @@ public class NightmareBoardTest
         }
     }
 }
-

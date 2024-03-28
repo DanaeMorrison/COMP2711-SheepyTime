@@ -10,9 +10,12 @@ public class Player{
     private boolean isAwake;
     private int winks;
     private int zTokens;
-    private int infiniteZTokens;
-    private Score scoreboard;
 
+    //TODO CodeSmell unussedvariable
+    private int infiniteZTokens;
+
+    private Score scoreboard;
+    
     public Player(String name, int orderPosition){
         BoardFactory factory = new BoardFactory();
         board = factory.createBoard("Player");
@@ -63,6 +66,7 @@ public class Player{
         winks = in;
     }
 
+    //TODO: Bad method name, this returns int, but looks like it returns boolean
     public int isScared(){
         return scaredStatus;
     }

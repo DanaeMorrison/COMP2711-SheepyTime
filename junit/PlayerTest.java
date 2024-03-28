@@ -1,49 +1,30 @@
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import model.Player;
+import model.Score;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 
 /**
  * The test class PlayerTest.
  *
- * @author  (your name)
+ * @author (your name)
  * @version (a version number or a date)
  */
-public class PlayerTest
-{
-    /**
-     * Default constructor for test class PlayerTest
-     */
-    public PlayerTest()
-    {
-    }
+public class PlayerTest {
 
-    /**
-     * Sets up the test fixture.
-     *
-     * Called before every test case method.
-     */
-    /*@BeforeEach
-    public void setUp()
-    {
-    }*/
 
-    /**
-     * Tears down the test fixture.
-     *
-     * Called after every test case method.
-     */
-    @AfterEach
-    public void tearDown()
-    {
-    }
-    
     private Player player;
 
-    @BeforeEach
+    @Before
     public void setUp() {
         player = new Player("Test Player", 1);
     }
@@ -66,16 +47,18 @@ public class PlayerTest
         assertTrue(player.getHand().isEmpty());
     }
 
-    /*@Test
-    public void testSetHand() {
-    ArrayList<Card> hand = new ArrayList<>();
-    Card testCard = new Card();
-    testCard.setName("Test Card");
-    hand.add(testCard);
-    player.setHand(hand);
-    assertEquals(hand, player.getHand());
-
-    }*/
+    /*
+     * @Test
+     * public void testSetHand() {
+     * ArrayList<Card> hand = new ArrayList<>();
+     * Card testCard = new Card();
+     * testCard.setName("Test Card");
+     * hand.add(testCard);
+     * player.setHand(hand);
+     * assertEquals(hand, player.getHand());
+     * 
+     * }
+     */
 
     @Test
     public void testGetName() {
@@ -128,4 +111,3 @@ public class PlayerTest
         assertNotNull(player.getBoard());
     }
 }
-

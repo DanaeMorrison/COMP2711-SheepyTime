@@ -1,4 +1,7 @@
 package model;
+
+//TODO: Why do we have to use array? can we just update integer instance variable position?
+
 public class PlayerBoard implements BoardInterface{
 
     private boolean[] board;
@@ -54,6 +57,7 @@ public class PlayerBoard implements BoardInterface{
         board[(startingPos + n) % 10] = true;
     }
 
+    //TODO: Does sheep token jump?
     /**
      * Jumps character directly to a tile
      * 
@@ -64,6 +68,7 @@ public class PlayerBoard implements BoardInterface{
         board[(n % 10)] = true;
     }
 
+    //TODO If this method is going to be called after advance(), this method never return true
     /**
      * Checks if the user will cross the fence if they were to advance n steps.
      * Doesn't actually move the player, just a check!
