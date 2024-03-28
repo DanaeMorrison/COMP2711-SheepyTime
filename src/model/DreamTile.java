@@ -50,6 +50,8 @@ public class DreamTile{
             } //throw some sort of error if no player is found?
         }
     }
-    
+
+    public void useTile(){};
+
     //todo: use method, player param and move/add whatever as required
 }
