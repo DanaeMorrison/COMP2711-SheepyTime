@@ -44,4 +44,8 @@ public class Deck {
     public void add(Card card){
         deck.add(card);
     }
+
+    public int getSize(){
+        return deck.size();
+    }
 }
