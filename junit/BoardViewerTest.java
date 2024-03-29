@@ -19,7 +19,6 @@ import java.util.ArrayList;
  * @version 2.0
  */
 public class BoardViewerTest {
-    private BoardViewer boardViewer;
     private ArrayList<Player> players;
     private Nightmare nightmare;
 
