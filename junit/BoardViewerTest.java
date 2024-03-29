@@ -24,7 +24,6 @@ public class BoardViewerTest {
 
     @Before
     public void setup() {
-        boardViewer = new BoardViewer();
         players = new ArrayList<>();
         players.add(new Player("Dan", 0)); // Assuming the second argument is the starting position
         players.add(new Player("Julie", 0));
