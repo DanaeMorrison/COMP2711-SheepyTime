@@ -10,7 +10,7 @@ public class Deck {
     
     public Deck(){
         deck = new ArrayList<>();
-
+        
     }
     
     /**
