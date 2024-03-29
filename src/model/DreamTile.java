@@ -51,6 +51,10 @@ public class DreamTile{
         }
     }
 
+    public ArrayList<ZToken> getTokens(){
+        return tokens;
+    }
+
     public void useTile(){};
 
     //todo: use method, player param and move/add whatever as required
