@@ -44,6 +44,7 @@ public class CardPlayerTest {
         player.setWinks(0);
         player.setZtokens(0);
 
+        //TODO: Test broke because of this(Scanner is recieving some inputs from user)
         cardPlayer.playCard(nonNightmareCard, player, nightmare);
 
         assertEquals(3, player.getWinks());
