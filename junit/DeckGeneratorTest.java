@@ -112,8 +112,8 @@ public class DeckGeneratorTest {
     }
 
     private Card findCardWithMoves(int[] moves) {
-        for (int i = 0; i < deck.size(); i++) {
-            Card card = deck.get(i);
+        for (int i = 0; i < deck.getSize(); i++) {
+            Card card = deck.takeCard();
             if (Arrays.equals(card.getMoves(), moves)) {
                 return card;
             }

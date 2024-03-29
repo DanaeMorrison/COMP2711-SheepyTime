@@ -10,7 +10,7 @@ public class Deck {
     
     public Deck(){
         deck = new ArrayList<>();
-
+        random = new Random();
     }
     
     /**
@@ -22,6 +22,7 @@ public class Deck {
 
     public boolean isEmpty(){
         return deck.isEmpty();
+        
     }
 
     /**
