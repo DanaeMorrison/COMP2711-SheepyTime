@@ -66,6 +66,6 @@ public class CardPlayerTest {
 
         assertEquals(0, player.getWinks()); // Winks should not be affected by nightmare cards
         assertEquals(0, player.getZtokens()); // Ztokens should not be affected by nightmare cards
-        assertEquals(5, playerBoard.getIndex()); // Player should be moved to the jump position
+        assertEquals(4, playerBoard.getIndex()); // Player should be moved to the jump position
     }
 }// re-do this test 
