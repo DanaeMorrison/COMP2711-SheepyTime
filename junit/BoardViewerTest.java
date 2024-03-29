@@ -40,7 +40,7 @@ public class BoardViewerTest {
         System.setOut(new PrintStream(outputStream));
 
         // Call the showBoard method
-        boardViewer.showBoard(players, nightmare);
+        BoardViewer.showBoard(players, nightmare);
         System.setOut(System.out);
 
         // Verify  expected output
