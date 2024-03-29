@@ -13,8 +13,6 @@ import static org.junit.Assert.assertNotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-//TODO: deck.size() do not exist
-
 public class DeckGeneratorTest {
     private Deck deck;
 
