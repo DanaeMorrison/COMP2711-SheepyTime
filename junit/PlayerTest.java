@@ -1,5 +1,5 @@
+package junit;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -7,17 +7,15 @@ import model.Player;
 import model.Score;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 
 /**
  * The test class PlayerTest.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Sobechi Cornella Madueke-Aniemeka(ver 1.0), Dylan(ver 2.0)
+ * @version 2.0
  */
 public class PlayerTest {
 
@@ -82,21 +80,21 @@ public class PlayerTest {
     }
 
     @Test
-    public void testIsScared() {
-        assertFalse(player.isScared());
+    public void testIsSetScared() {
+        assertEquals(0, player.isScared());
+        player.setScaredStatus(1);
+        assertEquals(1, player.isScared());
+        player.setScaredStatus(2);
+        assertEquals(2, player.isScared());
+        
     }
 
-    @Test
-    public void testSetScared() {
-        player.setScared();
-        assertTrue(player.isScared());
-    }
 
     @Test
     public void testSetBrave() {
-        player.setScared();
+        player.setScaredStatus(1);
         player.setBrave();
-        assertFalse(player.isScared());
+        assertEquals(0, player.isScared());
     }
 
     @Test

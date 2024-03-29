@@ -17,8 +17,8 @@ import java.io.PrintStream;
 /**
  * The test class CardViewerTest.
  *
- * @author  (your name)
- * @version (a version number or a date)
+ * @author Sobechi Cornella Madueke-Aniemeka(ver 1.0), Dylan(ver 2.0)
+ * @version 2.0
  */
 public class CardViewerTest
 {

@@ -15,8 +15,8 @@ import java.lang.IllegalArgumentException;
 /**
  * The test class BoardFactoryTest.
  *
- * @author  (your name)
- * @version (a version number or a date)
+ * @author Sobechi Cornella Madueke-Aniemeka(ver 1.0), Dylan(ver 2.0)
+ * @version 2.0
  */
 public class BoardFactoryTest
 {

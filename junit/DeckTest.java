@@ -6,6 +6,12 @@ import org.junit.Test;
 import model.Card;
 import model.Deck;
 
+/**
+ * The test class DeckTest.
+ *
+ * @author Sobechi Cornella Madueke-Aniemeka(ver 1.0), Dylan(ver 2.0)
+ * @version 2.0
+ */
 public class DeckTest {
     private Deck deck;
 

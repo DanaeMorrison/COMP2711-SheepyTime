@@ -11,6 +11,12 @@ import org.junit.Test;
 import model.DreamTile;
 import model.DreamTileBoard;
 
+/**
+ * The test class DreamTileBoardTest.
+ *
+ * @author Sobechi Cornella Madueke-Aniemeka(ver 1.0), Dylan(ver 2.0)
+ * @version 2.0
+ */
 public class DreamTileBoardTest {
 
     private DreamTileBoard dreamTileBoard;

@@ -9,6 +9,13 @@ import org.junit.Test;
 import model.PlayerBoard;
 
 //TODO: Test Failed
+
+/**
+ * The test class PlayerBoardTest.
+ *
+ * @author Sobechi Cornella Madueke-Aniemeka(ver 1.0), Dylan(ver 2.0)
+ * @version 2.0
+ */
 public class PlayerBoardTest {
 
     @Test

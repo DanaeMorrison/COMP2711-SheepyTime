@@ -10,6 +10,12 @@ import static org.junit.Assert.assertEquals;
 
 //ToDo: Test Failed
 
+/**
+ * The test class DreamTileViewer.
+ *
+ * @author Sobechi Cornella Madueke-Aniemeka(ver 1.0), Dylan(ver 2.0)
+ * @version 2.0
+ */
 public class DreamTileViewerTest {
 
         @Test

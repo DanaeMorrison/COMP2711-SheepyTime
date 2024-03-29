@@ -14,6 +14,12 @@ import model.PlayerBoard;
 
 //TODO: Test Failed
 
+/**
+ * The test class CardPlayerTest.
+ *
+ * @author Sobechi Cornella Madueke-Aniemeka(ver 1.0), Dylan(ver 2.0)
+ * @version 2.0
+ */
 public class CardPlayerTest {
     private CardPlayer cardPlayer;
     private Player player;

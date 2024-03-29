@@ -18,6 +18,14 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO Test failed
+
+/**
+ * The test class RacingPhaseTest.
+ *
+ * @author Sobechi Cornella Madueke-Aniemeka(ver 1.0), Dylan(ver 2.0)
+ * @version 2.0
+ */
 public class RacingPhaseTest {
     private RacingPhase racingPhase;
     private ArrayList<Player> players;

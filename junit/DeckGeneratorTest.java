@@ -10,9 +10,14 @@ import model.DeckGenerator;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * The test class DeckGeneratorTest.
+ *
+ * @author Sobechi Cornella Madueke-Aniemeka(ver 1.0), Dylan(ver 2.0)
+ * @version 2.0
+ */
 public class DeckGeneratorTest {
     private Deck deck;
 

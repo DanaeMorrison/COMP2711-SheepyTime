@@ -12,6 +12,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
+/**
+ * The test class BoardViewerTest.
+ *
+ * @author Sobechi Cornella Madueke-Aniemeka(ver 1.0), Dylan(ver 2.0)
+ * @version 2.0
+ */
 public class BoardViewerTest {
     private BoardViewer boardViewer;
     private ArrayList<Player> players;
