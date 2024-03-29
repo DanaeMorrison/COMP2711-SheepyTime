@@ -1,13 +1,14 @@
-import model.Card;
-import model.CardViewerInterface;
 
 package view;
+import model.Card;
 /**
  * @author Danae Morrison
  */
 
 
-public class CardViewer implements CardViewerInterface {
+ //TODO: what should we do with CardViewerInterface?
+
+public class CardViewer{
     /**
      * This class prints off the details of a given card
      */

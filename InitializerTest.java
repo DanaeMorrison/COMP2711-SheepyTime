@@ -1,14 +1,17 @@
-package junit;
-import org.junit.jupiter.api.Test;
+
+
+import org.junit.Test;
 
 import Initializer;
 import model.Deck;
+import model.Nightmare;
 import model.Player;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static org.junit.Assert.assertEquals;
 
 public class InitializerTest {
 
@@ -63,8 +66,10 @@ public class InitializerTest {
         players.add(new Player("Julie", 1));
         players.add(new Player("Toby", 2));
 
+        Nightmare nightmare = new Nightmare("Wolf", 1);
+
         // Generate cards
-        initializer.generateCards(deck, players);
+        initializer.generateCards(deck, players, nightmare);
 
         // Check that each player has 3 cards in their hand
         for (Player player : players) {

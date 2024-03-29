@@ -1,5 +1,6 @@
 package model;
 import java.util.ArrayList;
+//TODO CodeSmell: unused package
 import java.util.Arrays;
 import java.util.Scanner;
 

@@ -1,13 +1,21 @@
 package junit;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+import org.junit.Before;
+import org.junit.Test;
+//import org.junit.Before;
+//import org.junit.Test;
 
 import model.DreamTile;
 import model.Player;
 import model.ZToken;
 
 import java.util.ArrayList;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+//
 
 public class DreamTileTest {
 
@@ -15,7 +23,7 @@ public class DreamTileTest {
     private Player player1;
     private Player player2;
 
-    @BeforeEach
+    @Before
     public void setUp() {
         dreamTile = new DreamTile("Dream Tile");
         player1 = new Player("Player 1", 1);
@@ -25,19 +33,19 @@ public class DreamTileTest {
     @Test
     public void testGetTileName() {
         String tileName = dreamTile.getTileName();
-        assertEquals("Dream Tile", tileName, "Tile name should be 'Dream Tile'");
+        assertEquals("Tile name should be 'Dream Tile'", "Dream Tile", tileName);
     }
 
     @Test
     public void testCanUse_NoTokens() {
-        assertFalse(dreamTile.canUse(player1), "Tile should not be usable by Player 1");
+        assertFalse("Tile should not be usable by Player 1", dreamTile.canUse(player1));
     }
 
     @Test
     public void testCanUse_WithToken() {
         dreamTile.addToken(player1, true);
-        assertTrue(dreamTile.canUse(player1), "Tile should be usable by Player 1");
-        assertFalse(dreamTile.canUse(player2), "Tile should not be usable by Player 2");
+        assertTrue("Tile should be usable by Player 1", dreamTile.canUse(player1));
+        assertFalse("Tile should not be usable by Player 2", dreamTile.canUse(player2));
     }
 
     @Test
@@ -45,8 +53,8 @@ public class DreamTileTest {
         ZToken token = new ZToken(true, player1);
         dreamTile.addToken(token);
         ArrayList<ZToken> tokens = dreamTile.getTokens();
-        assertEquals(1, tokens.size(), "Token should be added to the Dream Tile");
-        assertSame(token, tokens.get(0), "Added token should be the same as the retrieved token");
+        assertEquals("Token should be added to the Dream Tile", 1, tokens.size());
+        assertSame("Added token should be the same as the retrieved token", token, tokens.get(0));
     }
 
     @Test
@@ -58,7 +66,10 @@ public class DreamTileTest {
 
         dreamTile.removePlayerAccess(player1);
         ArrayList<ZToken> tokens = dreamTile.getTokens();
-        assertEquals(1, tokens.size(), "Token should be removed from the Dream Tile");
-        assertSame(token2, tokens.get(0), "Remaining token should be the same as the retrieved token");
+
+        // TODO: should we add a emthod getTokens?
+
+        assertEquals("Token should be removed from the Dream Tile", 1, tokens.size());
+        assertSame("Remaining token should be the same as the retrieved token", token2, tokens.get(0));
     }
 }

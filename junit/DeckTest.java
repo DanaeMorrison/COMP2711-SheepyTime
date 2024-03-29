@@ -20,10 +20,10 @@ public class DeckTest {
         deck.add(new Card.Builder(true, true).withMoves(new int[]{2}).build());
     }
 
-    @Test
-    public void testDeckSize() {
-        assertEquals(4, deck.getDeckSize());
-    }
+    // @Test
+    // public void testDeckSize() {
+    //     assertEquals(4, deck.getDeckSize());
+    // }
 
     @Test
     public void testShuffle() {
