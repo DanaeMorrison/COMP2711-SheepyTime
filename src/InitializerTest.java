@@ -2,7 +2,6 @@
 
 import org.junit.Test;
 
-import Initializer;
 import model.Deck;
 import model.Nightmare;
 import model.Player;
