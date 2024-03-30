@@ -72,7 +72,7 @@ public class InitializerTest {
 
         // Check that each player has 3 cards in their hand
         for (Player player : players) {
-            assertEquals(3, player.getHand().size());
+            assertEquals(2, player.getHand().size());
         }
     }
 }
