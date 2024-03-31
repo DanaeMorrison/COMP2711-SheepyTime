@@ -2,9 +2,25 @@ package model;
 import java.util.ArrayList;
 //TODO CodeSmell: unused package
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
+import controller.ModelListenerCardPlayer;
+
+/**
+ * @author Julien Ouellette
+ * @version 1
+ * @author Danae Morrison
+ * @version 2- MVC compliant
+ */
+
 public class CardPlayer {
+    private List<ModelListenerCardPlayer> listeners = new ArrayList<>();
+
+    public void addListener(ModelListenerCardPlayer listener) {
+        listeners.add(listener);
+    }
+    //public final int MAX_ABILITY_OPTIONS = 3;
     /**
      * Plays a card and performs the appropriate operations specified by a card for the given player.
      * 
@@ -12,14 +28,12 @@ public class CardPlayer {
      * @param player Player playing the card.
      */
     public void playCard(Card card, Player player, Nightmare nightmare){
+        int secondAbility = getValidCardOptions(card);
         Scanner scanner = new Scanner(System.in);
         PlayerBoard board = player.getBoard();
-        if(!card.bothConditions()){ //"OR" card
-            System.out.println("You've picked an OR card. Which ability do you want to use? (Don't lie or this'll break...)");
-            System.out.println("1 - Move");
-            System.out.println("2 - Catch Winks");
-            System.out.println("3 - Get ZTokens");
-            int ability = scanner.nextInt();
+        if(!card.bothConditions()){ //"OR" card, needs conditionals below to specify which options are applicable to a card
+            notifyListenersDisplayAbilityOptions(secondAbility);
+            int ability = notifyListenersRequestAskAbility(secondAbility);
 
             switch(ability){
                 case 1:
@@ -98,12 +112,7 @@ public class CardPlayer {
      * @return Returns the appropriate amount of moves depending on user input.
      */
     private int multiMoveOptions(int[] moves){
-        System.out.println("How many steps would you like to move? Input the corresponding number to the amount of steps.");
-        for(int i = 0; i < moves.length; i++){
-            System.out.println(i + " - " + moves[i] + "steps");
-        }
-        Scanner scanner = new Scanner(System.in);
-        int selectedMoves = scanner.nextInt();
+        int selectedMoves = notifyListenersRequestSpecificMove(moves);
         return selectedMoves;
     }
 
@@ -132,8 +141,37 @@ public class CardPlayer {
         if(in.length > 1){
             return multiMoveOptions(in);
         }
-        else{
+        else {
             return in[0];
+        }
+    }
+
+    private int getValidCardOptions(Card card) {
+        int secondAbility = 0;
+
+        if (card.getWinks != 0) {
+            secondAbility = 2;
+        } else {
+            secondAbility = 3;
+        }
+        return secondAbility;
+    }
+
+    private void notifyListenersDisplayAbilityOptions(int secondAbility) {
+        for (ModelListenerRacingPhase listener: listeners) {
+            listener.onRequestDisplayAbilityOptions(secondAbility);
+        }
+    }
+
+    private int notifyListenersRequestAskAbility(int secondAbility) {
+        for (ModelListenerRacingPhase listener: listeners) {
+            listener.onRequestAskAbility(secondAbility);
+        }
+    }
+
+    private int notifyListenersRequestSpecificMove(int[] moves) {
+        for (ModelListenerRacingPhase listener: listeners) {
+            listener.onRequestSpecificMove(moves);
         }
     }
 }
