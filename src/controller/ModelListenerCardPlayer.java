@@ -1,7 +1,8 @@
 package controller;
 
 public interface ModelListenerCardPlayer {
-    public void onRequestDisplayAbilityOptions (int[] validCardOptions);
-    public int onRequestAskAbility(int[] validCardOptions);
+    public void onRequestDisplayAbilityOptions (int secondAbility);
+    public int onRequestAskAbility(int secondAbility);
     public int onRequestSpecificMove(int[] moves);
+    public int onRequestResolveFenceCrossing(Player player);
 }

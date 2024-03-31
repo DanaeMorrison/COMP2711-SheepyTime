@@ -38,7 +38,7 @@ public class RacingPhaseController implements ModelListenerRacingPhase, ModelLis
     }
 
     @Override
-    public int onRequestAskAbility(int[] secondAbility) {
+    public int onRequestAskAbility(int secondAbility) {
         // TODO Auto-generated method stub
         PlayerCardDecision playerCardDecision = new PlayerCardDecision();
         return playerCardDecision.getAbilityChoice(secondAbility);
@@ -49,7 +49,13 @@ public class RacingPhaseController implements ModelListenerRacingPhase, ModelLis
         PlayerCardDecision playerCardDecision = new PlayerCardDecision();
         return playerCardDecision.getSpecificMove(moves);
     }
+    @Override
+    public int onRequestResolveFenceCrossing(Player player) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 
+    
    
 
 
