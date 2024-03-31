@@ -197,4 +197,21 @@ public class RestingPhase {
         return OPERATION_SUCCEED;
     }
 
+    public boolean isBoardfull(){
+        for(int i=0; i<10; i++){
+            if(!board.occupied(i)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean[] getBoardStatus(){
+        boolean[] boardStatus = new boolean[10];
+        for(int i=0; i<10; i++){
+            boardStatus[i] = board.occupied(i);
+        }
+        return boardStatus;
+    }
+
 }
