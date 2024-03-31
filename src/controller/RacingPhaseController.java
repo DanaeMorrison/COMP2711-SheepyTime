@@ -29,16 +29,28 @@ public class RacingPhaseController implements ModelListenerRacingPhase, ModelLis
     }
 
     @Override
-    public int onRequestAskAbility(int[] validCardOptions) {
+    public void onRequestDisplayAbilityOptions(int secondAbility) {
         // TODO Auto-generated method stub
-        return 0;
+        
+        PlayerCardDecision playerCardDecision = new PlayerCardDecision();
+        playerCardDecision.displayAbilityOptions(secondAbility);
+        
     }
 
     @Override
-    public void onRequestDisplayCardOptions(int[] validCardOptions) {
+    public int onRequestAskAbility(int[] secondAbility) {
         // TODO Auto-generated method stub
-        
+        PlayerCardDecision playerCardDecision = new PlayerCardDecision();
+        return playerCardDecision.getAbilityChoice(secondAbility);
     }
+    @Override
+    public int onRequestSpecificMove(int[] moves) {
+        // TODO Auto-generated method stub
+        PlayerCardDecision playerCardDecision = new PlayerCardDecision();
+        return playerCardDecision.getSpecificMove(moves);
+    }
+
+   
 
 
     
