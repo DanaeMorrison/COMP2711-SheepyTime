@@ -3,13 +3,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import controller.ModelListenerRacing;
 import view.BoardViewer;
-import view.CardViewer;
 
 public class RacingPhase {
     private ArrayList<Player> players;
     private Deck deck;
     private Nightmare nightmare;
+    private List<ModelListenerRacingPhase> listeners = new ArrayList<>();
 
     public RacingPhase(ArrayList<Player> players, Deck deck, Nightmare nightmare){
         this.players = players;
@@ -17,12 +18,16 @@ public class RacingPhase {
         this.nightmare = nightmare;
     }
 
+    public void addListener(ModelListenerRacingPhase listener) {
+        listeners.add(listener);
+    }
+
     public void startPhase(){
         int playerCount = players.size();
         Player curr;
         Card picked;
+        int cardChoice;
         ArrayList<Integer> nightmareCardIndices = new ArrayList<>();
-        CardViewer cardViewer;
         boolean nightmareFound;
         ArrayList<Card> usedCards = new ArrayList<>();
 
@@ -41,22 +46,15 @@ public class RacingPhase {
                         nightmareFound = true;
                         nightmareCardIndices.add(j);
                     }
-    
-                    cardViewer = new CardViewer(curr.getHand().get(j), 1);
-                    cardViewer.rulePrint();
+                    
+                    notifyListenersPrintCard(curr.getHand().get(j), nightmare);
                 }
-    
-                Scanner scanner = new Scanner(System.in); //maybe move all this to a turnviewer class?
-    
-                System.out.println("Input which card you would like to use from your hand (integer)");
-                if(nightmareFound){
-                    System.out.println("Uh oh! You have one or more nightmare cards in your hand! Use one of the following indices (or else!): " + Arrays.asList(nightmareCardIndices));
-                }
-    
-                picked = hand.get(scanner.nextInt());
+                
+                cardChoice = notifyListenersAskCardChoice();
+
+                picked = hand.get(cardChoice);
                 usedCards.add(picked);
-                hand.remove(picked);
-                hand.add(deck.takeCard());
+                hand.remove(cardChoice);
 
                 CardPlayer cardPlayer = new CardPlayer();
                 if(picked.isNightmare()){
@@ -64,6 +62,10 @@ public class RacingPhase {
                 }
                 else{
                     cardPlayer.playCard(picked, curr, nightmare);
+                }
+                // maybe make this a helper function- fillHand
+                while (hand.size() < 2) {
+                    hand.add(deck.takeCard());
                 }
 
                 BoardViewer.showBoard(players, nightmare);
@@ -80,11 +82,11 @@ public class RacingPhase {
      */
     public void replaceUsedCards(ArrayList<Card> used, Deck toFill){
         while(!used.isEmpty()){
-            Card temp = used.getFirst();
+            Card temp = used.getFirst(); //get()?
             toFill.add(temp);
             used.remove(temp);
         }
-        toFill.shuffle();
+        toFill.shuffle(); //shouldn't be needed anymore with new style of getting a random card from deck
     }
 
     public boolean allPlayersAwake(ArrayList<Player> players){
@@ -95,5 +97,19 @@ public class RacingPhase {
             }
         }
         return (awakeCount == players.size());
+    }
+
+    private void notifyListenersPrintCard(Card card, int nightmare) {
+        for (ModelListenerRacingPhase listener: listeners) {
+            listener.onRequestPrintCard(card, nightmare);
+        }
+    }
+
+    private int notifyListenersAskCardChoice() {
+        int cardChoice;
+        for (ModelListenerRacingPhase listener: listeners) {
+            cardChoice = listener.onRequestCardChoice();
+        }
+        return cardChoice;
     }
 }
