@@ -123,9 +123,7 @@ public class CardPlayer {
      */
     public void resolveFenceCrossing(Player player){
         player.setWinks(player.getWinks() + 5);
-        System.out.println("You've crossed the fence. Would you like to call it a night, or keep playing?");
-        System.out.println("0: Keep playing -- 1: Call it a night");
-        int wakingUp = new Scanner(System.in).nextInt();
+        int wakingUp = notifyListenersRequestResolveFenceCrossing();
         if(wakingUp == 1){
             player.setAwake(true);
         }
@@ -164,14 +162,29 @@ public class CardPlayer {
     }
 
     private int notifyListenersRequestAskAbility(int secondAbility) {
+        int abiltyChoice = 0;
         for (ModelListenerRacingPhase listener: listeners) {
-            listener.onRequestAskAbility(secondAbility);
+            abiltyChoice = listener.onRequestAskAbility(secondAbility);
         }
+
+        return abiltyChoice;
     }
 
     private int notifyListenersRequestSpecificMove(int[] moves) {
+        int specificMove = 0;
         for (ModelListenerRacingPhase listener: listeners) {
-            listener.onRequestSpecificMove(moves);
+            specificMove = listener.onRequestSpecificMove(moves);
         }
+
+        return specificMove;
+    }
+
+    private int notifyListenersRequestResolveFenceCrossing() {
+        int playOrCallNight = -1;
+        for (ModelListenerRacingPhase listener: listeners) {
+            playOrCallNight = listener.onRequestResolveFenceCrossing();
+        }
+
+        return playOrCallNight;
     }
 }

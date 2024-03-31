@@ -56,6 +56,11 @@ public class RacingPhase {
                 usedCards.add(picked);
                 hand.remove(cardChoice);
 
+                // If CardPlayer is instantiated outside of this class and passed to the controller
+                // then an indication is needed here to alert the controller to play the card based
+                // on that object outside the class, passing the picked card, the current player, and
+                // and the nightmare to the controller method through the notify method 
+
                 CardPlayer cardPlayer = new CardPlayer();
                 if(picked.isNightmare()){
                     cardPlayer.playNightmareCard(picked, nightmare, players);
