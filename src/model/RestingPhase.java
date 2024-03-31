@@ -11,10 +11,10 @@ import java.util.ArrayList;
 public class RestingPhase {
     private final int OPERATION_SUCCEED = 1;
     private final int OPERATION_NOT_FULLFILLED = 0;
-    private final int ERR_NOT_ENOUGH_Z_TOKEN = -2;
-    private final int ERR_HAVE_Z_TOKEN = -3;
-    private final int ERR_EMPTY_TILE = -4;
-    private final int ERR_ALREADY_OCCUPIED = -5;
+    private final int ERR_NOT_ENOUGH_Z_TOKEN = -1;
+    private final int ERR_HAVE_Z_TOKEN = -2;
+    private final int ERR_EMPTY_TILE = -3;
+    private final int ERR_ALREADY_OCCUPIED = -4;
 
     private ArrayList<Player> players;
     private DreamTileCollection dreamTiles;
@@ -160,10 +160,8 @@ public class RestingPhase {
     /**
      * Helper method that refill the market with new DreamTile
      * 
-     * @throws IllegalStateException Since the maximum number of dreamtiles in
-     *                               market is 4, it throws an exception
-     *                               when the function is called even if market
-     *                               already contains 4 dreamtiles
+     * @throws IllegalStateException Since the maximum number of dreamtiles in market is 4, it throws an exception
+     *                               when the function is called even if market already contains 4 dreamtiles
      */
     private void fillMarket() {
         if (market.size() == 4) {
