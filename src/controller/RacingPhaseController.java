@@ -5,6 +5,7 @@ import model.Card;
 import model.CardPlayer;
 import model.RacingPhase;
 import view.PlayerCardDecision;
+import view.PlayerDecision;
 
 public class RacingPhaseController implements ModelListenerRacingPhase, ModelListenerCardPlayer {
     private RacingPhase racingPhase;
@@ -22,8 +23,8 @@ public class RacingPhaseController implements ModelListenerRacingPhase, ModelLis
 
     @Override
     public int onRequestCardChoice() {
-        PlayerCardDecision playerCardDecision = new PlayerCardDecision();
-        int cardChoice = playerCardDecision.getCardChoice();
+        PlayerDecision playerDecision = new PlayerDecision();
+        int cardChoice = playerDecision.getCardChoice();
         return cardChoice;
 
     }
@@ -32,27 +33,28 @@ public class RacingPhaseController implements ModelListenerRacingPhase, ModelLis
     public void onRequestDisplayAbilityOptions(int secondAbility) {
         // TODO Auto-generated method stub
         
-        PlayerCardDecision playerCardDecision = new PlayerCardDecision();
-        playerCardDecision.displayAbilityOptions(secondAbility);
+        PlayDecision playerDecision = new PlayerDecision();
+        playerDecision.displayAbilityOptions(secondAbility);
         
     }
 
     @Override
     public int onRequestAskAbility(int secondAbility) {
         // TODO Auto-generated method stub
-        PlayerCardDecision playerCardDecision = new PlayerCardDecision();
-        return playerCardDecision.getAbilityChoice(secondAbility);
+        PlayerDecision playerDecision = new PlayerDecision();
+        return playerDecision.getAbilityChoice(secondAbility);
     }
     @Override
     public int onRequestSpecificMove(int[] moves) {
         // TODO Auto-generated method stub
-        PlayerCardDecision playerCardDecision = new PlayerCardDecision();
-        return playerCardDecision.getSpecificMove(moves);
+        PlayerDecision playerDecision = new PlayerDecision();
+        return playerDecision.getSpecificMove(moves);
     }
     @Override
-    public int onRequestResolveFenceCrossing(Player player) {
+    public int onRequestResolveFenceCrossing() {
         // TODO Auto-generated method stub
-        return 0;
+        PlayerDecision playerDecision = new PlayerDecision();
+        return playerDecision.getPlayOrCallNight();
     }
 
     
