@@ -2,9 +2,14 @@ package controller;
 
 import org.junit.experimental.ParallelComputer;
 
+import model.DreamTileBoard;
+import model.DreamTileCollection;
 import model.RestingPhase;
 import view.DreamTileBoardViewer;
 import view.RestingPhaseViewer;
+import model.Player;
+
+import java.util.ArrayList;
 
 /**
  * Class for RestingPhase Controller
@@ -14,12 +19,15 @@ import view.RestingPhaseViewer;
 public class RestingPhaseController {
     private RestingPhaseViewer viewer;
     private RestingPhase phase;
-    private DreamTileBoardViewer viewer2; 
+    private DreamTileBoardViewer boardViewer; 
+    private DreamTileBoard tileBoard;
     
 
-    public RestingPhaseController(RestingPhaseViewer viewer, RestingPhase phase){
-        this.phase = phase;
-        this.viewer = viewer;
+    public RestingPhaseController(DreamTileBoard tileBoard, DreamTileBoardViewer boardViewer, ArrayList<Player> player, DreamTileCollection dreamTiles){
+        viewer = new RestingPhaseViewer(this);
+        phase = new RestingPhase(player, dreamTiles);
+        this.boardViewer = boardViewer;
+        this.tileBoard = tileBoard;
     }
 
     public void startPhase(){
@@ -27,24 +35,20 @@ public class RestingPhaseController {
 
         }while(phase.setNextPlayer());
 
-
-
-
-        nextPhase();
     }
 
-    public void setRacingPhaseController(RacingPhaseController controller){
-        racingPhaseController = controller;
-    }
+    // public void setRacingPhaseController(RacingPhaseController controller){
+    //     racingPhaseController = controller;
+    // }
 
-    private void nextPhase(){
-        racingPhaseController.startPhase();
-    }
+    // private void nextPhase(){
+    //     racingPhaseController.startPhase();
+    // }
 
     /**
      * Method that tells the viewer to show the board Status
      */
     private void showBoardStatus(){
-        viewer.showBoardStatus(phase.getBoardStatus());
+        viewer.showBoardStatus(tileBoard.getBoardStatus(phase.getCurrentPlayer()));
     }
 }

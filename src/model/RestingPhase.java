@@ -18,15 +18,13 @@ public class RestingPhase {
 
     private ArrayList<Player> players;
     private DreamTileCollection dreamTiles;
-    private DreamTileBoard board;
     private ArrayList<DreamTile> market;
     private int currPlayerIndex;
 
-    public RestingPhase(ArrayList<Player> players, DreamTileCollection dreamTiles, DreamTileBoard board) {
+    public RestingPhase(ArrayList<Player> players, DreamTileCollection dreamTiles) {
         this.players = players;
         currPlayerIndex = 0;
         this.dreamTiles = dreamTiles;
-        this.board = board;
         createMarket();
     }
 
@@ -59,7 +57,7 @@ public class RestingPhase {
         return ERR_ALREADY_OCCUPIED;
     }
 
-    private Player getCurrentPlayer() {
+    public Player getCurrentPlayer() {
         return players.get(currPlayerIndex);
     }
 
@@ -79,7 +77,7 @@ public class RestingPhase {
      * @param numZzzToken number of desired number of Zzz Token to catch
      * @return
      */
-    public int catchZzz(int location, int numZzzToken) {
+    public int catchZzz(int location, int numZzzToken, DreamTileBoard board) {
         if (!haveEnoughZ()) {
             return ERR_NOT_ENOUGH_Z_TOKEN;
         } else if (!board.occupied(location)) {
@@ -87,18 +85,18 @@ public class RestingPhase {
         }
 
         if (numZzzToken == 1) {
-            helpCatchZzz(location, numZzzToken);
+            helpCatchZzz(location, numZzzToken, false);
             return OPERATION_NOT_FULLFILLED;
 
         } else if (numZzzToken == 2) {
-            helpCatchZzz(location, numZzzToken);
+            helpCatchZzz(location, numZzzToken, false);
             return OPERATION_SUCCEED;
         }
 
         throw new IllegalArgumentException("Invalid input for numZzzToken: Should be either 1 or 2");
     }
 
-    public int moveZzz(int from, int to, int numZzzToken) {
+    public int moveZzz(int from, int to, int numZzzToken,DreamTileBoard board) {
         if (!board.occupied(from) || !board.occupied(to)) {
             return ERR_EMPTY_TILE;
         } else if (haveEnoughZ()) {
@@ -106,12 +104,12 @@ public class RestingPhase {
         }
 
         if (numZzzToken == 1) {
-            removeZToken(from);
-            helpCatchZzz(to, numZzzToken);
+            removeZToken(from, board);
+            helpCatchZzz(to, numZzzToken, false, board);
             return OPERATION_NOT_FULLFILLED;
         } else if (numZzzToken == 2) {
-            removeZToken(from);
-            helpCatchZzz(to, numZzzToken);
+            removeZToken(from, board);
+            helpCatchZzz(to, numZzzToken, false, board);
             return OPERATION_SUCCEED;
         }
         throw new IllegalArgumentException("Invalid input for numZzzToken: Should be either 1 or 2");
@@ -125,7 +123,7 @@ public class RestingPhase {
      * @throws IllegalStateException if there is no ZToken occupied by the current
      *                               player
      */
-    private void removeZToken(int location) {
+    private void removeZToken(int location, DreamTileBoard board) {
         DreamTile tile = board.getTile(location);
         ArrayList<ZToken> zTokens = tile.getTokens();
         for (int i = 0; i < zTokens.size(); i++) {
@@ -137,10 +135,10 @@ public class RestingPhase {
         throw new IllegalStateException("There is no ZToken occupied by current Player");
     }
 
-    private void helpCatchZzz(int location, int numZzzToken) {
+    private void helpCatchZzz(int location, int numZzzToken, boolean isInfinity, DreamTileBoard board) {
         DreamTile tile = board.getTile(location);
         for (int i = 0; i < numZzzToken; i++) {
-            tile.addToken(getCurrentPlayer(), false);
+            tile.addToken(getCurrentPlayer(), isInfinity);
             getCurrentPlayer().setZtokens(getCurrentPlayer().getZtokens() - 1);
         }
     }
@@ -195,7 +193,7 @@ public class RestingPhase {
      * @param location desired location to place the tile
      * @return corresponding error code, or success code
      */
-    public int putNewDreamTile(int tileNum, int location) {
+    public int putNewDreamTile(int tileNum, int location, DreamTileBoard board) {
         if (market.get(tileNum) == null) {
             return ERR_EMPTY_TILE;
         } else if (board.occupied(location)) {
@@ -204,61 +202,24 @@ public class RestingPhase {
 
         board.addTile(location, market.remove(tileNum));
 
-        //TODO: implement putting ZzzToken to the dreamtile
+        int numTokenToPlace = 3;
+        if(getTilePlacementBonus(location)){
+            numTokenToPlace = 1;
+        }
+        helpCatchZzz(location, numTokenToPlace, getTilePlacementBonus(location), board);
 
         fillMarket();
         return OPERATION_SUCCEED;
     }
 
-    public boolean isBoardfull() {
-        for (int i = 0; i < 10; i++) {
-            if (!board.occupied(i)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public String[] getBoardStatus() {
-        String[] boardStatus = new String[10];
-        for (int i = 0; i < 10; i++) {
-            if (board.occupied(i)) {
-                boardStatus[i] = "O";
-            } else {
-                boardStatus[i] = "X";
-            }
-            boardStatus[i] = boardStatus[i]+=printZToken(i);
-        }
-        return boardStatus;
-    }
-
-    private String printZToken(int location){
-        DreamTile tile = board.getTile(location);
-        ArrayList<ZToken> zTokens = tile.getTokens();
-        String result = "";
-        for (int i=0 ; i<zTokens.size() ; i++){
-            if(zTokens.get(i).getOwner().equals(getCurrentPlayer())){
-                result +="*";
-            }
-        }
-        return result;
+    /**
+     * Helper method that get the placement bonus of the dreamtile at certain location
+     * @param location desired location
+     * @return true if the placementbonus is infinity ZToken, otherwise 3 normal ZTokens
+     */
+    private boolean getTilePlacementBonus(int location,DreamTileBoard board){
+        // TODO: We need a information about placement Bonus in DreamTile
+        return board.getTile(location).getPlacementBonus();
     }
 
 }
-/**
-
-1 Dylan 
-2 
-3 Nightmare
-4 
-5
-6 Danae
-7
-8 
-9
-10
----fence---
-
-6: 
-
- */
