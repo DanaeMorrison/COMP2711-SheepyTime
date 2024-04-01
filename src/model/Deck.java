@@ -10,7 +10,7 @@ public class Deck {
     
     public Deck(){
         deck = new ArrayList<>();
-
+        nextIndex = 0;
     }
     
     /**
@@ -45,6 +45,10 @@ public class Deck {
         deck.add(card);
     }
 
+    /**
+     * Returns size of deck.
+     * @return Amount of cards in deck.
+     */
     public int getSize(){
         return deck.size();
     }
