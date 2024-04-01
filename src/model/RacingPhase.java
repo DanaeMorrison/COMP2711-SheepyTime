@@ -1,7 +1,6 @@
 package model;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
+//import java.util.Arrays;
 
 import controller.ModelListenerRacing;
 import view.BoardViewer;
@@ -40,13 +39,12 @@ public class RacingPhase {
                 ArrayList<Card> hand = curr.getHand();
     
                 for(int j = 0; j < hand.size(); j++){
-                    System.out.println(curr.getName() + "'s card #" + j);
-    
                     if(curr.getHand().get(i).isNightmare()){
                         nightmareFound = true;
                         nightmareCardIndices.add(j);
                     }
-                    
+
+                    notifyListenersPrintHandCard(curr.getname(), j);
                     notifyListenersPrintCard(curr.getHand().get(j), nightmare);
                 }
                 
@@ -61,6 +59,7 @@ public class RacingPhase {
                 // on that object outside the class, passing the picked card, the current player, and
                 // and the nightmare to the controller method through the notify method 
 
+                //deal with this
                 CardPlayer cardPlayer = new CardPlayer();
                 if(picked.isNightmare()){
                     cardPlayer.playNightmareCard(picked, nightmare, players);
@@ -72,7 +71,7 @@ public class RacingPhase {
                 while (hand.size() < 2) {
                     hand.add(deck.takeCard());
                 }
-
+                //deal with this
                 BoardViewer.showBoard(players, nightmare);
             }
         }
@@ -102,6 +101,12 @@ public class RacingPhase {
             }
         }
         return (awakeCount == players.size());
+    }
+
+    private void notifyListenersPrintHandCard(String playerName, int cardInHand) {
+        for (ModelListenerRacingPhase listener: listeners) {
+            listener.onRequestPrintHandCard(playerName, cardInHand);
+        }
     }
 
     private void notifyListenersPrintCard(Card card, int nightmare) {

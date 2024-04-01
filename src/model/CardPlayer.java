@@ -31,7 +31,7 @@ public class CardPlayer {
         int secondAbility = getValidCardOptions(card);
         Scanner scanner = new Scanner(System.in);
         PlayerBoard board = player.getBoard();
-        if(!card.bothConditions()){ //"OR" card, needs conditionals below to specify which options are applicable to a card
+        if(!card.bothConditions()){ //"OR" card
             notifyListenersDisplayAbilityOptions(secondAbility);
             int ability = notifyListenersRequestAskAbility(secondAbility);
 
