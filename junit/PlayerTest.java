@@ -1,49 +1,28 @@
+package junit;
 
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import java.util.ArrayList;
+import model.Player;
+import model.Score;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 
 /**
  * The test class PlayerTest.
  *
- * @author  (your name)
- * @version (a version number or a date)
+ * @author Sobechi Cornella Madueke-Aniemeka(ver 1.0), Dylan(ver 2.0)
+ * @version 2.0
  */
-public class PlayerTest
-{
-    /**
-     * Default constructor for test class PlayerTest
-     */
-    public PlayerTest()
-    {
-    }
+public class PlayerTest {
 
-    /**
-     * Sets up the test fixture.
-     *
-     * Called before every test case method.
-     */
-    /*@BeforeEach
-    public void setUp()
-    {
-    }*/
 
-    /**
-     * Tears down the test fixture.
-     *
-     * Called after every test case method.
-     */
-    @AfterEach
-    public void tearDown()
-    {
-    }
-    
     private Player player;
 
-    @BeforeEach
+    @Before
     public void setUp() {
         player = new Player("Test Player", 1);
     }
@@ -66,16 +45,18 @@ public class PlayerTest
         assertTrue(player.getHand().isEmpty());
     }
 
-    /*@Test
-    public void testSetHand() {
-    ArrayList<Card> hand = new ArrayList<>();
-    Card testCard = new Card();
-    testCard.setName("Test Card");
-    hand.add(testCard);
-    player.setHand(hand);
-    assertEquals(hand, player.getHand());
-
-    }*/
+    /*
+     * @Test
+     * public void testSetHand() {
+     * ArrayList<Card> hand = new ArrayList<>();
+     * Card testCard = new Card();
+     * testCard.setName("Test Card");
+     * hand.add(testCard);
+     * player.setHand(hand);
+     * assertEquals(hand, player.getHand());
+     * 
+     * }
+     */
 
     @Test
     public void testGetName() {
@@ -99,21 +80,21 @@ public class PlayerTest
     }
 
     @Test
-    public void testIsScared() {
-        assertFalse(player.isScared());
+    public void testIsSetScared() {
+        assertEquals(0, player.isScared());
+        player.setScaredStatus(1);
+        assertEquals(1, player.isScared());
+        player.setScaredStatus(2);
+        assertEquals(2, player.isScared());
+        
     }
 
-    @Test
-    public void testSetScared() {
-        player.setScared();
-        assertTrue(player.isScared());
-    }
 
     @Test
     public void testSetBrave() {
-        player.setScared();
+        player.setScaredStatus(1);
         player.setBrave();
-        assertFalse(player.isScared());
+        assertEquals(0, player.isScared());
     }
 
     @Test
@@ -128,4 +109,3 @@ public class PlayerTest
         assertNotNull(player.getBoard());
     }
 }
-

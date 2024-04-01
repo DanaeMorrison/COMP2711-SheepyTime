@@ -1,30 +1,36 @@
 package junit;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import model.Nightmare;
 import model.Player;
 import view.BoardViewer;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * The test class BoardViewerTest.
+ *
+ * @author Sobechi Cornella Madueke-Aniemeka(ver 1.0), Dylan(ver 2.0)
+ * @version 2.0
+ */
 public class BoardViewerTest {
-    private BoardViewer boardViewer;
     private ArrayList<Player> players;
     private Nightmare nightmare;
 
-    @BeforeEach
+    @Before
     public void setup() {
-        boardViewer = new BoardViewer();
         players = new ArrayList<>();
         players.add(new Player("Dan", 0)); // Assuming the second argument is the starting position
         players.add(new Player("Julie", 0));
-        nightmare = new Nightmare("Nightmare"); // Assuming the second argument is the starting position
+        nightmare = new Nightmare("Wolf", 1); // Assuming the second argument is the starting position
     }
 
+    //TODO: Test Failed
     @Test
     public void testShowBoard() {
         // Redirect the standard output to capture the printed output
@@ -32,7 +38,7 @@ public class BoardViewerTest {
         System.setOut(new PrintStream(outputStream));
 
         // Call the showBoard method
-        boardViewer.showBoard(players, nightmare);
+        BoardViewer.showBoard(players, nightmare);
         System.setOut(System.out);
 
         // Verify  expected output

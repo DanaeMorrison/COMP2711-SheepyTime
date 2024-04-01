@@ -1,7 +1,18 @@
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+package junit;
+
+import org.junit.Test;
+
+import model.Card;
+
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+
+/**
+ * The test class CardTest.
+ *
+ * @author Sobechi Cornella Madueke-Aniemeka(ver 1.0), Dylan(ver 2.0)
+ * @version 2.0
+ */
 public class CardTest {
 
     @Test

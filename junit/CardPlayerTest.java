@@ -8,21 +8,30 @@ import org.junit.Test;
 
 import model.Card;
 import model.CardPlayer;
+import model.Nightmare;
 import model.Player;
 import model.PlayerBoard;
-import model.Card.Builder;
 
+//TODO: Test Failed
+
+/**
+ * The test class CardPlayerTest.
+ *
+ * @author Sobechi Cornella Madueke-Aniemeka(ver 1.0), Dylan(ver 2.0)
+ * @version 2.0
+ */
 public class CardPlayerTest {
     private CardPlayer cardPlayer;
     private Player player;
     private PlayerBoard playerBoard;
+    private Nightmare nightmare;
 
     @Before
     public void setUp() {
         cardPlayer = new CardPlayer();
-        player = new Player(); // Create a simple player object
-        playerBoard = new PlayerBoard(); // Create a simple player board object
-        player.setBoard(playerBoard); // Assign the player board to the player
+        player = new Player("Tester", 1); // Create a simple player object
+        playerBoard = player.getBoard(); // Create a simple player board object
+        nightmare = new Nightmare("Wolf", 1);
     }
 
     @Test
@@ -41,7 +50,8 @@ public class CardPlayerTest {
         player.setWinks(0);
         player.setZtokens(0);
 
-        cardPlayer.playCard(nonNightmareCard, player);
+        //TODO: Test broke because of this(Scanner is recieving some inputs from user)
+        cardPlayer.playCard(nonNightmareCard, player, nightmare);
 
         assertEquals(3, player.getWinks());
         assertEquals(2, player.getZtokens());
@@ -57,12 +67,12 @@ public class CardPlayerTest {
 
         player.setWinks(0);
         player.setZtokens(0);
-        playerBoard.setCurrentPosition(3); // Assume the player is at position 3
+        playerBoard.advance(3); // Assume the player is at position 3
 
-        cardPlayer.playCard(nightmareCard, player);
+        cardPlayer.playCard(nightmareCard, player, nightmare);
 
         assertEquals(0, player.getWinks()); // Winks should not be affected by nightmare cards
         assertEquals(0, player.getZtokens()); // Ztokens should not be affected by nightmare cards
-        assertEquals(5, playerBoard.getCurrentPosition()); // Player should be moved to the jump position
+        assertEquals(4, playerBoard.getIndex()); // Player should be moved to the jump position
     }
 }// re-do this test 

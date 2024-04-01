@@ -11,6 +11,7 @@ public class Deck {
     public Deck(){
         deck = new ArrayList<>();
         nextIndex = 0;
+        random = new Random();
     }
     
     /**
@@ -22,6 +23,7 @@ public class Deck {
 
     public boolean isEmpty(){
         return deck.isEmpty();
+        
     }
 
     /**
