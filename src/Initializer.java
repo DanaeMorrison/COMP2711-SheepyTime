@@ -55,6 +55,7 @@ public class Initializer {
         init.generateCards(deck, players, nightmare);
 
         RacingPhase racingPhase = new RacingPhase(players, deck, nightmare);
+
         racingPhase.startPhase();
         init.resetScaredStatus(players);
     }

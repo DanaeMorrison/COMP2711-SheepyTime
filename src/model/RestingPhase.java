@@ -203,6 +203,9 @@ public class RestingPhase {
         }
 
         board.addTile(location, market.remove(tileNum));
+
+        //TODO: implement putting ZzzToken to the dreamtile
+
         fillMarket();
         return OPERATION_SUCCEED;
     }
@@ -242,3 +245,20 @@ public class RestingPhase {
     }
 
 }
+/**
+
+1 Dylan 
+2 
+3 Nightmare
+4 
+5
+6 Danae
+7
+8 
+9
+10
+---fence---
+
+6: 
+
+ */

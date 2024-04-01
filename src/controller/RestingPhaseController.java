@@ -1,6 +1,9 @@
 package controller;
 
+import org.junit.experimental.ParallelComputer;
+
 import model.RestingPhase;
+import view.DreamTileBoardViewer;
 import view.RestingPhaseViewer;
 
 /**
@@ -11,6 +14,8 @@ import view.RestingPhaseViewer;
 public class RestingPhaseController {
     private RestingPhaseViewer viewer;
     private RestingPhase phase;
+    private DreamTileBoardViewer viewer2; 
+    
 
     public RestingPhaseController(RestingPhaseViewer viewer, RestingPhase phase){
         this.phase = phase;
@@ -22,6 +27,18 @@ public class RestingPhaseController {
 
         }while(phase.setNextPlayer());
 
+
+
+
+        nextPhase();
+    }
+
+    public void setRacingPhaseController(RacingPhaseController controller){
+        racingPhaseController = controller;
+    }
+
+    private void nextPhase(){
+        racingPhaseController.startPhase();
     }
 
     /**
