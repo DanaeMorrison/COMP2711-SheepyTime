@@ -95,4 +95,8 @@ public class PlayerDecision {
 
         return playOrCallNight;
     }
+
+    public void printCardInHand(String playerName, int cardInHand) {
+        System.out.println(playerName + "'s card #" + String.valueOf(cardInHand));
+    }
 }
