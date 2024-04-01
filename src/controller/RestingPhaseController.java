@@ -8,7 +8,6 @@ import view.RestingPhaseViewer;
  * @author Dylan Kim
  * @version 1.0
  */
-
 public class RestingPhaseController {
     private RestingPhaseViewer viewer;
     private RestingPhase phase;
@@ -20,8 +19,15 @@ public class RestingPhaseController {
 
     public void startPhase(){
         do{
-            
+
         }while(phase.setNextPlayer());
 
+    }
+
+    /**
+     * Method that tells the viewer to show the board Status
+     */
+    private void showBoardStatus(){
+        viewer.showBoardStatus(phase.getBoardStatus());
     }
 }

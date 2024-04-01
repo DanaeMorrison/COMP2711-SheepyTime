@@ -32,24 +32,30 @@ public class RestingPhase {
 
     /**
      * Getter method for each errorcode and successcode
+     * 
      * @return corresponding errorcode and successcode
      */
-    public int getOperationSucceed(){
+    public int getOperationSucceed() {
         return OPERATION_SUCCEED;
     }
-    public int getOperationNotFulfilled(){
+
+    public int getOperationNotFulfilled() {
         return OPERATION_NOT_FULLFILLED;
     }
-    public int getErrNotEnoughZToken(){
+
+    public int getErrNotEnoughZToken() {
         return ERR_NOT_ENOUGH_Z_TOKEN;
     }
-    public int getErrHaveZToken(){
+
+    public int getErrHaveZToken() {
         return ERR_HAVE_Z_TOKEN;
     }
-    public int getErrEmptyTile(){
+
+    public int getErrEmptyTile() {
         return ERR_EMPTY_TILE;
     }
-    public int getErrAlreadyOccupied(){
+
+    public int getErrAlreadyOccupied() {
         return ERR_ALREADY_OCCUPIED;
     }
 
@@ -92,20 +98,18 @@ public class RestingPhase {
         throw new IllegalArgumentException("Invalid input for numZzzToken: Should be either 1 or 2");
     }
 
-    public int moveZzz(int from, int to, int numZzzToken){
-        if(!board.occupied(from) || !board.occupied(to)){
+    public int moveZzz(int from, int to, int numZzzToken) {
+        if (!board.occupied(from) || !board.occupied(to)) {
             return ERR_EMPTY_TILE;
-        }
-        else if (haveEnoughZ()){
+        } else if (haveEnoughZ()) {
             return ERR_HAVE_Z_TOKEN;
         }
 
-        if (numZzzToken == 1){
+        if (numZzzToken == 1) {
             removeZToken(from);
             helpCatchZzz(to, numZzzToken);
             return OPERATION_NOT_FULLFILLED;
-        }
-        else if (numZzzToken == 2){ 
+        } else if (numZzzToken == 2) {
             removeZToken(from);
             helpCatchZzz(to, numZzzToken);
             return OPERATION_SUCCEED;
@@ -114,15 +118,18 @@ public class RestingPhase {
     }
 
     /**
-     * Helper method to remove one ZToken from one DreamTile owned by the current Player
-     * @param location location of the desired DreamTile 
-     * @throws IllegalStateException if there is no ZToken occupied by the current player
+     * Helper method to remove one ZToken from one DreamTile owned by the current
+     * Player
+     * 
+     * @param location location of the desired DreamTile
+     * @throws IllegalStateException if there is no ZToken occupied by the current
+     *                               player
      */
-    private void removeZToken(int location){
+    private void removeZToken(int location) {
         DreamTile tile = board.getTile(location);
         ArrayList<ZToken> zTokens = tile.getTokens();
-        for (int i=0; i<zTokens.size(); i++){
-            if(zTokens.get(i).getOwner().equals(getCurrentPlayer())){
+        for (int i = 0; i < zTokens.size(); i++) {
+            if (zTokens.get(i).getOwner().equals(getCurrentPlayer())) {
                 zTokens.remove(i);
                 return;
             }
@@ -160,8 +167,10 @@ public class RestingPhase {
     /**
      * Helper method that refill the market with new DreamTile
      * 
-     * @throws IllegalStateException Since the maximum number of dreamtiles in market is 4, it throws an exception
-     *                               when the function is called even if market already contains 4 dreamtiles
+     * @throws IllegalStateException Since the maximum number of dreamtiles in
+     *                               market is 4, it throws an exception
+     *                               when the function is called even if market
+     *                               already contains 4 dreamtiles
      */
     private void fillMarket() {
         if (market.size() == 4) {
@@ -172,23 +181,24 @@ public class RestingPhase {
 
     /**
      * getter method for market
+     * 
      * @return market
      */
-    public ArrayList<DreamTile> getMarket(){
+    public ArrayList<DreamTile> getMarket() {
         return market;
     }
 
     /**
      * Method that place one dreamtile from market on the board
-     * @param tileNum number of desired dreamtiles in market
+     * 
+     * @param tileNum  number of desired dreamtiles in market
      * @param location desired location to place the tile
      * @return corresponding error code, or success code
      */
-    public int putNewDreamTile(int tileNum, int location){
-        if(market.get(tileNum)==null){
+    public int putNewDreamTile(int tileNum, int location) {
+        if (market.get(tileNum) == null) {
             return ERR_EMPTY_TILE;
-        }
-        else if (board.occupied(location)){
+        } else if (board.occupied(location)) {
             return ERR_ALREADY_OCCUPIED;
         }
 
@@ -197,21 +207,38 @@ public class RestingPhase {
         return OPERATION_SUCCEED;
     }
 
-    public boolean isBoardfull(){
-        for(int i=0; i<10; i++){
-            if(!board.occupied(i)){
+    public boolean isBoardfull() {
+        for (int i = 0; i < 10; i++) {
+            if (!board.occupied(i)) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean[] getBoardStatus(){
-        boolean[] boardStatus = new boolean[10];
-        for(int i=0; i<10; i++){
-            boardStatus[i] = board.occupied(i);
+    public String[] getBoardStatus() {
+        String[] boardStatus = new String[10];
+        for (int i = 0; i < 10; i++) {
+            if (board.occupied(i)) {
+                boardStatus[i] = "O";
+            } else {
+                boardStatus[i] = "X";
+            }
+            boardStatus[i] = boardStatus[i]+=printZToken(i);
         }
         return boardStatus;
+    }
+
+    private String printZToken(int location){
+        DreamTile tile = board.getTile(location);
+        ArrayList<ZToken> zTokens = tile.getTokens();
+        String result = "";
+        for (int i=0 ; i<zTokens.size() ; i++){
+            if(zTokens.get(i).getOwner().equals(getCurrentPlayer())){
+                result +="*";
+            }
+        }
+        return result;
     }
 
 }
