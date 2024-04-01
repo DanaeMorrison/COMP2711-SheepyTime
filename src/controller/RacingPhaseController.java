@@ -10,11 +10,17 @@ import view.PlayerDecision;
 public class RacingPhaseController implements ModelListenerRacingPhase, ModelListenerCardPlayer {
     private RacingPhase racingPhase;
     private CardPlayer cardPlayer;
+    PlayerDecision playerDecision = new PlayerDecision();
 
     public RacingPhaseController(RacingPhase racingPhase, CardPlayer cardPlayer) {
         this.racingPhase = racingPhase;
         this.cardPlayer = cardPlayer;
     }
+    @Override
+    public void onRequestPrintHandCard(String playerName, int cardInHand) {
+        playerDecision.printCardInHand(playerName, cardInHand);
+    }
+
     @Override
     public void onRequestPrintCard(Card card, int nightmare) {
         CardViewer cardViewer = new CardViewer(card, nightmare);
@@ -23,7 +29,6 @@ public class RacingPhaseController implements ModelListenerRacingPhase, ModelLis
 
     @Override
     public int onRequestCardChoice() {
-        PlayerDecision playerDecision = new PlayerDecision();
         int cardChoice = playerDecision.getCardChoice();
         return cardChoice;
 
@@ -32,28 +37,22 @@ public class RacingPhaseController implements ModelListenerRacingPhase, ModelLis
     @Override
     public void onRequestDisplayAbilityOptions(int secondAbility) {
         // TODO Auto-generated method stub
-        
-        PlayDecision playerDecision = new PlayerDecision();
         playerDecision.displayAbilityOptions(secondAbility);
-        
     }
 
     @Override
     public int onRequestAskAbility(int secondAbility) {
         // TODO Auto-generated method stub
-        PlayerDecision playerDecision = new PlayerDecision();
         return playerDecision.getAbilityChoice(secondAbility);
     }
     @Override
     public int onRequestSpecificMove(int[] moves) {
         // TODO Auto-generated method stub
-        PlayerDecision playerDecision = new PlayerDecision();
         return playerDecision.getSpecificMove(moves);
     }
     @Override
     public int onRequestResolveFenceCrossing() {
         // TODO Auto-generated method stub
-        PlayerDecision playerDecision = new PlayerDecision();
         return playerDecision.getPlayOrCallNight();
     }
 
