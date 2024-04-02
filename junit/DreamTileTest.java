@@ -70,7 +70,7 @@ public class DreamTileTest {
         dreamTile.addToken(token1);
         dreamTile.addToken(token2);
 
-        dreamTile.removePlayerAccess(player1);
+        dreamTile.removePlayerToken(player1);
         ArrayList<ZToken> tokens = dreamTile.getTokens();
 
         // TODO: should we add a emthod getTokens?
