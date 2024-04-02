@@ -4,8 +4,6 @@ package view;
 /**
  * @author Danae Morrison
  */
-
-
  //TODO: what should we do with CardViewerInterface?
 
 public class CardViewer{
