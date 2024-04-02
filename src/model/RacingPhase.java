@@ -6,6 +6,9 @@ import controller.ModelListenerRacingPhase;
 import view.BoardViewer;
 
 public class RacingPhase {
+    public final int FIRST_CARD = 0;
+    public final int SECOND_CARD = 1;
+
     private ArrayList<Player> players;
     private Deck deck;
     private Nightmare nightmare;
@@ -49,6 +52,12 @@ public class RacingPhase {
                 }
                 
                 cardChoice = notifyListenersAskCardChoice();
+
+                //make another function of this for controller and model to print out error message
+                while (cardChoice != FIRST_CARD && cardChoice != SECOND_CARD) {
+                    System.out.print("You did not enter a valid number. Please type in either 0 or 1");
+                    cardChoice = notifyListenersAskCardChoice();
+                }
 
                 picked = hand.get(cardChoice);
                 usedCards.add(picked);

@@ -3,9 +3,9 @@ package view;
 import java.util.Scanner;
 
 public class PlayerDecision {
-    public final int FIRST_CARD = 0;
-    public final int SECOND_CARD = 1;
-    public final int MOVE_ABILITY = 1;
+    // public final int FIRST_CARD = 0;
+    // public final int SECOND_CARD = 1;
+    // public final int MOVE_ABILITY = 1;
     public final int WINK_ABILITY = 2;
     public final int KEEP_PLAY = 0;
     public final int CALL_NIGHT = 1;
@@ -19,11 +19,11 @@ public class PlayerDecision {
         cardChoice = scanner.nextInt();
         System.out.println("");
 
-        while (cardChoice != FIRST_CARD && cardChoice != SECOND_CARD) {
+        /** while (cardChoice != FIRST_CARD && cardChoice != SECOND_CARD) {
             System.out.print("You did not enter a valid number. Please type in either 0 or 1");
             cardChoice = scanner.nextInt();
             System.out.println("");
-        }
+        }*/
 
         return cardChoice;
     }
@@ -46,19 +46,19 @@ public class PlayerDecision {
         abilityChoice = scanner.nextInt();
         System.out.println("");
 
-        while (abilityChoice != MOVE_ABILITY && abilityChoice != secondAbility) {
+        /** while (abilityChoice != MOVE_ABILITY && abilityChoice != secondAbility) {
             System.out.println("You did not enter a valid number. Please type in either 1 or " + String.valueOf(secondAbility));
             System.out.print("Your choice: ");
             abilityChoice = scanner.nextInt();
             System.out.println("");
-        }
+        }*/
 
         return abilityChoice;
     }
 
     public int getSpecificMove(int[] moves) {
-        int firstMove = moves[0];
-        int secondMove = moves[1];
+        // int firstMove = moves[0];
+        // int secondMove = moves[1];
 
         System.out.println("How many steps would you like to move? Input the corresponding number to the amount of steps.");
         for(int i = 0; i < moves.length; i++){
@@ -69,12 +69,12 @@ public class PlayerDecision {
         int selectedMove = scanner.nextInt();
         System.out.println("");
         
-        while (selectedMove != firstMove && selectedMove != secondMove) {
+        /** while (selectedMove != firstMove && selectedMove != secondMove) {
             System.out.print("You did not enter a valid number. Please type in either " + String.valueOf(firstMove) + " or " + String.valueOf(secondMove));
             System.out.print("Your choice: ");
             selectedMove = scanner.nextInt();
             System.out.println("");
-        }
+        }*/
 
         return selectedMove;
     }
@@ -86,12 +86,12 @@ public class PlayerDecision {
         System.out.print("Your choice: ");
         int playOrCallNight = scanner.nextInt();
 
-        while (playOrCallNight != KEEP_PLAY && playOrCallNight != CALL_NIGHT) {
+        /** while (playOrCallNight != KEEP_PLAY && playOrCallNight != CALL_NIGHT) {
             System.out.println("You did not enter a valid number. Please type in either 0 or 1");
             System.out.print("Your choice: ");
             playOrCallNight = scanner.nextInt();
             System.out.println("");
-        }
+        }*/
 
         return playOrCallNight;
     }

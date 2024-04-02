@@ -12,6 +12,10 @@ import controller.ModelListenerCardPlayer;
  */
 
 public class CardPlayer {
+    public final int MOVE_ABILITY = 1;
+    public final int KEEP_PLAY = 0;
+    public final int CALL_NIGHT = 1;
+
     private ArrayList<ModelListenerCardPlayer> listeners = new ArrayList<>();
 
     public void addListener(ModelListenerCardPlayer listener) {
@@ -31,6 +35,12 @@ public class CardPlayer {
             notifyListenersDisplayAbilityOptions(secondAbility);
             int ability = notifyListenersRequestAskAbility(secondAbility);
 
+            //make another function of this for controller and model to print out error message
+            while (ability != MOVE_ABILITY && ability != secondAbility) {
+                System.out.println("You did not enter a valid number. Please type in either 1 or " + String.valueOf(secondAbility));
+                ability = notifyListenersRequestAskAbility(secondAbility);
+            }
+
             switch(ability){
                 case 1:
                     int moveAmount = getMoveAmount(card.getMoves());
@@ -46,6 +56,8 @@ public class CardPlayer {
         }
         else{ //"AND" card or single-ability card
             int moveAmount = getMoveAmount(card.getMoves());
+
+
 
             if(board.isCrossing(moveAmount)){
                 resolveFenceCrossing(player);
@@ -108,8 +120,16 @@ public class CardPlayer {
      * @return Returns the appropriate amount of moves depending on user input.
      */
     private int multiMoveOptions(int[] moves){
-        int selectedMoves = notifyListenersRequestSpecificMove(moves);
-        return selectedMoves;
+        int firstMove = moves[0];
+        int secondMove = moves[1];
+        int selectedMove = notifyListenersRequestSpecificMove(moves);
+
+        while (selectedMove != firstMove && selectedMove != secondMove) {
+            //make another function of this for controller and model to print out error message and ask for choice
+            System.out.print("You did not enter a valid number. Please type in either " + String.valueOf(firstMove) + " or " + String.valueOf(secondMove));
+            selectedMove = notifyListenersRequestSpecificMove(moves);
+        }
+        return selectedMove;
     }
 
     /**
@@ -120,6 +140,13 @@ public class CardPlayer {
     public void resolveFenceCrossing(Player player){
         player.setWinks(player.getWinks() + 5);
         int wakingUp = notifyListenersRequestResolveFenceCrossing();
+        
+        //make another function of this for controller and model to print out error message
+        while (wakingUp != KEEP_PLAY && wakingUp != CALL_NIGHT) {
+            System.out.println("You did not enter a valid number. Please type in either 0 or 1");
+            wakingUp = notifyListenersRequestResolveFenceCrossing();
+        }
+        
         if(wakingUp == 1){
             player.setAwake(true);
         }
