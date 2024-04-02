@@ -2,21 +2,23 @@ package model;
 import java.util.ArrayList;
 //import java.util.Arrays;
 
-import controller.ModelListenerRacing;
+import controller.ModelListenerRacingPhase;
 import view.BoardViewer;
 
 public class RacingPhase {
     private ArrayList<Player> players;
     private Deck deck;
     private Nightmare nightmare;
-    private List<ModelListenerRacingPhase> listeners = new ArrayList<>();
+    private ArrayList<ModelListenerRacingPhase> listeners = new ArrayList<>();
     private DreamTileBoard dreamTileBoard;
+    private CardPlayer cardPlayer;
 
-    public RacingPhase(ArrayList<Player> players, Deck deck, Nightmare nightmare, DreamTileBoard dreamTileBoard){
+    public RacingPhase(ArrayList<Player> players, Deck deck, Nightmare nightmare, DreamTileBoard dreamTileBoard, CardPlayer cardPlayer){
         this.players = players;
         this.deck = deck;
         this.nightmare = nightmare;
         this.dreamTileBoard = dreamTileBoard;
+        this.cardPlayer = cardPlayer;
     }
 
     public void addListener(ModelListenerRacingPhase listener) {
@@ -28,9 +30,6 @@ public class RacingPhase {
         Player curr;
         Card picked;
         int cardChoice;
-      
-        CardViewer cardViewer;
-        CardPlayer cardPlayer = new CardPlayer();
         ArrayList<Card> usedCards = new ArrayList<>();
 
         while(!allPlayersAwake(players)){
@@ -45,14 +44,8 @@ public class RacingPhase {
                 ArrayList<Card> hand = curr.getHand();
     
                 for(int j = 0; j < hand.size(); j++){
-
-                    if(curr.getHand().get(i).isNightmare()){
-                        nightmareFound = true;
-                        nightmareCardIndices.add(j);
-                    }
-
-                    notifyListenersPrintHandCard(curr.getname(), j);
-                    notifyListenersPrintCard(curr.getHand().get(j), nightmare);
+                    notifyListenersPrintHandCard(curr.getName(), j);
+                    notifyListenersPrintCard(curr.getHand().get(j), nightmare.getType());
                 }
                 
                 cardChoice = notifyListenersAskCardChoice();
@@ -66,34 +59,27 @@ public class RacingPhase {
                 // on that object outside the class, passing the picked card, the current player, and
                 // and the nightmare to the controller method through the notify method 
 
-                //deal with this
-                CardPlayer cardPlayer = new CardPlayer();
-                if(picked.isNightmare()){
+                /**if(picked.isNightmare()){
                     cardPlayer.playNightmareCard(picked, nightmare, players);
                 }
-                else{
-                    cardPlayer.playCard(picked, curr, nightmare);
-                }
+                else{*/
+                cardPlayer.playCard(picked, curr, nightmare);
+               // }
                 // maybe make this a helper function- fillHand
-                while (hand.size() < 2) {
+                // one was made. call it at the end of a player's turn
+                /** while (hand.size() < 2) {
                     hand.add(deck.takeCard());
-                }
+                }*/
                 //deal with this
 
-                    System.out.println(curr.getName() + "'s card #" + j);
+                    /**System.out.println(curr.getName() + "'s card #" + j);
                     cardViewer = new CardViewer(curr.getHand().get(j), 1); //TODO: currently cardviewer can't actually change the card and nightmare type, should probably change
-                    cardViewer.rulePrint();
-                }
+                    cardViewer.rulePrint(); */
+                // }
     
-                Scanner scanner = new Scanner(System.in); //maybe move all this to a turnviewer class?
+                // Scanner scanner = new Scanner(System.in); maybe move all this to a turnviewer class?
     
-                System.out.println("Input which card you would like to use from your hand (integer)");
-    
-                picked = hand.get(scanner.nextInt());
-                usedCards.add(picked);
-                hand.remove(picked);
-
-                cardPlayer.playCard(picked, curr, nightmare);
+                // System.out.println("Input which card you would like to use from your hand (integer)");
 
                 //TODO: here, the dreamtile is always being used if it can be used. we need to ask the player if they want to use it or not.
                 dreamTileUser(curr);
@@ -112,7 +98,7 @@ public class RacingPhase {
      */
     public void replaceUsedCards(ArrayList<Card> used, Deck toFill){
         while(!used.isEmpty()){
-            Card temp = used.getFirst(); //get()?
+            Card temp = used.get(1); //get()?
             toFill.add(temp);
             used.remove(temp);
         }
@@ -125,8 +111,9 @@ public class RacingPhase {
             usedCards.add(card);
             
             if(card.isNightmare()){
-                new CardViewer(card, nightmare.getType()).rulePrint();
-                new CardPlayer().playNightmareCard(card, nightmare, players);
+                // new CardViewer(card, nightmare.getType()).rulePrint();
+                notifyListenersPrintCard(card, nightmare.getType());
+                cardPlayer.playNightmareCard(card, nightmare, players);
                 j--;
                 continue;
             }
@@ -159,12 +146,13 @@ public class RacingPhase {
     }
 
     private int notifyListenersAskCardChoice() {
-        int cardChoice;
+        int cardChoice = -1;
         for (ModelListenerRacingPhase listener: listeners) {
             cardChoice = listener.onRequestCardChoice();
         }
         return cardChoice;
-        
+    }
+
     private void dreamTileUser(Player player){
         PlayerBoard board = player.getBoard();
         int playerPos = board.getIndex();
