@@ -1,15 +1,15 @@
 package model;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
+//import java.util.Arrays;
 
+import controller.ModelListenerRacing;
 import view.BoardViewer;
-import view.CardViewer;
 
 public class RacingPhase {
     private ArrayList<Player> players;
     private Deck deck;
     private Nightmare nightmare;
+    private List<ModelListenerRacingPhase> listeners = new ArrayList<>();
     private DreamTileBoard dreamTileBoard;
 
     public RacingPhase(ArrayList<Player> players, Deck deck, Nightmare nightmare, DreamTileBoard dreamTileBoard){
@@ -19,10 +19,16 @@ public class RacingPhase {
         this.dreamTileBoard = dreamTileBoard;
     }
 
+    public void addListener(ModelListenerRacingPhase listener) {
+        listeners.add(listener);
+    }
+
     public void startPhase(){
         int playerCount = players.size();
         Player curr;
         Card picked;
+        int cardChoice;
+      
         CardViewer cardViewer;
         CardPlayer cardPlayer = new CardPlayer();
         ArrayList<Card> usedCards = new ArrayList<>();
@@ -39,6 +45,41 @@ public class RacingPhase {
                 ArrayList<Card> hand = curr.getHand();
     
                 for(int j = 0; j < hand.size(); j++){
+
+                    if(curr.getHand().get(i).isNightmare()){
+                        nightmareFound = true;
+                        nightmareCardIndices.add(j);
+                    }
+
+                    notifyListenersPrintHandCard(curr.getname(), j);
+                    notifyListenersPrintCard(curr.getHand().get(j), nightmare);
+                }
+                
+                cardChoice = notifyListenersAskCardChoice();
+
+                picked = hand.get(cardChoice);
+                usedCards.add(picked);
+                hand.remove(cardChoice);
+
+                // If CardPlayer is instantiated outside of this class and passed to the controller
+                // then an indication is needed here to alert the controller to play the card based
+                // on that object outside the class, passing the picked card, the current player, and
+                // and the nightmare to the controller method through the notify method 
+
+                //deal with this
+                CardPlayer cardPlayer = new CardPlayer();
+                if(picked.isNightmare()){
+                    cardPlayer.playNightmareCard(picked, nightmare, players);
+                }
+                else{
+                    cardPlayer.playCard(picked, curr, nightmare);
+                }
+                // maybe make this a helper function- fillHand
+                while (hand.size() < 2) {
+                    hand.add(deck.takeCard());
+                }
+                //deal with this
+
                     System.out.println(curr.getName() + "'s card #" + j);
                     cardViewer = new CardViewer(curr.getHand().get(j), 1); //TODO: currently cardviewer can't actually change the card and nightmare type, should probably change
                     cardViewer.rulePrint();
@@ -71,11 +112,11 @@ public class RacingPhase {
      */
     public void replaceUsedCards(ArrayList<Card> used, Deck toFill){
         while(!used.isEmpty()){
-            Card temp = used.getFirst();
+            Card temp = used.getFirst(); //get()?
             toFill.add(temp);
             used.remove(temp);
         }
-        toFill.shuffle();
+        toFill.shuffle(); //shouldn't be needed anymore with new style of getting a random card from deck
     }
 
     public void fillHand(Player player, ArrayList<Player> players, ArrayList<Card> usedCards){
@@ -104,6 +145,26 @@ public class RacingPhase {
         return (awakeCount == players.size());
     }
 
+
+    private void notifyListenersPrintHandCard(String playerName, int cardInHand) {
+        for (ModelListenerRacingPhase listener: listeners) {
+            listener.onRequestPrintHandCard(playerName, cardInHand);
+        }
+    }
+
+    private void notifyListenersPrintCard(Card card, int nightmare) {
+        for (ModelListenerRacingPhase listener: listeners) {
+            listener.onRequestPrintCard(card, nightmare);
+        }
+    }
+
+    private int notifyListenersAskCardChoice() {
+        int cardChoice;
+        for (ModelListenerRacingPhase listener: listeners) {
+            cardChoice = listener.onRequestCardChoice();
+        }
+        return cardChoice;
+        
     private void dreamTileUser(Player player){
         PlayerBoard board = player.getBoard();
         int playerPos = board.getIndex();

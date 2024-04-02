@@ -28,19 +28,19 @@ public class CardViewer{
     /**
      * This method prints the information on a card to be displayed to the user
      */
-    public void rulePrint() {
+    public void rulePrint(int[] moves, int jumpPos, int spiderMove, int winks, int Ztokens, boolean isNightmare, boolean bothConditions) {
         System.out.println("            ");
         System.out.println("____________");
         System.out.println("            ");
         
-        if (card.isNightmare()) {
+        if (isNightmare()) {
             if (nightmare == 1) {
                 System.out.println("    WOLF    ");
                 System.out.println("            ");
                 System.out.println("            ");
 
-                if (card.getMoves()[0] != 10) {
-                    System.out.println("Move nightmare by " + String.valueOf(card.getMoves()[0]) + " spaces");
+                if (moves[0] != 10) {
+                    System.out.println("Move nightmare by " + String.valueOf(moves[0]) + " spaces");
                 } else {
                     System.out.println("All players on and adjacent to the nightmare get scared");
                 }
@@ -51,8 +51,8 @@ public class CardViewer{
                 System.out.println("            ");
                 System.out.println("            ");
 
-                if (card.getJumpPos() > 1) {
-                    System.out.println("Jump nightmare " + String.valueOf(card.getJumpPos()) + " spaces forward");
+                if (jumpPos > 1) {
+                    System.out.println("Jump nightmare " + String.valueOf(jumpPos) + " spaces forward");
                 } else if (card.getJumpPos() == 1) {
                     System.out.println("Jump nightmare 1 space forward");
                 } else if (card.getJumpPos() == -2) {
@@ -68,7 +68,7 @@ public class CardViewer{
                 System.out.println("            ");
 
                 System.out.println("Jump nightmare to web token");
-                System.out.println("If nightmare doesn't move, move web token forward by " + String.valueOf(card.getSpiderMove()) + " spaces");
+                System.out.println("If nightmare doesn't move, move web token forward by " + String.valueOf(spiderMove) + " spaces");
             }
 
         } else {
@@ -76,23 +76,23 @@ public class CardViewer{
             System.out.println("            ");
             System.out.println("            ");
 
-            if (card.bothConditions() == false) {
-                String condition1 = "Move " + String.valueOf(card.getMoves()[0]);
-                if (card.getMoves().length > 1) {
-                    condition1 += " OR " + String.valueOf(card.getMoves()[1]);
+            if (bothConditions() == false) {
+                String condition1 = "Move " + String.valueOf(moves[0]);
+                if (moves.length > 1) {
+                    condition1 += " OR " + String.valueOf(moves[1]);
                 }
                 condition1 += " spaces";
                 System.out.println(condition1);
-            }
+            } //add functionality for AND
 
-            if (card.getWinks() != 0) {
+            if (winks != 0) {
                 System.out.println("    OR      ");
-                System.out.println("Gain " + String.valueOf(card.getWinks()) + " Wink");
+                System.out.println("Gain " + String.valueOf(winks) + " Wink");
             }
            
-            if (card.getZtokens() != 0) {
+            if (Ztokens != 0) {
                 System.out.println("    OR      ");
-                System.out.println("Catch " + String.valueOf(card.getZtokens()) + " Zzz");
+                System.out.println("Catch " + String.valueOf(Ztokens) + " Zzz");
             }
             
         }
