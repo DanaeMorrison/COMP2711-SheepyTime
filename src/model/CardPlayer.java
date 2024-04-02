@@ -1,9 +1,6 @@
 package model;
 import java.util.ArrayList;
 //TODO CodeSmell: unused package
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
 
 import controller.ModelListenerCardPlayer;
 
@@ -15,7 +12,7 @@ import controller.ModelListenerCardPlayer;
  */
 
 public class CardPlayer {
-    private List<ModelListenerCardPlayer> listeners = new ArrayList<>();
+    private ArrayList<ModelListenerCardPlayer> listeners = new ArrayList<>();
 
     public void addListener(ModelListenerCardPlayer listener) {
         listeners.add(listener);
@@ -29,7 +26,6 @@ public class CardPlayer {
      */
     public void playCard(Card card, Player player, Nightmare nightmare){
         int secondAbility = getValidCardOptions(card);
-        Scanner scanner = new Scanner(System.in);
         PlayerBoard board = player.getBoard();
         if(!card.bothConditions()){ //"OR" card
             notifyListenersDisplayAbilityOptions(secondAbility);
@@ -147,7 +143,7 @@ public class CardPlayer {
     private int getValidCardOptions(Card card) {
         int secondAbility = 0;
 
-        if (card.getWinks != 0) {
+        if (card.getWinks() != 0) {
             secondAbility = 2;
         } else {
             secondAbility = 3;
@@ -156,14 +152,14 @@ public class CardPlayer {
     }
 
     private void notifyListenersDisplayAbilityOptions(int secondAbility) {
-        for (ModelListenerRacingPhase listener: listeners) {
+        for (ModelListenerCardPlayer listener: listeners) {
             listener.onRequestDisplayAbilityOptions(secondAbility);
         }
     }
 
     private int notifyListenersRequestAskAbility(int secondAbility) {
         int abiltyChoice = 0;
-        for (ModelListenerRacingPhase listener: listeners) {
+        for (ModelListenerCardPlayer listener: listeners) {
             abiltyChoice = listener.onRequestAskAbility(secondAbility);
         }
 
@@ -172,7 +168,7 @@ public class CardPlayer {
 
     private int notifyListenersRequestSpecificMove(int[] moves) {
         int specificMove = 0;
-        for (ModelListenerRacingPhase listener: listeners) {
+        for (ModelListenerCardPlayer listener: listeners) {
             specificMove = listener.onRequestSpecificMove(moves);
         }
 
@@ -181,7 +177,7 @@ public class CardPlayer {
 
     private int notifyListenersRequestResolveFenceCrossing() {
         int playOrCallNight = -1;
-        for (ModelListenerRacingPhase listener: listeners) {
+        for (ModelListenerCardPlayer listener: listeners) {
             playOrCallNight = listener.onRequestResolveFenceCrossing();
         }
 
