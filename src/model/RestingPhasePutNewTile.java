@@ -4,13 +4,11 @@ import java.util.ArrayList;
 
 public class RestingPhasePutNewTile extends RestingPhaseAction{
     
-    private RestingPhase phase;
-    private DreamTileBoard board;
+
     private ArrayList<DreamTile> market;
 
-    public RestingPhasePutNewTile(RestingPhase phase, DreamTileBoard board){
-        this.phase = phase;
-        this.board = board;
+    public RestingPhasePutNewTile(RestingPhase phase, DreamTileBoard tileBoard){
+        super(phase, tileBoard);
         market = phase.getMarket();
     }
 
@@ -19,22 +17,22 @@ public class RestingPhasePutNewTile extends RestingPhaseAction{
         try {
             if (market.get(tileNum) == null) {
                 return getErrEmptyTile();
-            } else if (board.occupied(location)) {
+            } else if (getBoard().occupied(location)) {
                 return getErrAlreadyOccupied();
             }
         } catch (ArrayIndexOutOfBoundsException aiobe) {
             return getErrInvalidInput();
         }
 
-        board.addTile(location, market.remove(tileNum));
+        getBoard().addTile(location, market.remove(tileNum));
 
         int numTokenToPlace = 3;
         if(getTilePlacementBonus(location)){
             numTokenToPlace = 1;
         }
-        helpCatchZzz(location, numTokenToPlace, getTilePlacementBonus(location), board, phase.getCurrentPlayer());
+        helpCatchZzz(location, numTokenToPlace, getTilePlacementBonus(location));
 
-        phase.fillMarket();
+        getRestingPhase().fillMarket();
         return getOperationSucceed();
     }
 
@@ -44,7 +42,7 @@ public class RestingPhasePutNewTile extends RestingPhaseAction{
      * @return true if the placementbonus is infinity ZToken, otherwise 3 normal ZTokens
      */
     private boolean getTilePlacementBonus(int location){
-        return board.getTile(location).isInfiniteBonus();
+        return getBoard().getTile(location).isInfiniteBonus();
     }
 
 }

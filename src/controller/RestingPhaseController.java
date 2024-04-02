@@ -1,10 +1,11 @@
 package controller;
 
-import org.junit.experimental.ParallelComputer;
-
 import model.DreamTileBoard;
 import model.DreamTileCollection;
 import model.RestingPhase;
+import model.RestingPhaseAction;
+import model.RestingPhaseCatchZ;
+import model.RestingPhasePutNewTile;
 import view.DreamTileBoardViewer;
 import view.RestingPhaseViewer;
 import model.Player;
@@ -21,19 +22,22 @@ public class RestingPhaseController {
     private RestingPhase phase;
     private DreamTileBoardViewer boardViewer; 
     private DreamTileBoard tileBoard;
-    
+    private RestingPhaseAction catchZ;    
+    private RestingPhaseAction putNewTile;    
 
     public RestingPhaseController(DreamTileBoard tileBoard, DreamTileBoardViewer boardViewer, ArrayList<Player> player, DreamTileCollection dreamTiles){
         phaseViewer = new RestingPhaseViewer(this);
-        phase = new RestingPhase(player, dreamTiles, tileBoard);
+        phase = new RestingPhase(player, dreamTiles);
+        catchZ = new RestingPhaseCatchZ(phase, tileBoard);
+        putNewTile  = new RestingPhasePutNewTile(phase, tileBoard);
         this.boardViewer = boardViewer;
         this.tileBoard = tileBoard;
     }
 
     public void startPhase(){
         do{
-            //Show Choice
-            phaseViewer.showChoice(getChoiceList());
+            int numOption = showChoiceList();
+            int userChoice = askUserChoice(numOption);
 
             //get choice from user + check whether input is valid
 
@@ -42,39 +46,31 @@ public class RestingPhaseController {
             //call proper function
 
             //Show Update
+            
         }while(phase.setNextPlayer());
         //Move to Racing Phase
     }
 
-    private void takeAction(){
-        boolean validInput = false;
-        do{
-            int choiceCode = phaseViewer.getChoice();
-            
-            
-        }while(!validInput);
-        
-
-    }
-
-    private boolean isPuttingTileAvaiable(){
-        return !tileBoard.isFull();
-    }
-
-    private boolean isCatchZAvailable(){
-        return phase.getCurrentPlayer().getZtokens() >0;
-    }
-
-    private ArrayList<Integer> getChoiceList(){
-        ArrayList<Integer> choiceList = new ArrayList<>();
-        if(isPuttingTileAvaiable()){
-            choiceList.add(phase.getOperationPlaceNewTile());
+    private int showChoiceList(){
+        int numOption = 0;
+        if(!tileBoard.isFull()){
+            phaseViewer.addPutNewTileInstruction(numOption);
+            numOption++;
         }
-        if(isCatchZAvailable()){
-            choiceList.add(phase.getOperationCatchZ());
-        }
-        return choiceList;
+        phaseViewer.addPutNewTileInstruction(numOption);
+        phaseViewer.showOption();
+        return numOption;
     } 
+
+    private int askUserChoice(int numOption){
+        boolean validInput = false;
+        int userChoice;
+        do{
+            userChoice = phaseViewer.askIntegerInput();
+            validInput = phase.isChoiceValid(userChoice, numOption);
+        }while(!validInput);
+        return userChoice;
+    }
 
 
     /**
