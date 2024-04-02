@@ -1,14 +1,16 @@
 package model;
 import java.util.ArrayList;
 
-public class DreamTile{
+public abstract class DreamTile{
     private ArrayList<ZToken> tokens;
     private String tileName;
+    private boolean infiniteBonus;
     //private String rule;
 
-    public DreamTile(String name){
+    public DreamTile(String name, boolean infiteBonus){
         tokens = new ArrayList<>();
         tileName = name;
+        this.infiniteBonus = infiteBonus;
     }
 
     public String getTileName() {
@@ -37,11 +39,11 @@ public class DreamTile{
         tokens.add(new ZToken(isInfinite, player));
     }
 
-    public void removePlayerAccess(Player player){
+    public void removePlayerToken(Player player){
         if(!tokens.isEmpty()){
             int index = -1;
             for(int i = 0; i < tokens.size(); i++){
-                if(tokens.get(i).getOwner() == player){
+                if(tokens.get(i).getOwner() == player && !tokens.get(i).isInfinite()){
                     index = i;
                 }
             }
@@ -51,11 +53,24 @@ public class DreamTile{
         }
     }
 
+    public boolean hasInfinite(Player player){
+        for(ZToken z : tokens){
+            if(z.getOwner() == player && z.isInfinite()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isInfiniteBonus(){
+        return infiniteBonus;
+    }
+
     public ArrayList<ZToken> getTokens(){
         return tokens;
     }
 
-    public void useTile(){};
+    public void useTile(Player player){};
 
     //todo: use method, player param and move/add whatever as required
 }
