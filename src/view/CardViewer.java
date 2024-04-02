@@ -1,6 +1,6 @@
 
 package view;
-import model.Card;
+// import model.Card;
 /**
  * @author Danae Morrison
  */
@@ -12,8 +12,8 @@ public class CardViewer{
     /**
      * This class prints off the details of a given card
      */
-    private Card card;
-    private int nightmare;
+    // private Card card;
+    // private int nightmare;
 
     /**
      * This constructor creates a CardViewer that takes in a card and the int associated with the chosen nightmare.
@@ -21,19 +21,19 @@ public class CardViewer{
      * @param card a specific card that is drawn from a deck or in a player's hand
      * @param nightmare the int associated with the chosen nightmare for a game
      */
-    public CardViewer (Card card, int nightmare) {
+    /** public CardViewer (Card card, int nightmare) {
         this.card = card;
         this.nightmare = nightmare;
-    }
+    } */
     /**
      * This method prints the information on a card to be displayed to the user
      */
-    public void rulePrint(int[] moves, int jumpPos, int spiderMove, int winks, int Ztokens, boolean isNightmare, boolean bothConditions) {
+    public void rulePrint(int[] moves, int jumpPos, int spiderMove, int winks, int Ztokens, int nightmare, boolean isNightmare, boolean bothConditions) {
         System.out.println("            ");
         System.out.println("____________");
         System.out.println("            ");
         
-        if (isNightmare()) {
+        if (isNightmare) {
             if (nightmare == 1) {
                 System.out.println("    WOLF    ");
                 System.out.println("            ");
@@ -53,9 +53,9 @@ public class CardViewer{
 
                 if (jumpPos > 1) {
                     System.out.println("Jump nightmare " + String.valueOf(jumpPos) + " spaces forward");
-                } else if (card.getJumpPos() == 1) {
+                } else if (jumpPos == 1) {
                     System.out.println("Jump nightmare 1 space forward");
-                } else if (card.getJumpPos() == -2) {
+                } else if (jumpPos == -2) {
                     System.out.println("Jump nightmare 2 spaces backward");
                 } else {
                     System.out.println("Jump nightmare 1 space backward");
@@ -76,7 +76,7 @@ public class CardViewer{
             System.out.println("            ");
             System.out.println("            ");
 
-            if (bothConditions() == false) {
+            if (bothConditions == false) {
                 String condition1 = "Move " + String.valueOf(moves[0]);
                 if (moves.length > 1) {
                     condition1 += " OR " + String.valueOf(moves[1]);
