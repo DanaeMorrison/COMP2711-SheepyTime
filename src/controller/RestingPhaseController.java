@@ -46,6 +46,17 @@ public class RestingPhaseController {
         //Move to Racing Phase
     }
 
+    private void takeAction(){
+        boolean validInput = false;
+        do{
+            int choiceCode = phaseViewer.getChoice();
+            
+            
+        }while(!validInput);
+        
+
+    }
+
     private boolean isPuttingTileAvaiable(){
         return !tileBoard.isFull();
     }
@@ -61,9 +72,6 @@ public class RestingPhaseController {
         }
         if(isCatchZAvailable()){
             choiceList.add(phase.getOperationCatchZ());
-        }
-        else{
-            choiceList.add(phase.getOperationMoveZ());
         }
         return choiceList;
     } 
