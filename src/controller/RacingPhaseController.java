@@ -2,20 +2,26 @@ package controller;
 
 import model.Card;
 
-import model.CardPlayer;
+//import model.CardPlayer;
 import model.RacingPhase;
-import view.PlayerCardDecision;
+import view.CardViewer;
 import view.PlayerDecision;
 
 public class RacingPhaseController implements ModelListenerRacingPhase, ModelListenerCardPlayer {
     private RacingPhase racingPhase;
-    private CardPlayer cardPlayer;
+    //private CardPlayer cardPlayer;
+    CardViewer cardViewer = new CardViewer();
     PlayerDecision playerDecision = new PlayerDecision();
 
-    public RacingPhaseController(RacingPhase racingPhase, CardPlayer cardPlayer) {
+    public RacingPhaseController(RacingPhase racingPhase/*, CardPlayer cardPlayer*/) {
         this.racingPhase = racingPhase;
-        this.cardPlayer = cardPlayer;
+        //this.cardPlayer = cardPlayer;
     }
+
+    public void startPhase() {
+        racingPhase.startPhase();
+    }
+
     @Override
     public void onRequestPrintHandCard(String playerName, int cardInHand) {
         playerDecision.printCardInHand(playerName, cardInHand);
@@ -23,7 +29,6 @@ public class RacingPhaseController implements ModelListenerRacingPhase, ModelLis
 
     @Override
     public void onRequestPrintCard(Card card, int nightmare) {
-        CardViewer cardViewer = new CardViewer(card, nightmare);
         cardViewer.rulePrint(card.getMoves(), card.getJumpPos(), card.getSpiderMove(), card.getWinks(), card.getZtokens(), nightmare, card.isNightmare(), card.bothConditions());
     }
 
