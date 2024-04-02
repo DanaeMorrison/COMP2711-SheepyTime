@@ -25,7 +25,7 @@ public class RestingPhaseController {
 
     public RestingPhaseController(DreamTileBoard tileBoard, DreamTileBoardViewer boardViewer, ArrayList<Player> player, DreamTileCollection dreamTiles){
         phaseViewer = new RestingPhaseViewer(this);
-        phase = new RestingPhase(player, dreamTiles);
+        phase = new RestingPhase(player, dreamTiles, tileBoard);
         this.boardViewer = boardViewer;
         this.tileBoard = tileBoard;
     }
@@ -73,7 +73,7 @@ public class RestingPhaseController {
      * Method that tells the viewer to show the board Status
      */
     private void showBoardStatus(){
-        phaseViewer.showBoardStatus(tileBoard.getBoardStatus(phase.getCurrentPlayer()));
+        boardViewer.showBoardStatus(tileBoard.getBoardStatus(phase.getCurrentPlayer()));
     }
 
     // public void setRacingPhaseController(RacingPhaseController controller){

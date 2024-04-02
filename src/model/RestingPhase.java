@@ -25,11 +25,13 @@ public class RestingPhase {
     private DreamTileCollection dreamTiles;
     private ArrayList<DreamTile> market;
     private int currPlayerIndex;
+    private DreamTileBoard board;
 
-    public RestingPhase(ArrayList<Player> players, DreamTileCollection dreamTiles) {
+    public RestingPhase(ArrayList<Player> players, DreamTileCollection dreamTiles, DreamTileBoard board) {
         this.players = players;
         currPlayerIndex = 0;
         this.dreamTiles = dreamTiles;
+        this.board = board;
         createMarket();
     }
 
@@ -72,6 +74,10 @@ public class RestingPhase {
         return ERR_ALREADY_OCCUPIED;
     }
 
+    public boolean isChoiceValid(int choice){
+        return ((choice==0)||(choice==1));
+    }
+
     public Player getCurrentPlayer() {
         return players.get(currPlayerIndex);
     }
@@ -84,18 +90,6 @@ public class RestingPhase {
         return true;
     }
 
-    public int takeAction(int choice){
-        if(choice == OPERATION_CATCH_Z) {
-            
-        }
-        else if(choice == OPERATION_MOVE_Z){
-
-        }
-        else{
-
-        }
-    }
-
     /**
      * Method for catching ZzzToken, when the player has enough ZzzToken in their
      * supply(inventory)
@@ -104,7 +98,7 @@ public class RestingPhase {
      * @param numZzzToken number of desired number of Zzz Token to catch
      * @return
      */
-    public int catchZzz(int location, int numZzzToken, DreamTileBoard board) {
+    public int catchZzz(int location, int numZzzToken) {
         if (!haveEnoughZ()) {
             return ERR_NOT_ENOUGH_Z_TOKEN;
         } else if (!board.occupied(location)) {
@@ -112,11 +106,11 @@ public class RestingPhase {
         }
 
         if (numZzzToken == 1) {
-            helpCatchZzz(location, numZzzToken, false, board);
+            helpCatchZzz(location, numZzzToken, false);
             return OPERATION_NOT_FULLFILLED;
 
         } else if (numZzzToken == 2) {
-            helpCatchZzz(location, numZzzToken, false, board);
+            helpCatchZzz(location, numZzzToken, false);
             return OPERATION_SUCCEED;
         }
 
@@ -131,12 +125,12 @@ public class RestingPhase {
         }
 
         if (numZzzToken == 1) {
-            removeZToken(from, board);
-            helpCatchZzz(to, numZzzToken, false, board);
+            removeZToken(from);
+            helpCatchZzz(to, numZzzToken, false);
             return OPERATION_NOT_FULLFILLED;
         } else if (numZzzToken == 2) {
-            removeZToken(from, board);
-            helpCatchZzz(to, numZzzToken, false, board);
+            removeZToken(from);
+            helpCatchZzz(to, numZzzToken, false);
             return OPERATION_SUCCEED;
         }
         throw new IllegalArgumentException("Invalid input for numZzzToken: Should be either 1 or 2");
@@ -150,7 +144,7 @@ public class RestingPhase {
      * @throws IllegalStateException if there is no ZToken occupied by the current
      *                               player
      */
-    private void removeZToken(int location, DreamTileBoard board) {
+    private void removeZToken(int location) {
         DreamTile tile = board.getTile(location);
         ArrayList<ZToken> zTokens = tile.getTokens();
         for (int i = 0; i < zTokens.size(); i++) {
@@ -162,7 +156,7 @@ public class RestingPhase {
         throw new IllegalStateException("There is no ZToken occupied by current Player");
     }
 
-    private void helpCatchZzz(int location, int numZzzToken, boolean isInfinity, DreamTileBoard board) {
+    private void helpCatchZzz(int location, int numZzzToken, boolean isInfinity) {
         DreamTile tile = board.getTile(location);
         for (int i = 0; i < numZzzToken; i++) {
             tile.addToken(getCurrentPlayer(), isInfinity);
@@ -220,7 +214,7 @@ public class RestingPhase {
      * @param location desired location to place the tile
      * @return corresponding error code, or success code
      */
-    public int putNewDreamTile(int tileNum, int location, DreamTileBoard board) {
+    public int putNewDreamTile(int tileNum, int location) {
         if (market.get(tileNum) == null) {
             return ERR_EMPTY_TILE;
         } else if (board.occupied(location)) {
@@ -233,7 +227,7 @@ public class RestingPhase {
         if(getTilePlacementBonus(location)){
             numTokenToPlace = 1;
         }
-        helpCatchZzz(location, numTokenToPlace, getTilePlacementBonus(location), board);
+        helpCatchZzz(location, numTokenToPlace, getTilePlacementBonus(location));
 
         fillMarket();
         return OPERATION_SUCCEED;
@@ -244,9 +238,8 @@ public class RestingPhase {
      * @param location desired location
      * @return true if the placementbonus is infinity ZToken, otherwise 3 normal ZTokens
      */
-    private boolean getTilePlacementBonus(int location,DreamTileBoard board){
-        // TODO: We need a information about placement Bonus in DreamTile
-        return board.getTile(location).getPlacementBonus();
+    private boolean getTilePlacementBonus(int location){
+        return board.getTile(location).isInfiniteBonus();
     }
 
 }

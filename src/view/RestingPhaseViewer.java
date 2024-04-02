@@ -16,9 +16,9 @@ public class RestingPhaseViewer {
         this.controller = controller;
     }
 
-    public int showChoice(ArrayList<String> choiceList){
+    public int showChoice(ArrayList<Integer> choiceList){
         for(int i=0 ; i<choiceList.size() ; i++){
-
+            if(choiceList.get(i) == 11)
         }
     }
 
