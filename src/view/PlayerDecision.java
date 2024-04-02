@@ -28,6 +28,14 @@ public class PlayerDecision {
         return cardChoice;
     }
 
+    public int getCardChoiceOnError() {
+        int cardChoice = -1;
+        System.out.print("You did not enter a valid number. Please type in either 0 or 1");
+        cardChoice = scanner.nextInt();
+        System.out.println("");
+        return cardChoice;
+    }
+
     public void displayAbilityOptions(int secondAbility) {
         System.out.println("You've picked an OR card. Which ability do you want to use?");
         System.out.println("Enter 1 to Move");
@@ -56,6 +64,15 @@ public class PlayerDecision {
         return abilityChoice;
     }
 
+    public int getAbilityChoiceOnError(int secondAbility) {
+        int abilityChoice = 0;
+        System.out.println("You did not enter a valid number. Please type in either 1 or " + String.valueOf(secondAbility));
+        System.out.print("Your choice: ");
+        abilityChoice = scanner.nextInt();
+        System.out.println("");
+        return abilityChoice;
+    }
+
     public int getSpecificMove(int[] moves) {
         // int firstMove = moves[0];
         // int secondMove = moves[1];
@@ -79,6 +96,18 @@ public class PlayerDecision {
         return selectedMove;
     }
 
+    public int getSpecificMoveOnError(int[] moves) {
+        int firstMove = moves[0];
+        int secondMove = moves[1];
+
+        System.out.print("You did not enter a valid number. Please type in either " + String.valueOf(firstMove) + " or " + String.valueOf(secondMove));
+        System.out.print("Your choice: ");
+        int selectedMove = scanner.nextInt();
+        System.out.println("");
+
+        return selectedMove;
+    }
+
     public int getPlayOrCallNight() {
         System.out.println("You've crossed the fence. Would you like to call it a night, or keep playing?");
         System.out.println("0: Keep playing");
@@ -92,6 +121,17 @@ public class PlayerDecision {
             playOrCallNight = scanner.nextInt();
             System.out.println("");
         }*/
+
+        return playOrCallNight;
+    }
+
+    public int getPlayOrCallNightOnError() {
+        System.out.println("You did not enter a valid number. Please type in either 0 or 1");
+        System.out.println("0: Keep playing");
+        System.out.println("1: Call it a night");
+        System.out.print("Your choice: ");
+        int playOrCallNight = scanner.nextInt();
+        System.out.println("");
 
         return playOrCallNight;
     }

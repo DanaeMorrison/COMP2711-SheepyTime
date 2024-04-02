@@ -55,8 +55,7 @@ public class RacingPhase {
 
                 //make another function of this for controller and model to print out error message
                 while (cardChoice != FIRST_CARD && cardChoice != SECOND_CARD) {
-                    System.out.print("You did not enter a valid number. Please type in either 0 or 1");
-                    cardChoice = notifyListenersAskCardChoice();
+                    cardChoice = notifyListenersRepeatAskCardChoice();
                 }
 
                 picked = hand.get(cardChoice);
@@ -158,6 +157,14 @@ public class RacingPhase {
         int cardChoice = -1;
         for (ModelListenerRacingPhase listener: listeners) {
             cardChoice = listener.onRequestCardChoice();
+        }
+        return cardChoice;
+    }
+
+    private int notifyListenersRepeatAskCardChoice() {
+        int cardChoice = -1;
+        for (ModelListenerRacingPhase listener: listeners) {
+            cardChoice = listener.onRequestRepeatCardChoice();
         }
         return cardChoice;
     }

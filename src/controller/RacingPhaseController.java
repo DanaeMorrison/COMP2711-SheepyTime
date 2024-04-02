@@ -40,6 +40,12 @@ public class RacingPhaseController implements ModelListenerRacingPhase, ModelLis
     }
 
     @Override
+    public int onRequestRepeatCardChoice() {
+        int cardChoice = playerDecision.getCardChoiceOnError();
+        return cardChoice;
+    }
+
+    @Override
     public void onRequestDisplayAbilityOptions(int secondAbility) {
         // TODO Auto-generated method stub
         playerDecision.displayAbilityOptions(secondAbility);
@@ -50,15 +56,35 @@ public class RacingPhaseController implements ModelListenerRacingPhase, ModelLis
         // TODO Auto-generated method stub
         return playerDecision.getAbilityChoice(secondAbility);
     }
+
+    @Override
+    public int onRequestRepeatAskAbility(int secondAbility) {
+        // TODO Auto-generated method stub
+        return playerDecision.getAbilityChoiceOnError(secondAbility);
+    }
+
     @Override
     public int onRequestSpecificMove(int[] moves) {
         // TODO Auto-generated method stub
         return playerDecision.getSpecificMove(moves);
     }
+
+    @Override
+    public int onRequestRepeatSpecificMove(int[] moves) {
+        // TODO Auto-generated method stub
+        return playerDecision.getSpecificMoveOnError(moves);
+    }
+
     @Override
     public int onRequestResolveFenceCrossing() {
         // TODO Auto-generated method stub
         return playerDecision.getPlayOrCallNight();
+    }
+
+    @Override
+    public int onRequestRepeatResolveFenceCrossing() {
+        // TODO Auto-generated method stub
+        return playerDecision.getPlayOrCallNightOnError();
     }
 
     

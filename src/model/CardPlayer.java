@@ -37,8 +37,7 @@ public class CardPlayer {
 
             //make another function of this for controller and model to print out error message
             while (ability != MOVE_ABILITY && ability != secondAbility) {
-                System.out.println("You did not enter a valid number. Please type in either 1 or " + String.valueOf(secondAbility));
-                ability = notifyListenersRequestAskAbility(secondAbility);
+                ability = notifyListenersRepeatRequestAskAbility(secondAbility);
             }
 
             switch(ability){
@@ -126,8 +125,7 @@ public class CardPlayer {
 
         while (selectedMove != firstMove && selectedMove != secondMove) {
             //make another function of this for controller and model to print out error message and ask for choice
-            System.out.print("You did not enter a valid number. Please type in either " + String.valueOf(firstMove) + " or " + String.valueOf(secondMove));
-            selectedMove = notifyListenersRequestSpecificMove(moves);
+            selectedMove = notifyListenersRepeatRequestSpecificMove(moves);
         }
         return selectedMove;
     }
@@ -144,7 +142,7 @@ public class CardPlayer {
         //make another function of this for controller and model to print out error message
         while (wakingUp != KEEP_PLAY && wakingUp != CALL_NIGHT) {
             System.out.println("You did not enter a valid number. Please type in either 0 or 1");
-            wakingUp = notifyListenersRequestResolveFenceCrossing();
+            wakingUp = notifyListenersRepeatRequestResolveFenceCrossing();
         }
         
         if(wakingUp == 1){
@@ -193,6 +191,15 @@ public class CardPlayer {
         return abiltyChoice;
     }
 
+    private int notifyListenersRepeatRequestAskAbility(int secondAbility) {
+        int abiltyChoice = 0;
+        for (ModelListenerCardPlayer listener: listeners) {
+            abiltyChoice = listener.onRequestRepeatAskAbility(secondAbility);
+        }
+
+        return abiltyChoice;
+    }
+
     private int notifyListenersRequestSpecificMove(int[] moves) {
         int specificMove = 0;
         for (ModelListenerCardPlayer listener: listeners) {
@@ -202,10 +209,28 @@ public class CardPlayer {
         return specificMove;
     }
 
+    private int notifyListenersRepeatRequestSpecificMove(int[] moves) {
+        int specificMove = 0;
+        for (ModelListenerCardPlayer listener: listeners) {
+            specificMove = listener.onRequestRepeatSpecificMove(moves);
+        }
+
+        return specificMove;
+    }
+
     private int notifyListenersRequestResolveFenceCrossing() {
         int playOrCallNight = -1;
         for (ModelListenerCardPlayer listener: listeners) {
             playOrCallNight = listener.onRequestResolveFenceCrossing();
+        }
+
+        return playOrCallNight;
+    }
+
+    private int notifyListenersRepeatRequestResolveFenceCrossing() {
+        int playOrCallNight = -1;
+        for (ModelListenerCardPlayer listener: listeners) {
+            playOrCallNight = listener.onRequestRepeatResolveFenceCrossing();
         }
 
         return playOrCallNight;
