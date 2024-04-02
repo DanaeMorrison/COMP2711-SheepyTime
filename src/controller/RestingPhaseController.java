@@ -17,14 +17,14 @@ import java.util.ArrayList;
  * @version 1.0
  */
 public class RestingPhaseController {
-    private RestingPhaseViewer viewer;
+    private RestingPhaseViewer phaseViewer;
     private RestingPhase phase;
     private DreamTileBoardViewer boardViewer; 
     private DreamTileBoard tileBoard;
     
 
     public RestingPhaseController(DreamTileBoard tileBoard, DreamTileBoardViewer boardViewer, ArrayList<Player> player, DreamTileCollection dreamTiles){
-        viewer = new RestingPhaseViewer(this);
+        phaseViewer = new RestingPhaseViewer(this);
         phase = new RestingPhase(player, dreamTiles);
         this.boardViewer = boardViewer;
         this.tileBoard = tileBoard;
@@ -32,9 +32,48 @@ public class RestingPhaseController {
 
     public void startPhase(){
         do{
+            //Show Choice
+            phaseViewer.showChoice(getChoiceList());
 
+            //get choice from user + check whether input is valid
+
+            //get input from user based on the desired choice
+
+            //call proper function
+
+            //Show Update
         }while(phase.setNextPlayer());
+        //Move to Racing Phase
+    }
 
+    private boolean isPuttingTileAvaiable(){
+        return !tileBoard.isFull();
+    }
+
+    private boolean isCatchZAvailable(){
+        return phase.getCurrentPlayer().getZtokens() >0;
+    }
+
+    private ArrayList<Integer> getChoiceList(){
+        ArrayList<Integer> choiceList = new ArrayList<>();
+        if(isPuttingTileAvaiable()){
+            choiceList.add(phase.getOperationPlaceNewTile());
+        }
+        if(isCatchZAvailable()){
+            choiceList.add(phase.getOperationCatchZ());
+        }
+        else{
+            choiceList.add(phase.getOperationMoveZ());
+        }
+        return choiceList;
+    } 
+
+
+    /**
+     * Method that tells the viewer to show the board Status
+     */
+    private void showBoardStatus(){
+        phaseViewer.showBoardStatus(tileBoard.getBoardStatus(phase.getCurrentPlayer()));
     }
 
     // public void setRacingPhaseController(RacingPhaseController controller){
@@ -44,11 +83,4 @@ public class RestingPhaseController {
     // private void nextPhase(){
     //     racingPhaseController.startPhase();
     // }
-
-    /**
-     * Method that tells the viewer to show the board Status
-     */
-    private void showBoardStatus(){
-        viewer.showBoardStatus(tileBoard.getBoardStatus(phase.getCurrentPlayer()));
-    }
 }

@@ -9,8 +9,13 @@ package model;
 import java.util.ArrayList;
 
 public class RestingPhase {
+    
+    private final int OPERATION_CATCH_Z = 11;
+    private final int OPERATION_MOVE_Z = 12;
+    private final int OPERATION_PLACE_NEW_TILE = 13;
     private final int OPERATION_SUCCEED = 1;
     private final int OPERATION_NOT_FULLFILLED = 0;
+
     private final int ERR_NOT_ENOUGH_Z_TOKEN = -1;
     private final int ERR_HAVE_Z_TOKEN = -2;
     private final int ERR_EMPTY_TILE = -3;
@@ -26,6 +31,16 @@ public class RestingPhase {
         currPlayerIndex = 0;
         this.dreamTiles = dreamTiles;
         createMarket();
+    }
+
+    public int getOperationCatchZ(){
+        return OPERATION_CATCH_Z;
+    }
+    public int getOperationMoveZ(){
+        return OPERATION_MOVE_Z;
+    }
+    public int getOperationPlaceNewTile(){
+        return OPERATION_PLACE_NEW_TILE;
     }
 
     /**
@@ -69,6 +84,18 @@ public class RestingPhase {
         return true;
     }
 
+    public int takeAction(int choice){
+        if(choice == OPERATION_CATCH_Z) {
+            
+        }
+        else if(choice == OPERATION_MOVE_Z){
+
+        }
+        else{
+
+        }
+    }
+
     /**
      * Method for catching ZzzToken, when the player has enough ZzzToken in their
      * supply(inventory)
@@ -85,11 +112,11 @@ public class RestingPhase {
         }
 
         if (numZzzToken == 1) {
-            helpCatchZzz(location, numZzzToken, false);
+            helpCatchZzz(location, numZzzToken, false, board);
             return OPERATION_NOT_FULLFILLED;
 
         } else if (numZzzToken == 2) {
-            helpCatchZzz(location, numZzzToken, false);
+            helpCatchZzz(location, numZzzToken, false, board);
             return OPERATION_SUCCEED;
         }
 

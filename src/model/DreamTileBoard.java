@@ -33,7 +33,7 @@ public class DreamTileBoard /*implements BoardInterface*/{
      * method that check if there is a empty spot in the board
      * @return true if there is, otherwise false
      */
-    public boolean isBoardfull() {
+    public boolean isFull() {
         for (int i = 0; i < 10; i++) {
             if (!occupied(i)) {
                 return true;
