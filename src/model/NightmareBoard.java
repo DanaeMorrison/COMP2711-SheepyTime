@@ -1,30 +1,28 @@
 package model;
 public class NightmareBoard implements BoardInterface{
-    private boolean[] board;
+    private int position;
 
     public NightmareBoard(){
-        board = new boolean[10];
-        emptyBoard();
-        board[0] = true;
+        position = -1;
     }
 
     /**
      * Empties out the board, and resets the player position to 0.
      */
+    @Override
     public void emptyBoard(){
-        for(int i = 0; i < board.length; i++){
-            board[i] = false;
-        }
+        position = -1;
     }
 
     /**
      * Returns true if occupied at given index.
      * 
-     * @param i index
+     * @param index index
      * @return true if occupied, false otherwise.
      */
-    public boolean occupied(int i){
-        return board[i];
+    @Override
+    public boolean occupied(int index) {
+        return index == position; 
     }
 
     /**
@@ -32,13 +30,9 @@ public class NightmareBoard implements BoardInterface{
      * 
      * @return location of character on board
      */
+    @Override
     public int getIndex(){
-        for(int i = 0; i < board.length; i++){
-            if(board[i]){
-                return i;
-            }
-        }
-        return -1;
+        return position;
     }
 
     /**
@@ -46,10 +40,9 @@ public class NightmareBoard implements BoardInterface{
      * 
      * @param n Steps to advance
      */
-    public void advance(int n){
-        int startingPos = getIndex();
-        board[startingPos] = false;
-        board[(startingPos + n) % 10] = true;
+    @Override
+    public void advance(int steps) {
+        position = (position+steps) % 10;
     }
 
     /**
@@ -71,10 +64,23 @@ public class NightmareBoard implements BoardInterface{
     /**
      * Jumps character directly to a tile
      * 
-     * @param n Tile to jump to
+     * @param position Tile to jump to
      */
-    public void jump(int n){
-        emptyBoard();
-        board[(n % 10)] = true;
+    public void jump(int position){
+        this.position = position%10;
+    }
+
+    /**
+     * Checks if the user will cross the fence if they were to advance n steps.
+     * Doesn't actually move the player, just a check!
+     * 
+     * @param steps Steps to be checked
+     * @return true if crossing, false if not
+     */
+    public boolean isCrossing(int steps){
+        if((getIndex() + steps) >= 10){
+            return true;
+        }
+        return false;
     }
 }

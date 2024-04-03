@@ -1,6 +1,5 @@
 package model;
 import java.util.ArrayList;
-//TODO CodeSmell: unused package
 
 import controller.ModelListenerCardPlayer;
 
