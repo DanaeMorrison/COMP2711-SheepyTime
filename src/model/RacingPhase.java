@@ -39,9 +39,10 @@ public class RacingPhase {
         return deck;
     }
 
+    /**
     public int getCardChoice() {
         return cardChoice;
-    }
+    }*/
 
     public DreamTileBoard getDreamTileBoard() {
         return dreamTileBoard;
@@ -53,5 +54,13 @@ public class RacingPhase {
         } else {
             this.cardChoice = cardChoice;
         }
+    }
+
+    public boolean isCardChoiceValid(int cardChoice) {
+        boolean validChoice = true;
+        if (cardChoice != FIRST_CARD && cardChoice != SECOND_CARD) {
+            validChoice = false;
+        }
+        return validChoice;
     }
 }

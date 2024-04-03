@@ -60,7 +60,8 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
                     cardViewer.rulePrint(currCard.getMoves(), currCard.getJumpPos(), currCard.getSpiderMove(), currCard.getWinks(), currCard.getZtokens(), nightmare.getType(), currCard.isNightmare(), currCard.bothConditions());
                 }
                 // should the model be updated to store the currently chosen card?
-                cardChoice = racingPhaseViewer.getCardChoice();
+                //cardChoice = racingPhaseViewer.getCardChoice();
+                cardChoice = askCardChoice();
                 // cardChoice = notifyListenersAskCardChoice();
 
                 // make a version that says if thrown an error, will ask for new input
@@ -145,5 +146,15 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
             tile.useTile(player);
         }
         tile.removePlayerToken(player);
+    }
+
+    private int askCardChoice() {
+        boolean validInput = false;
+        int cardChoice;
+        do {
+            cardChoice = racingPhaseViewer.getCardChoiceOnError();
+            validInput = racingPhase.isCardChoiceValid(cardChoice);
+        } while (!validInput);
+        return cardChoice;
     }
 }
