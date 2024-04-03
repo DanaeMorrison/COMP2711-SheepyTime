@@ -173,7 +173,7 @@ public class RestingPhaseController {
                 tileViewer.printDreamTile("(Empty)", "");
             }
             else{
-                tileViewer.printDreamTile(getTile(i).getTileName(), getTile(i).getDescription());
+                tileViewer.printDreamTile(getTile(i).getTileName(), getTile(i).getRule());
             }
         }
     }

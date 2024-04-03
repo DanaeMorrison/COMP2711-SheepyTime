@@ -5,12 +5,17 @@ public abstract class DreamTile{
     private ArrayList<ZToken> tokens;
     private String tileName;
     private boolean infiniteBonus;
-    //private String rule;
+    private String rule;
 
-    public DreamTile(String name, boolean infiteBonus){
+    public DreamTile(String name, boolean infiteBonus, String rule){
         tokens = new ArrayList<>();
         tileName = name;
         this.infiniteBonus = infiteBonus;
+        this.rule = rule;
+    }
+
+    public String getRule(){
+        return rule;
     }
 
     public String getTileName() {
