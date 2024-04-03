@@ -1,10 +1,27 @@
 package model;
 import java.util.ArrayList;
 //TODO CodeSmell: unused package
-import java.util.Arrays;
-import java.util.Scanner;
+
+import controller.ModelListenerCardPlayer;
+
+/**
+ * @author Julien Ouellette
+ * @version 1
+ * @author Danae Morrison
+ * @version 2- MVC compliant
+ */
 
 public class CardPlayer {
+    public final int MOVE_ABILITY = 1;
+    public final int KEEP_PLAY = 0;
+    public final int CALL_NIGHT = 1;
+
+    private ArrayList<ModelListenerCardPlayer> listeners = new ArrayList<>();
+
+    public void addListener(ModelListenerCardPlayer listener) {
+        listeners.add(listener);
+    }
+    //public final int MAX_ABILITY_OPTIONS = 3;
     /**
      * Plays a card and performs the appropriate operations specified by a card for the given player.
      * 
@@ -12,14 +29,16 @@ public class CardPlayer {
      * @param player Player playing the card.
      */
     public void playCard(Card card, Player player, Nightmare nightmare){
-        Scanner scanner = new Scanner(System.in);
+        int secondAbility = getValidCardOptions(card);
         PlayerBoard board = player.getBoard();
         if(!card.bothConditions()){ //"OR" card
-            System.out.println("You've picked an OR card. Which ability do you want to use? (Don't lie or this'll break...)");
-            System.out.println("1 - Move");
-            System.out.println("2 - Catch Winks");
-            System.out.println("3 - Get ZTokens");
-            int ability = scanner.nextInt();
+            notifyListenersDisplayAbilityOptions(secondAbility);
+            int ability = notifyListenersRequestAskAbility(secondAbility);
+
+            //make another function of this for controller and model to print out error message
+            while (ability != MOVE_ABILITY && ability != secondAbility) {
+                ability = notifyListenersRepeatRequestAskAbility(secondAbility);
+            }
 
             switch(ability){
                 case 1:
@@ -36,6 +55,8 @@ public class CardPlayer {
         }
         else{ //"AND" card or single-ability card
             int moveAmount = getMoveAmount(card.getMoves());
+
+
 
             if(board.isCrossing(moveAmount)){
                 resolveFenceCrossing(player);
@@ -98,13 +119,15 @@ public class CardPlayer {
      * @return Returns the appropriate amount of moves depending on user input.
      */
     private int multiMoveOptions(int[] moves){
-        System.out.println("How many steps would you like to move? Input the corresponding number to the amount of steps.");
-        for(int i = 0; i < moves.length; i++){
-            System.out.println(i + " - " + moves[i] + "steps");
+        int firstMove = moves[0];
+        int secondMove = moves[1];
+        int selectedMove = notifyListenersRequestSpecificMove(moves);
+
+        while (selectedMove != firstMove && selectedMove != secondMove) {
+            //make another function of this for controller and model to print out error message and ask for choice
+            selectedMove = notifyListenersRepeatRequestSpecificMove(moves);
         }
-        Scanner scanner = new Scanner(System.in);
-        int selectedMoves = scanner.nextInt();
-        return selectedMoves;
+        return selectedMove;
     }
 
     /**
@@ -114,9 +137,14 @@ public class CardPlayer {
      */
     public void resolveFenceCrossing(Player player){
         player.setWinks(player.getWinks() + 5);
-        System.out.println("You've crossed the fence. Would you like to call it a night, or keep playing?");
-        System.out.println("0: Keep playing -- 1: Call it a night");
-        int wakingUp = new Scanner(System.in).nextInt();
+        int wakingUp = notifyListenersRequestResolveFenceCrossing();
+        
+        //make another function of this for controller and model to print out error message
+        while (wakingUp != KEEP_PLAY && wakingUp != CALL_NIGHT) {
+            System.out.println("You did not enter a valid number. Please type in either 0 or 1");
+            wakingUp = notifyListenersRepeatRequestResolveFenceCrossing();
+        }
+        
         if(wakingUp == 1){
             player.setAwake(true);
         }
@@ -132,8 +160,79 @@ public class CardPlayer {
         if(in.length > 1){
             return multiMoveOptions(in);
         }
-        else{
+        else {
             return in[0];
         }
+    }
+
+    private int getValidCardOptions(Card card) {
+        int secondAbility = 0;
+
+        if (card.getWinks() != 0) {
+            secondAbility = 2;
+        } else {
+            secondAbility = 3;
+        }
+        return secondAbility;
+    }
+
+    private void notifyListenersDisplayAbilityOptions(int secondAbility) {
+        for (ModelListenerCardPlayer listener: listeners) {
+            listener.onRequestDisplayAbilityOptions(secondAbility);
+        }
+    }
+
+    private int notifyListenersRequestAskAbility(int secondAbility) {
+        int abiltyChoice = 0;
+        for (ModelListenerCardPlayer listener: listeners) {
+            abiltyChoice = listener.onRequestAskAbility(secondAbility);
+        }
+
+        return abiltyChoice;
+    }
+
+    private int notifyListenersRepeatRequestAskAbility(int secondAbility) {
+        int abiltyChoice = 0;
+        for (ModelListenerCardPlayer listener: listeners) {
+            abiltyChoice = listener.onRequestRepeatAskAbility(secondAbility);
+        }
+
+        return abiltyChoice;
+    }
+
+    private int notifyListenersRequestSpecificMove(int[] moves) {
+        int specificMove = 0;
+        for (ModelListenerCardPlayer listener: listeners) {
+            specificMove = listener.onRequestSpecificMove(moves);
+        }
+
+        return specificMove;
+    }
+
+    private int notifyListenersRepeatRequestSpecificMove(int[] moves) {
+        int specificMove = 0;
+        for (ModelListenerCardPlayer listener: listeners) {
+            specificMove = listener.onRequestRepeatSpecificMove(moves);
+        }
+
+        return specificMove;
+    }
+
+    private int notifyListenersRequestResolveFenceCrossing() {
+        int playOrCallNight = -1;
+        for (ModelListenerCardPlayer listener: listeners) {
+            playOrCallNight = listener.onRequestResolveFenceCrossing();
+        }
+
+        return playOrCallNight;
+    }
+
+    private int notifyListenersRepeatRequestResolveFenceCrossing() {
+        int playOrCallNight = -1;
+        for (ModelListenerCardPlayer listener: listeners) {
+            playOrCallNight = listener.onRequestRepeatResolveFenceCrossing();
+        }
+
+        return playOrCallNight;
     }
 }
