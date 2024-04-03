@@ -24,15 +24,15 @@ public class RestingPhaseController {
     private RestingPhase phase;
     private DreamTileBoardViewer boardViewer;
     private DreamTileBoard tileBoard;
-    private RestingPhaseCatchZ catchZ;
-    private RestingPhasePutNewTile putNewTile;
+    private RestingPhaseCatchZ ActionCatchZ;
+    private RestingPhasePutNewTile ActionPutNewTile;
 
     public RestingPhaseController(DreamTileBoard tileBoard, DreamTileBoardViewer boardViewer, ArrayList<Player> player,
             DreamTileCollection dreamTiles) {
         phaseViewer = new RestingPhaseViewer(this);
         phase = new RestingPhase(player, dreamTiles);
-        catchZ = new RestingPhaseCatchZ(phase, tileBoard);
-        putNewTile = new RestingPhasePutNewTile(phase, tileBoard);
+        ActionCatchZ = new RestingPhaseCatchZ(phase, tileBoard);
+        ActionPutNewTile = new RestingPhasePutNewTile(phase, tileBoard);
         this.boardViewer = boardViewer;
         this.tileBoard = tileBoard;
     }
@@ -41,9 +41,6 @@ public class RestingPhaseController {
         do{
             int numOption = showChoiceList();
             int userChoice = askUserChoice(numOption);
-
-            int integerParam1 = phaseViewer.askIntegerInput();
-            int integerParam2 = phaseViewer.askIntegerInput();
 
             //get choice from user + check whether input is valid
             if(userChoice == 0){
@@ -76,14 +73,27 @@ public class RestingPhaseController {
             location = phaseViewer.askTileLocationToCatch();
             numZToken = phaseViewer.askNumZTokenToCatch();
             try{
-                actionTermination = catchZ.catchZ(location, numZToken);
+                actionTermination = ActionCatchZ.catchZ(location, numZToken);
+                
             }
             catch(GameLogicViolationException glve) {
                 phaseViewer.showErrorMessage(glve.getMessage());
+                continue;
             }
             
         }while(!actionTermination);
+    }
 
+    private boolean helpCatchZ(int location, int numZToken){
+        boolean result = true;
+        try{
+            ActionCatchZ.catchZ(location, numZToken);
+        }
+        catch(GameLogicViolationException glve) {
+            phaseViewer.showErrorMessage(glve.getMessage());
+            result = false;
+        }
+        return result;
     }
 
     private int showChoiceList() {

@@ -30,7 +30,7 @@ public class RestingPhaseAction {
      */
      void catchZ(int location, int numZzzToken, boolean isInfinity) {
         if (notEnoughZ(numZzzToken)) {
-            throw new NotEnoughZTokenInSupplyException();
+            throw new NotEnoughZTokenInSupplyException("You don't have that many Z Token in your supply!");
         }
 
         DreamTile tile = getBoard.getTile(location);

@@ -55,6 +55,8 @@ public class RestingPhaseViewer {
         return askIntegerInput();
     }
 
+    public int 
+
 
     private int askIntegerInput(){
         boolean validInput = false;
