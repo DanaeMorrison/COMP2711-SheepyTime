@@ -24,15 +24,15 @@ public class RestingPhaseController {
     private RestingPhase phase;
     private DreamTileBoardViewer boardViewer;
     private DreamTileBoard tileBoard;
-    private RestingPhaseCatchZ ActionCatchZ;
-    private RestingPhasePutNewTile ActionPutNewTile;
+    private RestingPhaseCatchZ actionCatchZ;
+    private RestingPhasePutNewTile actionPutNewTile;
 
     public RestingPhaseController(DreamTileBoard tileBoard, DreamTileBoardViewer boardViewer, ArrayList<Player> player,
-            DreamTileCollection dreamTiles) {
+        DreamTileCollection dreamTiles) {
         phaseViewer = new RestingPhaseViewer(this);
         phase = new RestingPhase(player, dreamTiles);
-        ActionCatchZ = new RestingPhaseCatchZ(phase, tileBoard);
-        ActionPutNewTile = new RestingPhasePutNewTile(phase, tileBoard);
+        actionCatchZ = new RestingPhaseCatchZ(phase, tileBoard);
+        actionPutNewTile = new RestingPhasePutNewTile(phase, tileBoard);
         this.boardViewer = boardViewer;
         this.tileBoard = tileBoard;
     }
@@ -44,11 +44,7 @@ public class RestingPhaseController {
 
             //get choice from user + check whether input is valid
             if(userChoice == 0){
-                //catchZ
-                
-                //get input from user based on the desired choice
-
-                //call proper function
+                catchZ();
             }
             else if (userChoice == 1 && numOption == 1){
                 //Put New Tile
@@ -70,31 +66,32 @@ public class RestingPhaseController {
         showBoardStatus();
         boolean actionTermination = false;
         do{
+            if(playerHasZ()){
+                phaseViewer.showErrorMessage("Uh oh! You don't have ZToken anymore!");
+                return;
+            }
             location = phaseViewer.askTileLocationToCatch();
             numZToken = phaseViewer.askNumZTokenToCatch();
             try{
-                actionTermination = ActionCatchZ.catchZ(location, numZToken);
-                
+                actionTermination = actionCatchZ.catchZ(location, numZToken);
             }
             catch(GameLogicViolationException glve) {
                 phaseViewer.showErrorMessage(glve.getMessage());
                 continue;
-            }
-            
+            }  
         }while(!actionTermination);
     }
 
-    private boolean helpCatchZ(int location, int numZToken){
-        boolean result = true;
-        try{
-            ActionCatchZ.catchZ(location, numZToken);
-        }
-        catch(GameLogicViolationException glve) {
-            phaseViewer.showErrorMessage(glve.getMessage());
-            result = false;
-        }
-        return result;
+    private boolean playerHasZ(){
+        return phase.getCurrentPlayer().getZtokens()==0;
     }
+
+    private void putNewTile(){
+        int tileNum;
+        int location;
+
+    }
+
 
     private int showChoiceList() {
         int numOption = 0;
@@ -122,6 +119,10 @@ public class RestingPhaseController {
      */
     private void showBoardStatus() {
         boardViewer.showBoardStatus(tileBoard.getBoardStatus(phase.getCurrentPlayer()));
+    }
+
+    private void showMarket(){
+        
     }
 
     // public void setRacingPhaseController(RacingPhaseController controller){

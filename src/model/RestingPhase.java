@@ -38,6 +38,8 @@ public class RestingPhase {
         currPlayerIndex++;
         return true;
     }
+
+
     /**
      * Helper method that create the market
      */
