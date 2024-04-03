@@ -1,4 +1,6 @@
 package model;
+
+import java.util.ArrayList;
 public class DreamTileBoard /*implements BoardInterface*/{
     private DreamTile[] board;
     public DreamTileBoard(){
@@ -26,4 +28,43 @@ public class DreamTileBoard /*implements BoardInterface*/{
         }
         return false;
     }
+
+    /**
+     * method that check if there is a empty spot in the board
+     * @return true if there is, otherwise false
+     */
+    public boolean isFull() {
+        for (int i = 0; i < 10; i++) {
+            if (!occupied(i)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String[] getBoardStatus(Player currPlayer) {
+        String[] boardStatus = new String[10];
+        for (int i = 0; i < 10; i++) {
+            if (occupied(i)) {
+                boardStatus[i] = "O";
+            } else {
+                boardStatus[i] = "X";
+            }
+            boardStatus[i] = boardStatus[i] += printZToken(i, currPlayer);
+        }
+        return boardStatus;
+    }
+
+    private String printZToken(int location, Player currPlayer) {
+        DreamTile tile = getTile(location);
+        ArrayList<ZToken> zTokens = tile.getTokens();
+        String result = "";
+        for (int i = 0; i < zTokens.size(); i++) {
+            if (zTokens.get(i).getOwner().equals(currPlayer)) {
+                result += "*";
+            }
+        }
+        return result;
+    }
+
 }

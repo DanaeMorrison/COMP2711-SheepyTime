@@ -1,10 +1,11 @@
 package view;
+
 /**
  * @author Danae Morrison
  */
 
 public class DreamTileViewer {
-    
+
     public void printRule(String tileName) {
 
         System.out.println("");
@@ -28,5 +29,9 @@ public class DreamTileViewer {
         }
 
         System.out.println("");
+    }
+
+    public void printDreamTile(String tileName, String tileDescription){
+        System.out.println("\nDREAM TILE\n\n"+tileName+": "+ tileDescription);
     }
 }
