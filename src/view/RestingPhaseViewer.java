@@ -3,7 +3,6 @@ package view;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import controller.RestingPhaseController;
 
 /**
  * Class for RestingPhase Controller
