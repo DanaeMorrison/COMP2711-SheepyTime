@@ -3,22 +3,22 @@ package model;
 import model.exception.NotEnoughZTokenInSupplyException;
 
 /**
+ * Super class of RestingPhasePutNewTile and RestingPhaseCatchZ classes. It contains methods that two subclasses share
  * @author Dylan Kim
  * @version 1.0
  */
 public class RestingPhaseAction {
 
     private RestingPhase phase;
-    private DreamTileBoard getBoard;
+    private DreamTileBoard tileBoard;
 
     public RestingPhaseAction(RestingPhase phase, DreamTileBoard tileBoard) {
         this.phase = phase;
-        this.getBoard = tileBoard;
+        this.tileBoard = tileBoard;
     }
 
     // Getter Methods
-    public DreamTileBoard getBoard() { return getBoard; }
-
+    public DreamTileBoard getBoard() { return tileBoard; }
     public RestingPhase getRestingPhase() { return phase; }
 
     /**
@@ -33,12 +33,13 @@ public class RestingPhaseAction {
             throw new NotEnoughZTokenInSupplyException("You don't have that many Z Token in your supply!");
         }
 
-        DreamTile tile = getBoard.getTile(location);
+        DreamTile tile = tileBoard.getTile(location);
         for (int i = 0; i < numZzzToken; i++) {
             tile.addToken(phase.getCurrentPlayer(), isInfinity);
             removeZTokenFromSupply();
         }
     }
+
 
     /**
      * Helper method that reduce one Z Token in Player's Supply(inventory)
@@ -46,6 +47,7 @@ public class RestingPhaseAction {
     private void removeZTokenFromSupply(){
         phase.getCurrentPlayer().setZtokens(phase.getCurrentPlayer().getZtokens() - 1);
     }
+
 
     /**
      * Helper method that checks whether the current player has enough Zzztoken or

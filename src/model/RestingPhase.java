@@ -1,7 +1,7 @@
 package model;
 
 /**
- * Class for Resting Phase
+ * Class for Resting Phase. It is responsible for determining the current player and the market
  * @author Dylan Kim
  * @version 1.0
  */
@@ -22,15 +22,28 @@ public class RestingPhase {
         createMarket();
     }
 
-
+    /**
+     * Method that checks whether user's input for choosing behaviour(catchZ or putNewTile) is valid or not
+     * @param userChoice user's choice
+     * @param numOption number of options for user
+     * @return whether the user's choice is valid or not
+     */
     public boolean isChoiceValid(int userChoice, int numOption) {
         return ((userChoice >= 0) && (userChoice < numOption));
     }
 
+    /**
+     * Getter method for current Player
+     * @return current player
+     */
     public Player getCurrentPlayer() {
         return players.get(currPlayerIndex);
     }
 
+    /**
+     * Methods that updates the current player from previous current player to the next one
+     * @return if the current player isn't last player, then updates to the next player and return true, and return false if the current player is the last player
+     */
     public boolean setNextPlayer() {
         if (currPlayerIndex == players.size() - 1) {
             return false;

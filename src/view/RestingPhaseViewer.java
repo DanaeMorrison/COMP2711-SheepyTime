@@ -26,7 +26,6 @@ public class RestingPhaseViewer {
     
     public void showErrorMessage(String errorMessage){
         System.out.println(errorMessage);
-        //TODO: 시간 지나고 에러 메세지 사라지게 만드는 거
     }
 
     public void showOption() {

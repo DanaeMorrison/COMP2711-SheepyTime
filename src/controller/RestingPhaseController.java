@@ -45,6 +45,9 @@ public class RestingPhaseController {
         actionPutNewTile = new RestingPhasePutNewTile(phase, tileBoard);
     }
 
+    /**
+     * Method that starts the phase
+     */
     public void startPhase(){
         do{
             int numOption = showChoiceList();
@@ -65,6 +68,9 @@ public class RestingPhaseController {
         //Move to Racing Phase
     }
 
+    /**
+     * Helper method that handles when the user decides to catch Z Token
+     */
     private void catchZ(){
         int location;
         int numZToken;
@@ -75,8 +81,10 @@ public class RestingPhaseController {
                 phaseViewer.showErrorMessage("Uh oh! You don't have ZToken anymore!");
                 return;
             }
+            
             location = phaseViewer.askTileLocationToCatch();
             numZToken = phaseViewer.askNumZTokenToCatch();
+
             try{
                 actionTermination = actionCatchZ.catchZ(location, numZToken);
             }
@@ -87,10 +95,17 @@ public class RestingPhaseController {
         }while(!actionTermination);
     }
 
+    /**
+     * Helper method that checks whether player has Z Token in their supply
+     * @return true if player has Z Token
+     */
     private boolean playerHasZ(){
         return phase.getCurrentPlayer().getZtokens()==0;
     }
 
+    /**
+     * Helper method that handles when the player decides to put a new DreamTile on the board
+     */
     private void putNewTile(){
         int tileNum;
         int location;
@@ -112,7 +127,10 @@ public class RestingPhaseController {
 
     }
 
-
+    /**
+     * Method that asks the viewer to show the available choice for user
+     * @return
+     */
     private int showChoiceList() {
         int numOption = 0;
         phaseViewer.addCatchZInstruction(numOption);
@@ -127,7 +145,7 @@ public class RestingPhaseController {
     /**
      * Helper method that guarantee that the player chose the right option
      * @param numOption
-     * @return
+     * @return user choice
      */
     private int askUserChoice(int numOption) {
         boolean validInput = false;
