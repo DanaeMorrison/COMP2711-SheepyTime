@@ -1,5 +1,6 @@
 package controller;
 
+import model.DreamTile;
 import model.DreamTileBoard;
 import model.DreamTileCollection;
 import model.RestingPhase;
@@ -8,6 +9,7 @@ import model.RestingPhaseCatchZ;
 import model.RestingPhasePutNewTile;
 import model.exception.GameLogicViolationException;
 import view.DreamTileBoardViewer;
+import view.DreamTileViewer;
 import view.RestingPhaseViewer;
 import model.Player;
 
@@ -20,21 +22,27 @@ import java.util.ArrayList;
  * @version 1.0
  */
 public class RestingPhaseController {
-    private RestingPhaseViewer phaseViewer;
     private RestingPhase phase;
+    private RestingPhaseViewer phaseViewer;
+    private DreamTileViewer tileViewer;
     private DreamTileBoardViewer boardViewer;
     private DreamTileBoard tileBoard;
     private RestingPhaseCatchZ actionCatchZ;
     private RestingPhasePutNewTile actionPutNewTile;
+    
 
     public RestingPhaseController(DreamTileBoard tileBoard, DreamTileBoardViewer boardViewer, ArrayList<Player> player,
-        DreamTileCollection dreamTiles) {
-        phaseViewer = new RestingPhaseViewer(this);
+    DreamTileCollection dreamTiles, DreamTileViewer tileViewer) {
         phase = new RestingPhase(player, dreamTiles);
+        
+        phaseViewer = new RestingPhaseViewer(this);
+        this.boardViewer = boardViewer;
+        this.tileViewer = tileViewer;
+        
+        this.tileBoard = tileBoard;
+        
         actionCatchZ = new RestingPhaseCatchZ(phase, tileBoard);
         actionPutNewTile = new RestingPhasePutNewTile(phase, tileBoard);
-        this.boardViewer = boardViewer;
-        this.tileBoard = tileBoard;
     }
 
     public void startPhase(){
@@ -47,13 +55,10 @@ public class RestingPhaseController {
                 catchZ();
             }
             else if (userChoice == 1 && numOption == 1){
-                //Put New Tile
-
-                //get input from user based on the desired choice
-
-                //call proper function 
+                putNewTile();
+                showMarket();
             }
-
+            showBoardStatus();
             //Show Update
             
         }while(phase.setNextPlayer());
@@ -89,13 +94,28 @@ public class RestingPhaseController {
     private void putNewTile(){
         int tileNum;
         int location;
+        boolean actionTermination = false;
+        do{
+            showMarket();
+            tileNum = phaseViewer.askTileNumber();
+            showBoardStatus();
+            location = phaseViewer.askLocationToPut();
+
+            try{
+                actionTermination = actionPutNewTile.putNewTile(tileNum, location);
+            }
+            catch(GameLogicViolationException glve) {
+                phaseViewer.showErrorMessage(glve.getMessage());
+                continue;
+            }  
+        }while(!actionTermination);
 
     }
 
 
     private int showChoiceList() {
         int numOption = 0;
-        phaseViewer.addPutNewTileInstruction(numOption);
+        phaseViewer.addCatchZInstruction(numOption);
         if (!tileBoard.isFull()) {
             numOption++;
             phaseViewer.addPutNewTileInstruction(numOption);
@@ -104,12 +124,17 @@ public class RestingPhaseController {
         return numOption;
     }
 
+    /**
+     * Helper method that guarantee that the player chose the right option
+     * @param numOption
+     * @return
+     */
     private int askUserChoice(int numOption) {
         boolean validInput = false;
         int userChoice;
         do {
-            userChoice = phaseViewer.askIntegerInput();
-            validInput = phase.isChoiceValid(userChoice, numOption);
+            userChoice = phaseViewer.askChoice(numOption);
+            validInput = phase.isChoiceValid(userChoice-1, numOption);
         } while (!validInput);
         return userChoice;
     }
@@ -121,8 +146,27 @@ public class RestingPhaseController {
         boardViewer.showBoardStatus(tileBoard.getBoardStatus(phase.getCurrentPlayer()));
     }
 
+    /**
+     * Helper method that tell the DreamTileViewer to show the DreamTile in the market
+     */
     private void showMarket(){
-        
+        for(int i=0 ; i<4 ; i++){
+            if(getTile(i)==null){
+                tileViewer.printDreamTile("(Empty)", "");
+            }
+            else{
+                tileViewer.printDreamTile(getTile(i).getTileName(), getTile(i).getDescription());
+            }
+        }
+    }
+
+    /**
+     * helper method that gives the DreamTile on the desired index
+     * @param index index in the market
+     * @return
+     */
+    private DreamTile getTile(int index){
+        return phase.getMarket().get(index);
     }
 
     // public void setRacingPhaseController(RacingPhaseController controller){

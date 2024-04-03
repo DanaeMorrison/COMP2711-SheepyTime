@@ -23,10 +23,10 @@ public class RestingPhaseViewer {
         scanner = new Scanner(System.in);
         instruction = "";
     }
-
     
     public void showErrorMessage(String errorMessage){
         System.out.println(errorMessage);
+        //TODO: 시간 지나고 에러 메세지 사라지게 만드는 거
     }
 
     public void showOption() {
@@ -55,8 +55,25 @@ public class RestingPhaseViewer {
         return askIntegerInput();
     }
 
-    public int 
+    public int askChoice(int numOption){
+        System.out.println("Choose your behavior and type the corresponing number");
+        System.out.println("Option 1: Catch 2 Z Tokens");
+        if(numOption == 1){
+            System.out.println("Option 2: Choose one DreamTile from the market and put it on the Board");
+        }
+        System.out.print("=>");
+        return askIntegerInput();
+    }
 
+    public int askTileNumber(){
+        System.out.print("Which tile do you want to place?");
+        return askIntegerInput();
+    }
+
+    public int askLocationToPut(){
+        System.out.println("Where do you want to place?");
+        return askIntegerInput();
+    }
 
     private int askIntegerInput(){
         boolean validInput = false;
