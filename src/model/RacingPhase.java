@@ -9,6 +9,7 @@ public class RacingPhase {
     public final int FIRST_CARD = 0;
     public final int SECOND_CARD = 1;
 
+    private boolean nightmareHasCrossed;
     private ArrayList<Player> players;
     private Deck deck;
     private Nightmare nightmare;
@@ -22,6 +23,7 @@ public class RacingPhase {
         this.nightmare = nightmare;
         this.dreamTileBoard = dreamTileBoard;
         this.cardPlayer = cardPlayer;
+        nightmareHasCrossed = false;
     }
 
     public void addListener(ModelListenerRacingPhase listener) {
@@ -43,6 +45,16 @@ public class RacingPhase {
                 }
 
                 fillHand(curr, players, usedCards);
+
+                if(nightmareHasCrossed){
+                    for(Player p : players){
+                        if(!p.isAwake()){
+                            p.setWinks(0);
+                            p.setAwake(true);
+                        }
+                    }
+                    return; //racing phase done if nightmare has crossed
+                }
 
                 ArrayList<Card> hand = curr.getHand();
     
@@ -121,7 +133,10 @@ public class RacingPhase {
             if(card.isNightmare()){
                 // new CardViewer(card, nightmare.getType()).rulePrint();
                 notifyListenersPrintCard(card, nightmare.getType());
-                cardPlayer.playNightmareCard(card, nightmare, players);
+                if(cardPlayer.playNightmareCard(card, nightmare, players)){ //ugly syntactically, but it's playing the card *and* returning a true boolean if the nightmare is crossing.
+                    nightmareHasCrossed = true;
+                    return;
+                }
                 j--;
                 continue;
             }
