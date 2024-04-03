@@ -5,7 +5,7 @@ import model.Deck;
 import model.DeckGenerator;
 import model.Nightmare;
 import model.Player;
-import model.RacingPhase;
+import model.RacingPhaseOld;
 
 public class Initializer {
 

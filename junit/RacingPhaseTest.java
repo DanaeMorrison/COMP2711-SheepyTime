@@ -7,7 +7,7 @@ import model.Card;
 import model.Deck;
 import model.Nightmare;
 import model.Player;
-import model.RacingPhase;
+import model.RacingPhaseOld;
 
 import static org.junit.Assert.assertEquals;
 
@@ -27,7 +27,7 @@ import java.util.List;
  * @version 2.0
  */
 public class RacingPhaseTest {
-    private RacingPhase racingPhase;
+    private RacingPhaseOld racingPhase;
     private ArrayList<Player> players;
     private Deck deck;
 

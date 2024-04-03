@@ -11,7 +11,7 @@ import controller.ModelListenerCardPlayer;
  * @version 2- MVC compliant
  */
 
-public class CardPlayer {
+public class CardPlayerOld {
     public final int MOVE_ABILITY = 1;
     public final int KEEP_PLAY = 0;
     public final int CALL_NIGHT = 1;
@@ -91,40 +91,24 @@ public class CardPlayer {
      * @param nightmare nightmare
      * @param players players to scare
      */
-    public void playNightmareCard(Card card, Nightmare nightmare, ArrayList<Player> players) {
-        // should rename "moves" to "move"
-        PlayerBoard playerBoard;
-        NightmareBoard nightmareBoard = nightmare.getBoard();
-
+    public void playNightmareCard(Card card, Nightmare nightmare, ArrayList<Player> players){
         int moves = card.getMoves()[0]; //nightmare cards only have 1 move option
-        if(moves > 0 && moves != 10) {
-            int[] path = nightmareBoard.traveledSpaces(moves);
+        if(moves > 0){
+            int[] path = nightmare.getBoard().traveledSpaces(moves);
 
+            PlayerBoard playerBoard;
             for(Player p : players){
                 playerBoard = p.getBoard();
                 for(int i = 0; i < path.length; i++){
-                    // don't we want to check if  the player is in a spot on the path
-                    // that the nightmare moves? shouldn't it be "playerBoard.occupied(path[i])"?
-                    if(playerBoard.occupied(i)) {
+                    if(playerBoard.occupied(i)){
                         nightmareCollision(p);
                     }
                 }
             }
         }
 
-        if (moves == 10) {
-            for(Player p : players) {
-                playerBoard = p.getBoard();
-                if (playerBoard.getIndex() == ((nightmareBoard.getIndex() - 1) % 10) || playerBoard.getIndex() == nightmareBoard.getIndex() || playerBoard.getIndex() == ((nightmareBoard.getIndex() + 1) % 10)) {
-                    nightmareCollision(p);
-                }
-            }
-        }
-
         nightmare.getBoard().jump(card.getJumpPos());
         //something something spider token
-        // spider nightmare uses spiderMove
-        // Bump nightmare uses jumpPost
         
     }
 
