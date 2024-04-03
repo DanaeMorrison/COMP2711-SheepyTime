@@ -24,6 +24,11 @@ public class RestingPhaseViewer {
         instruction = "";
     }
 
+    
+    public void showErrorMessage(String errorMessage){
+        System.out.println(errorMessage);
+    }
+
     public void showOption() {
         System.out.print(instruction);
     }
@@ -40,7 +45,18 @@ public class RestingPhaseViewer {
         return "Option "+optionNum+ ": "+ instruction + "\n";
     }
 
-    public int askIntegerInput(){
+    public int askTileLocationToCatch(){
+        System.out.print("Where Do you want to catch your Z Token? Please type from 1~10");
+        return askIntegerInput();
+    }
+
+    public int askNumZTokenToCatch(){
+        System.out.print("How many Z Tokens do you want to catch here? please type either 1 or 2");
+        return askIntegerInput();
+    }
+
+
+    private int askIntegerInput(){
         boolean validInput = false;
         int userInput=0;
         do{
@@ -48,7 +64,7 @@ public class RestingPhaseViewer {
                 userInput = scanner.nextInt();
             }
             catch( InputMismatchException ime ){
-                System.out.println("Wrong input format! Please Type integer");
+                System.out.print("\nWrong input format! Please Type integer");
             }
         }while(!validInput);
         return userInput;
