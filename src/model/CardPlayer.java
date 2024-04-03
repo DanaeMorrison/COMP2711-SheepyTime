@@ -115,10 +115,6 @@ public class CardPlayer {
                 }
             }
 
-            if(nightmare.getBoard().isCrossing()){
-
-            }
-
             nightmare.getBoard().advance(moves);
         }
 
