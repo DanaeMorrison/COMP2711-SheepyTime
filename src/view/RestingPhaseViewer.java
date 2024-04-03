@@ -12,14 +12,12 @@ import controller.RestingPhaseController;
  * @version 1.0
  */
 public class RestingPhaseViewer {
-    private RestingPhaseController controller;
     private Scanner scanner;
     private String instruction = "";
     private final String CATCH_Z_INSTRUCTION = "Catch 2 ZTokens on DreamTiles";
     private final String PUT_NEW_TILE_INSTRUCTION = "Add a new DreamTile to the Board";
 
-    public RestingPhaseViewer(RestingPhaseController controller) {
-        this.controller = controller;
+    public RestingPhaseViewer() {
         scanner = new Scanner(System.in);
         instruction = "";
     }

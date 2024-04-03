@@ -35,7 +35,7 @@ public class RestingPhaseController {
     DreamTileCollection dreamTiles, DreamTileViewer tileViewer) {
         phase = new RestingPhase(player, dreamTiles);
         
-        phaseViewer = new RestingPhaseViewer(this);
+        phaseViewer = new RestingPhaseViewer();
         this.boardViewer = boardViewer;
         this.tileViewer = tileViewer;
         
@@ -77,7 +77,7 @@ public class RestingPhaseController {
         showBoardStatus();
         boolean actionTermination = false;
         do{
-            if(playerHasZ()){
+            if(playerDoesNotHaveZ()){
                 phaseViewer.showErrorMessage("Uh oh! You don't have ZToken anymore!");
                 return;
             }
@@ -99,7 +99,7 @@ public class RestingPhaseController {
      * Helper method that checks whether player has Z Token in their supply
      * @return true if player has Z Token
      */
-    private boolean playerHasZ(){
+    private boolean playerDoesNotHaveZ(){
         return phase.getCurrentPlayer().getZtokens()==0;
     }
 
