@@ -1,35 +1,29 @@
 package model;
 
-//TODO: Why do we have to use array? can we just update integer instance variable position?
 
 public class PlayerBoard implements BoardInterface{
 
-    private boolean[] board;
+    private int position;
 
     public PlayerBoard(){
-        board = new boolean[10];
-        emptyBoard();
-        board[0] = true;
+        position = -1;
     }
 
     /**
      * Empties out the board, and resets the player position to 0.
      */
     public void emptyBoard(){
-        for(int i = 0; i < board.length; i++){
-            board[i] = false;
-        }
-        board[0] = true;
+        position = -1;
     }
 
     /**
      * Returns true if occupied at given index.
      * 
-     * @param i index
+     * @param index index
      * @return true if occupied, false otherwise.
      */
-    public boolean occupied(int i){
-        return board[i];
+    public boolean occupied(int index){
+        return index == position; 
     }
 
     /**
@@ -38,46 +32,36 @@ public class PlayerBoard implements BoardInterface{
      * @return location of character on board
      */
     public int getIndex(){
-        for(int i = 0; i < board.length; i++){
-            if(board[i]){
-                return i;
-            }
-        }
-        return -1;
+        return position;
     }
 
     /**
      * Advances the character forwards by n steps, looping around to 0 if needed.
      * 
-     * @param n Steps to advance
+     * @param steps Steps to advance
      */
-    public void advance(int n){
-        int startingPos = getIndex();
-        board[startingPos] = false;
-        board[(startingPos + n) % 10] = true;
+    public void advance(int steps){
+        position = (position+steps) % 10;
     }
 
-    //TODO: Does sheep token jump?
     /**
      * Jumps character directly to a tile
      * 
      * @param n Tile to jump to
      */
     public void jump(int n){
-        emptyBoard();
-        board[(n % 10)] = true;
+        this.position = position%10;
     }
 
-    //TODO If this method is going to be called after advance(), this method never return true
     /**
      * Checks if the user will cross the fence if they were to advance n steps.
      * Doesn't actually move the player, just a check!
      * 
-     * @param n Steps to be checked
+     * @param steps Steps to be checked
      * @return true if crossing, false if not
      */
-    public boolean isCrossing(int n){
-        if((getIndex() + n) >= 10){
+    public boolean isCrossing(int steps){
+        if((getIndex() + steps) >= 10){
             return true;
         }
         return false;
