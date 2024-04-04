@@ -37,11 +37,15 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
         Nightmare nightmare = racingPhase.getNightmare();
         DreamTileBoard dreamTileBoard = racingPhase.getDreamTileBoard();
         Deck deck = racingPhase.getDeck();
+        // boolean nightmareHasCrossed = racingPhase.getNightmareHasCrossed();
+        boolean nightmareHasCrossed = false;
+        // boolean oneSleepingPlayer;
+
         Player curr;
         Card picked;
         int cardChoice;
         ArrayList<Card> usedCards = new ArrayList<>();
-        boolean nightmareHasCrossed = racingPhase.getNightmareHasCrossed();
+
 
         while(!allPlayersAwake(players)){
             for(int i = 0; i < playerCount; i++){
@@ -60,7 +64,10 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
                             p.setAwake(true);
                         }
                     }
-                    return; //racing phase done if nightmare has crossed
+                    return; // racing phase done if nightmare has crossed. Perhaps some details should be returned with it/updated in racing phase, such as the setting the phase's dreamtileboard to be equal to the one
+                            // present at the end of the phase. we need to make sure that whenever a racing phase begins again, appropriate information is stored in RacingPhase to facilitate continuing the game
+                            // from the start of a new racing phase, but with updated details (the new dreamtile board from the resting phase, for example. This means that the resting phase has to be able to access the 
+                            // final )
                 }
 
                 ArrayList<Card> hand = curr.getHand();
@@ -88,7 +95,21 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
                 cardPlayer.playCard(picked, curr, nightmare);
 
                 //TODO: here, the dreamtile is always being used if it can be used. we need to ask the player if they want to use it or not.
+                // will put in it's own class like CardPlayer
                 dreamTileUser(curr, dreamTileBoard);
+
+                if (onePlayerAsleep(players)) {
+                    Card card = deck.takeCard();
+                    usedCards.add(card);
+            
+                    if(card.isNightmare()){
+                        // new CardViewer(card, nightmare.getType()).rulePrint();
+                        cardViewer.rulePrint(card.getMoves(), card.getJumpPos(), card.getSpiderMove(), card.getWinks(), card.getZtokens(), nightmare.getType(), card.isNightmare(), card.bothConditions());
+                        if(cardPlayer.playNightmareCard(card, nightmare, players)){ //ugly syntactically, but it's playing the card *and* returning a true boolean if the nightmare is crossing.
+                            racingPhase.setNightmareHasCrossed(true);
+                        }
+                    }
+                }
 
                 // refills a player's hand at the end of their turn
                 // code smell: put fillHand and the loop below it together in another function
@@ -103,6 +124,7 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
                             p.setAwake(true);
                         }
                     }
+                    // make method to print out that the nightmare has jumped the fence (in RacingPhaseViewer)
                     return; //racing phase done if nightmare has crossed
                 }
 
@@ -116,6 +138,9 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
             }
         }
         replaceUsedCards(usedCards, deck);
+        // here is where more code should be written to update RacingPhase before the startPhase method closes
+        // e.g. racingPhase.setDreamTileBoard(dreamTileBoard); This method hasn't been created yet.
+        // loop through all players and access their boards to reset their positions to -1. Same with nightmare 
     }
 
     /**
@@ -162,6 +187,16 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
             }
         }
         return (awakeCount == players.size());
+    }
+
+    public boolean onePlayerAsleep(ArrayList<Player> players){
+        int asleepCount = 0;
+        for(Player p : players){
+            if(!p.isAwake()){
+                asleepCount++;
+            }
+        }
+        return (asleepCount == 1);
     }
 
     private void dreamTileUser(Player player, DreamTileBoard dreamTileBoard){
