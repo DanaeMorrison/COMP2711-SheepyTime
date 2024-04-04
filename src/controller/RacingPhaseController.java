@@ -215,9 +215,9 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
         boolean validInput = false;
         int cardChoice;
 
-        cardChoice = racingPhaseViewer.getCardChoiceOnError();
+        cardChoice = racingPhaseViewer.getCardChoice();
         validInput = racingPhase.isCardChoiceValid(cardChoice);
-        
+
         do {
             cardChoice = racingPhaseViewer.getCardChoiceOnError();
             validInput = racingPhase.isCardChoiceValid(cardChoice);
