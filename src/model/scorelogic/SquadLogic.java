@@ -4,24 +4,17 @@ import java.util.ArrayList;
 
 import model.Player;
 
-public class SquadLogic implements ScoreLogic {
+public class SquadLogic extends MultiPlayerLogic {
 
-    private ArrayList<Player> players;
+    private final int[] SQUAD_SCORE_LOGIC = { 10, 8, 6, 5 };
 
-    public SquadLogic(ArrayList<Player> players){
-        this.players = players;
+    public SquadLogic(ArrayList<Player> players) {
+        super(players);
     }
 
     @Override
-    public ArrayList<Player> getOrder() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Player getWinner() {
-        // TODO Auto-generated method stub
-        return null;
+    public int[] getLogic() {
+        return SQUAD_SCORE_LOGIC;
     }
 
 }

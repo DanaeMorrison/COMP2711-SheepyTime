@@ -26,7 +26,7 @@ public class Player{
         isAwake = false;
         winks = 0;
         zTokens = 0;
-        scoreboard = new Score(this);
+        scoreboard = new Score();
         setBrave();
     }
 

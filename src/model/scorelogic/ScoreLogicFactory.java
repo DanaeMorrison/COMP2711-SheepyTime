@@ -4,9 +4,9 @@ import model.Player;
 import java.util.ArrayList;
 
 public abstract class ScoreLogicFactory {
-    public ScoreLogic getScoreLogic(ArrayList<Player> players){
+    public MultiPlayerLogic getScoreLogic(ArrayList<Player> players) {
         return createLogic(players);
     }
 
-    protected abstract ScoreLogic createLogic(ArrayList<Player> players);
+    protected abstract MultiPlayerLogic createLogic(ArrayList<Player> players);
 }

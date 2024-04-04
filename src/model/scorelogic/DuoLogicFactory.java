@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import model.Player;
 
-public class DuoLogicFactory extends ScoreLogicFactory{
+public class DuoLogicFactory extends ScoreLogicFactory {
 
     @Override
-    protected ScoreLogic createLogic(ArrayList<Player> players) {
+    protected MultiPlayerLogic createLogic(ArrayList<Player> players) {
         return new DuoLogic(players);
     }
 

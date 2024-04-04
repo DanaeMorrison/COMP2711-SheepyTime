@@ -4,24 +4,17 @@ import java.util.ArrayList;
 
 import model.Player;
 
-public class TrioLogic implements ScoreLogic {
+public class TrioLogic extends MultiPlayerLogic {
 
-    private ArrayList<Player> players;
+    private final int[] TRIO_SCORING_LOGIC = { 10, 7, 5 };
 
     public TrioLogic(ArrayList<Player> players) {
-        this.players = players;
+        super(players);
     }
 
     @Override
-    public ArrayList<Player> getOrder() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Player getWinner() {
-        // TODO Auto-generated method stub
-        return null;
+    public int[] getLogic() {
+        return TRIO_SCORING_LOGIC;
     }
 
 }

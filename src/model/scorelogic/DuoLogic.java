@@ -4,24 +4,19 @@ import java.util.ArrayList;
 
 import model.Player;
 
-public class DuoLogic implements ScoreLogic {
+public class DuoLogic extends MultiPlayerLogic {
 
-    private ArrayList<Player> players;
+    private final int[] DUO_SCORING_LOGIC = { 8, 5 };
 
-    public DuoLogic(ArrayList<Player> players){
-        this.players = players;
+    public DuoLogic(ArrayList<Player> players) {
+        super(players);
     }
 
     @Override
-    public ArrayList<Player> getOrder() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getOrder'");
+    public int[] getLogic() {
+        return DUO_SCORING_LOGIC;
     }
 
-    @Override
-    public Player getWinner() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getWinner'");
-    }
+    
 
 }
