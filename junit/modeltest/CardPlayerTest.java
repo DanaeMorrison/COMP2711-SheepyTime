@@ -1,4 +1,4 @@
-package junit;
+package junit.modeltest;
 
 import static org.junit.Assert.*;
 import java.io.ByteArrayInputStream;

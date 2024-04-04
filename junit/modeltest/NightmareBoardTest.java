@@ -1,4 +1,4 @@
-package junit;
+package junit.modeltest;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;

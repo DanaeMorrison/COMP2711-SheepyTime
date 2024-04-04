@@ -3,7 +3,6 @@ package view;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import controller.RestingPhaseController;
 
 /**
  * Class for RestingPhase Controller
@@ -12,21 +11,18 @@ import controller.RestingPhaseController;
  * @version 1.0
  */
 public class RestingPhaseViewer {
-    private RestingPhaseController controller;
     private Scanner scanner;
     private String instruction = "";
     private final String CATCH_Z_INSTRUCTION = "Catch 2 ZTokens on DreamTiles";
     private final String PUT_NEW_TILE_INSTRUCTION = "Add a new DreamTile to the Board";
 
-    public RestingPhaseViewer(RestingPhaseController controller) {
-        this.controller = controller;
+    public RestingPhaseViewer() {
         scanner = new Scanner(System.in);
         instruction = "";
     }
     
     public void showErrorMessage(String errorMessage){
         System.out.println(errorMessage);
-        //TODO: 시간 지나고 에러 메세지 사라지게 만드는 거
     }
 
     public void showOption() {

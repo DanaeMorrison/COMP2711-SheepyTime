@@ -1,4 +1,4 @@
-package junit;
+package junit.modeltest;
 
 import org.junit.Test;
 import org.junit.Before;

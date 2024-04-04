@@ -5,6 +5,7 @@ public class RacingPhase {
     public final int FIRST_CARD = 0;
     public final int SECOND_CARD = 1;
 
+    // private boolean nightmareHasCrossed;
     private ArrayList<Player> players;
     private Deck deck;
     private Nightmare nightmare;
@@ -19,6 +20,7 @@ public class RacingPhase {
         this.nightmare = nightmare;
         this.dreamTileBoard = dreamTileBoard;
         // this.cardPlayer = cardPlayer;
+        nightmareHasCrossed = false;
     }
 
     // getter and setter methods

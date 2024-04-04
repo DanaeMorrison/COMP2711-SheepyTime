@@ -1,4 +1,4 @@
-package junit;
+package junit.viewertest;
 
 import org.junit.Before;
 import org.junit.After;
