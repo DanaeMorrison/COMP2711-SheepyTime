@@ -41,16 +41,27 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
         Card picked;
         int cardChoice;
         ArrayList<Card> usedCards = new ArrayList<>();
+        boolean nightmareHasCrossed = racingPhase.getNightmareHasCrossed();
 
         while(!allPlayersAwake(players)){
             for(int i = 0; i < playerCount; i++){
-                // should curr (current plaeyer) be stored in the model?
+                // should curr (current player) be stored in the model?
                 curr = players.get(i);
                 if(curr.isAwake()){
                     continue;
                 }
 
                 fillHand(curr, players, usedCards, deck, nightmare);
+
+                if(nightmareHasCrossed){
+                    for(Player p : players){
+                        if(!p.isAwake()){
+                            p.setWinks(0);
+                            p.setAwake(true);
+                        }
+                    }
+                    return; //racing phase done if nightmare has crossed
+                }
 
                 ArrayList<Card> hand = curr.getHand();
     
@@ -66,9 +77,9 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
 
                 // make a version that says if thrown an error, will ask for new input
                 // will replace this one
-                while (cardChoice != FIRST_CARD && cardChoice != SECOND_CARD) {
+                /** while (cardChoice != FIRST_CARD && cardChoice != SECOND_CARD) {
                     cardChoice = racingPhaseViewer.getCardChoiceOnError();
-                }
+                }*/
 
                 picked = hand.get(cardChoice);
                 usedCards.add(picked);
@@ -83,6 +94,17 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
                 // code smell: put fillHand and the loop below it together in another function
                 // to run at the same time
                 fillHand(curr, players, usedCards, deck, nightmare);
+
+                if(nightmareHasCrossed){
+                    for(Player p : players){
+                        if(!p.isAwake()){
+                            p.setWinks(0);
+                            p.setScaredStatus(2);
+                            p.setAwake(true);
+                        }
+                    }
+                    return; //racing phase done if nightmare has crossed
+                }
 
                 for(int j = 0; j < hand.size(); j++){
                     Card currCard = curr.getHand().get(j);
@@ -112,6 +134,7 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
     }
 
     public void fillHand(Player player, ArrayList<Player> players, ArrayList<Card> usedCards, Deck deck, Nightmare nightmare){
+        
         for(int j = player.getHand().size(); j < 2; j++){
             Card card = deck.takeCard();
             usedCards.add(card);
@@ -119,7 +142,10 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
             if(card.isNightmare()){
                 // new CardViewer(card, nightmare.getType()).rulePrint();
                 cardViewer.rulePrint(card.getMoves(), card.getJumpPos(), card.getSpiderMove(), card.getWinks(), card.getZtokens(), nightmare.getType(), card.isNightmare(), card.bothConditions());
-                cardPlayer.playNightmareCard(card, nightmare, players);
+                if(cardPlayer.playNightmareCard(card, nightmare, players)){ //ugly syntactically, but it's playing the card *and* returning a true boolean if the nightmare is crossing.
+                    racingPhase.setNightmareHasCrossed(true);
+                    return;
+                }
                 j--;
                 continue;
             }

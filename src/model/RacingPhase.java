@@ -5,14 +5,14 @@ public class RacingPhase {
     public final int FIRST_CARD = 0;
     public final int SECOND_CARD = 1;
 
-    // private boolean nightmareHasCrossed;
+    private boolean nightmareHasCrossed;
     private ArrayList<Player> players;
     private Deck deck;
     private Nightmare nightmare;
     // private ArrayList<ModelListenerRacingPhase> listeners = new ArrayList<>();
     private DreamTileBoard dreamTileBoard;
     // private CardPlayer cardPlayer;
-    private int cardChoice = -1;
+    // private int cardChoice = -1;
 
     public RacingPhase(ArrayList<Player> players, Deck deck, Nightmare nightmare, DreamTileBoard dreamTileBoard/**, /**CardPlayer cardPlayer*/){
         this.players = players;
@@ -28,6 +28,7 @@ public class RacingPhase {
     public int getPlayerSize() {
         return players.size();
     }
+
 
     public ArrayList<Player> getPlayers() {
         return players;
@@ -50,13 +51,22 @@ public class RacingPhase {
         return dreamTileBoard;
     }
 
+    public boolean getNightmareHasCrossed() {
+        return nightmareHasCrossed;
+    }
+
+    public void setNightmareHasCrossed(boolean nightmareHasCrossed) {
+        this.nightmareHasCrossed = nightmareHasCrossed;
+    }
+
+    /**
     public void setCardChoice(int cardChoice) {
         if (cardChoice != FIRST_CARD && cardChoice != SECOND_CARD) {
             //throw some error. should it be try and catch? 
         } else {
             this.cardChoice = cardChoice;
         }
-    }
+    }*/
 
     public boolean isCardChoiceValid(int cardChoice) {
         boolean validChoice = true;

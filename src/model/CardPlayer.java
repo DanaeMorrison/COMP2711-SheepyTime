@@ -90,30 +90,17 @@ public class CardPlayer {
      * @param nightmare nightmare
      * @param players players to scare
      */
-<<<<<<< HEAD
-    public void playNightmareCard(Card card, Nightmare nightmare, ArrayList<Player> players) {
+    public boolean playNightmareCard(Card card, Nightmare nightmare, ArrayList<Player> players) {
         // should rename "moves" to "move"
         PlayerBoard playerBoard;
         NightmareBoard nightmareBoard = nightmare.getBoard();
 
         int moves = card.getMoves()[0]; //nightmare cards only have 1 move option
-        if(moves > 0 && moves != 10) {
-            int[] path = nightmareBoard.traveledSpaces(moves);
-
-            for(Player p : players){
-                playerBoard = p.getBoard();
-                for(int i = 0; i < path.length; i++){
-                    // don't we want to check if  the player is in a spot on the path
-                    // that the nightmare moves? shouldn't it be "playerBoard.occupied(path[i])"?
-                    if(playerBoard.occupied(i)) {
-=======
-    public boolean playNightmareCard(Card card, Nightmare nightmare, ArrayList<Player> players){
-        int moves = card.getMoves()[0]; //nightmare cards only have 1 move option
         boolean nightmareCrossed = false;
 
-        if(moves > 0){
+        if(moves > 0 && moves != 10) {
 
-            int[] path = nightmare.getBoard().traveledSpaces(moves);
+            int[] path = nightmareBoard.traveledSpaces(moves);
 
             int end = path.length;
 
@@ -122,17 +109,14 @@ public class CardPlayer {
                 nightmareCrossed = true;
             }
 
-            PlayerBoard playerBoard;
             for(Player p : players){
                 playerBoard = p.getBoard();
                 for(int i = 0; i < end; i++){
                     if(playerBoard.occupied(path[i])){
->>>>>>> 76a24c390760eac35d75ff1410b7c604b4b42b7c
                         nightmareCollision(p);
                     }
                 }
             }
-
             nightmare.getBoard().advance(moves);
         }
 
@@ -146,16 +130,12 @@ public class CardPlayer {
         }
 
         nightmare.getBoard().jump(card.getJumpPos());
-<<<<<<< HEAD
-        //something something spider token
-        // spider nightmare uses spiderMove
-        // Bump nightmare uses jumpPost
-=======
->>>>>>> 76a24c390760eac35d75ff1410b7c604b4b42b7c
         
         return nightmareCrossed;
 
         //TODO: something something spider token for different nightmares?
+        // spider nightmare uses spiderMove
+        // Bump nightmare uses jumpPost
         
     }
 
