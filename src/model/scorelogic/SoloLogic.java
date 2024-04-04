@@ -1,9 +1,7 @@
 package model.scorelogic;
 
-import java.util.ArrayList;
-
 import model.Player;
-import model.exception.InvalidScoreLogicCreationException;
+import model.Score;
 
 /**
  * Game Logic for solo
@@ -17,17 +15,52 @@ public class SoloLogic{
 
     private final int SCOING_RATIO = 5;
 
-    private ArrayList<Player> players;
+    private Player player;
+    private Score scoreBoard;
 
-    public SoloLogic(ArrayList<Player> players) {
-        if(players.size()!=1){
-            throw new InvalidScoreLogicCreationException("Number of players doesn't match with the requirement. Expected: 1, got: " + players.size());
-        } 
-        this.players = players;
+    public SoloLogic(Player player) {
+        this.player = player;
+        scoreBoard = player.getScoreboard();
     }
 
-    public void updateScore(int ) {
-
+    public void updateScore() {
+        int scoreAmount;
+        if(player.isScared()==2){
+            scoreAmount = WAKE_UP;
+        }else{
+            scoreAmount = scoreBoard.getWinkPos() / SCOING_RATIO;
+        }
+        getPillowScore(scoreAmount);
     }
 
+    private void getPillowScore(int score){
+        scoreBoard.setPillowPos(scoreBoard.getPillowPos() -score);
+    }
+
+    public String getWinner(int numRound){
+        if(scoreBoard.getDistance() <=0){
+            int finalScore = scoreBoard.getWinkPos();
+            finalScore += 2*(scoreBoard.getPillowPos() / 5);
+            finalScore -= 5*numRound;
+            return getResult(finalScore);
+        }
+        return null;
+    }
+
+    private String getResult(int finalScore){
+        String result;
+        if(finalScore <10){
+            result = "9 or less points: Restless Sleeper...";
+        }
+        else if (finalScore <20){
+            result = "10-19 points: Solid Snooze";
+        }
+        else if (finalScore <30){
+            result = "20-29 points: Amazing Dreaming!";
+        }
+        else{
+            result = "30 or more points: The Dreamiest Sheep!!!";
+        }
+        return result;
+    }
 }
