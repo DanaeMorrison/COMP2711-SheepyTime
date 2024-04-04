@@ -12,7 +12,7 @@ import model.Score;
  * @author Dylan Kim
  * @version 1.0
  */
-public abstract class MultiPlayerLogic{
+public abstract class MultiPlayerLogic implements ScoreLogic{
 
     private ArrayList<Player> players;
     private final int WAKE_UP = 3;

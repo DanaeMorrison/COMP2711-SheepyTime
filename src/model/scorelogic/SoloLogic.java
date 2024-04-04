@@ -9,7 +9,7 @@ import model.Score;
  * @author Dylan Kim
  * @version 1.0
  */
-public class SoloLogic{
+public class SoloLogic implements ScoreLogic{
 
     private final int WAKE_UP = 0;
 
