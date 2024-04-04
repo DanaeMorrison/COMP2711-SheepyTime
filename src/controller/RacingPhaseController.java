@@ -92,6 +92,8 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
                 usedCards.add(picked);
                 hand.remove(cardChoice);
 
+                // make separate method here that will handle the controller settings for the card
+                // player model class
                 cardPlayer.playCard(picked, curr, nightmare);
 
                 //TODO: here, the dreamtile is always being used if it can be used. we need to ask the player if they want to use it or not.
@@ -212,6 +214,10 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
     private int askCardChoice() {
         boolean validInput = false;
         int cardChoice;
+
+        cardChoice = racingPhaseViewer.getCardChoiceOnError();
+        validInput = racingPhase.isCardChoiceValid(cardChoice);
+        
         do {
             cardChoice = racingPhaseViewer.getCardChoiceOnError();
             validInput = racingPhase.isCardChoiceValid(cardChoice);
