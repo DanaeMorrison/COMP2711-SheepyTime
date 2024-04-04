@@ -27,10 +27,10 @@ public class CardPlayer {
      * @param card Card to be played.
      * @param player Player playing the card.
      */
-    public void playCard(Card card, Player player, Nightmare nightmare){
+    /** public void playCard(Card card, Player player, Nightmare nightmare){
         int secondAbility = getValidCardOptions(card);
         PlayerBoard board = player.getBoard();
-        if(!card.bothConditions()){ //"OR" card
+        if(!card.bothConditions()) {//"OR" card
             notifyListenersDisplayAbilityOptions(secondAbility);
             int ability = notifyListenersRequestAskAbility(secondAbility);
 
@@ -63,11 +63,27 @@ public class CardPlayer {
 
             board.advance(moveAmount);
             player.setWinks(player.getWinks() + card.getWinks());
-            //player.setZtokens(player.getZtokens() + card.getZtokens()); need to add proper ztoken functionality still
+            //player.setZtokens(player.getZtokens() + card.getZtokens()); need to add proper ztoken functionality still  
+        }
 
-            if(board.getIndex() == nightmare.getBoard().getIndex()){
-                nightmareCollision(player);
-            }   
+        if(board.getIndex() == nightmare.getBoard().getIndex()){
+            nightmareCollision(player);
+        } 
+    }*/
+    // maybe have the method below return a string with a message saying what action was taken
+
+    public void playCard(Card card, Player player, Nightmare nightmare, int ability, PlayerBoard board) {
+        switch(ability){
+            case 1:
+                int moveAmount = getMoveAmount(card.getMoves());
+                if(board.isCrossing(moveAmount)){
+                    resolveFenceCrossing(player);
+                }
+                board.advance(moveAmount);
+            case 2:
+                player.setWinks(player.getWinks() + card.getWinks());
+            case 3:
+                //add ztokens and infinite ztokens, no dreamtile functionality yet
         }
     }
 
@@ -82,6 +98,9 @@ public class CardPlayer {
             player.setAwake(true);
         }
     }
+
+    // TODO: method above should return a string that either says "Player name got scared!"
+    // or "Player name got scared awake!"
 
     /**
      * Deals with playing Nightmare cards, and executes all the given moves from given card.
@@ -201,7 +220,7 @@ public class CardPlayer {
         }
     }
 
-    private int getValidCardOptions(Card card) {
+    public int getValidCardOptions(Card card) {
         int secondAbility = 0;
 
         if (card.getWinks() != 0) {
@@ -210,6 +229,14 @@ public class CardPlayer {
             secondAbility = 3;
         }
         return secondAbility;
+    }
+
+    public boolean isAbilityChoiceValid(int abilityChoice, int secondAbility) {
+        boolean validOption = true;
+        if (abilityChoice != MOVE_ABILITY && abilityChoice != secondAbility) {
+            validOption = false;
+        }
+        return validOption;
     }
 
     private void notifyListenersDisplayAbilityOptions(int secondAbility) {

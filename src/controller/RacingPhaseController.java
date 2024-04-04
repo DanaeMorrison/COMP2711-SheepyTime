@@ -80,6 +80,15 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
                 // should the model be updated to store the currently chosen card?
                 //cardChoice = racingPhaseViewer.getCardChoice();
                 cardChoice = askCardChoice();
+                // IGNORE
+                // instead: make a handle card method that will go through taking in input,
+                //          choosing a card from the hand based on the input, and playing the card.
+                //          if the player's hand and the usedCards are handed to the method, then the
+                //          picked card can be added to the usedCards and removed from the hand within
+                //          that method. Otherwise:
+                //          make the method return the integer that was picked so that the matching card
+                //          can be added to used cards and so it can be removed from the player's hand
+                //          
                 // cardChoice = notifyListenersAskCardChoice();
 
                 // make a version that says if thrown an error, will ask for new input
@@ -94,7 +103,8 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
 
                 // make separate method here that will handle the controller settings for the card
                 // player model class
-                cardPlayer.playCard(picked, curr, nightmare);
+                playCard(picked, curr, nightmare);
+
 
                 //TODO: here, the dreamtile is always being used if it can be used. we need to ask the player if they want to use it or not.
                 // will put in it's own class like CardPlayer
@@ -217,11 +227,42 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
 
         cardChoice = racingPhaseViewer.getCardChoice();
         validInput = racingPhase.isCardChoiceValid(cardChoice);
+        // follow something like "success = racingPhase.resolveCard(cardChoice);"
 
         do {
             cardChoice = racingPhaseViewer.getCardChoiceOnError();
             validInput = racingPhase.isCardChoiceValid(cardChoice);
         } while (!validInput);
         return cardChoice;
+    }
+
+    private void playCard(Card pickedCard, Player currentPlayer, Nightmare nightmare) {
+        boolean validInput = false;
+        int abilityChoice;
+        // cardPlayer.playCard(picked, curr, nightmare);
+
+        int secondAbility = cardPlayer.getValidCardOptions(pickedCard);
+        PlayerBoard board = currentPlayer.getBoard();
+
+        if(!pickedCard.bothConditions()) {
+            racingPhaseViewer.displayAbilityOptions(secondAbility);
+            abilityChoice = racingPhaseViewer.getAbilityChoice(secondAbility);
+            validInput = cardPlayer.isAbilityChoiceValid(abilityChoice, secondAbility);
+
+            do {
+                abilityChoice = racingPhaseViewer.getAbilityChoiceOnError(secondAbility);
+                validInput = cardPlayer.isAbilityChoiceValid(abilityChoice, secondAbility);
+            } while (!validInput);
+
+            // if ability choice == 1 and getMoveAmount > 1 then need to ask for the length that the user wants to travel
+            // then this info could be passed to a different playCard method
+
+            // otherwise, this method can be played
+            cardPlayer.playCard(pickedCard, currentPlayer, nightmare, abilityChoice, board);
+
+            // both of these should be made into booleans so we can know if the player hopped the fence
+        } else {
+            // make a racingphaseviewer method to print "All abilities on the card will be played"
+        }
     }
 }

@@ -67,12 +67,16 @@ public class RacingPhase {
             this.cardChoice = cardChoice;
         }
     }*/
-
+    
+    // rename resolveCard. IGNORE for now
     public boolean isCardChoiceValid(int cardChoice) {
         boolean validChoice = true;
         if (cardChoice != FIRST_CARD && cardChoice != SECOND_CARD) {
             validChoice = false;
         }
+        /** if (validChoice) {
+            // do card player
+        }*/
         return validChoice;
     }
 }
