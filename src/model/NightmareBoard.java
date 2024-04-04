@@ -66,6 +66,7 @@ public class NightmareBoard implements BoardInterface{
      * 
      * @param position Tile to jump to
      */
+    @Override
     public void jump(int position){
         this.position = position%10;
     }
@@ -77,6 +78,7 @@ public class NightmareBoard implements BoardInterface{
      * @param steps Steps to be checked
      * @return true if crossing, false if not
      */
+    @Override
     public boolean isCrossing(int steps){
         if((getIndex() + steps) >= 10){
             return true;

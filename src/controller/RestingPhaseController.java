@@ -4,7 +4,6 @@ import model.DreamTile;
 import model.DreamTileBoard;
 import model.DreamTileCollection;
 import model.RestingPhase;
-import model.RestingPhaseAction;
 import model.RestingPhaseCatchZ;
 import model.RestingPhasePutNewTile;
 import model.exception.GameLogicViolationException;

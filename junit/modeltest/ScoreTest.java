@@ -31,29 +31,29 @@ public class ScoreTest {
 
     @Test
     public void testWon_PlayerPosGreaterThanPillowPos_ReturnsTrue() {
-        score.setPlayerPos(10);
+        score.setWinkPos(10);
         score.setPillowPos(5);
         assertTrue(score.won());
     }
 
     @Test
     public void testWon_PlayerPosEqualToPillowPos_ReturnsTrue() {
-        score.setPlayerPos(5);
+        score.setWinkPos(5);
         score.setPillowPos(5);
         assertTrue(score.won());
     }
 
     @Test
     public void testWon_PlayerPosLessThanPillowPos_ReturnsFalse() {
-        score.setPlayerPos(3);
+        score.setWinkPos(3);
         score.setPillowPos(8);
         assertFalse(score.won());
     }
 
     @Test
     public void testSetPlayerPos() {
-        score.setPlayerPos(7);
-        assertEquals(7, score.getPlayerPos());
+        score.setWinkPos(7);
+        assertEquals(7, score.getWinkPos());
     }
 
     @Test
@@ -70,8 +70,8 @@ public class ScoreTest {
 
     @Test
     public void testGetPlayerPos() {
-        score.setPlayerPos(10);
-        int playerPos = score.getPlayerPos();
+        score.setWinkPos(10);
+        int playerPos = score.getWinkPos();
         assertEquals(10, playerPos);
     }
 

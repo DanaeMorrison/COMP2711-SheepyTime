@@ -12,6 +12,7 @@ public class PlayerBoard implements BoardInterface{
     /**
      * Empties out the board, and resets the player position to 0.
      */
+    @Override
     public void emptyBoard(){
         position = -1;
     }
@@ -22,6 +23,7 @@ public class PlayerBoard implements BoardInterface{
      * @param index index
      * @return true if occupied, false otherwise.
      */
+    @Override
     public boolean occupied(int index){
         return index == position; 
     }
@@ -31,6 +33,7 @@ public class PlayerBoard implements BoardInterface{
      * 
      * @return location of character on board
      */
+    @Override
     public int getIndex(){
         return position;
     }
@@ -40,6 +43,7 @@ public class PlayerBoard implements BoardInterface{
      * 
      * @param steps Steps to advance
      */
+    @Override
     public void advance(int steps){
         position = (position+steps) % 10;
     }
@@ -49,6 +53,7 @@ public class PlayerBoard implements BoardInterface{
      * 
      * @param n Tile to jump to
      */
+    @Override
     public void jump(int n){
         this.position = position%10;
     }
@@ -60,6 +65,7 @@ public class PlayerBoard implements BoardInterface{
      * @param steps Steps to be checked
      * @return true if crossing, false if not
      */
+    @Override
     public boolean isCrossing(int steps){
         if((getIndex() + steps) >= 10){
             return true;
