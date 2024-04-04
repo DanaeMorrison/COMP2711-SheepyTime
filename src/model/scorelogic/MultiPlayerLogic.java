@@ -7,7 +7,12 @@ import java.util.Collections;
 import model.Player;
 import model.Score;
 
-public abstract class MultiPlayerLogic {
+/**
+ * Abtract Class contains scoring logic only for Multiplayer
+ * @author Dylan Kim
+ * @version 1.0
+ */
+public abstract class MultiPlayerLogic implements ScoreLogic{
 
     private ArrayList<Player> players;
     private final int WAKE_UP = 3;
@@ -16,41 +21,66 @@ public abstract class MultiPlayerLogic {
         this.players = players;
     }
 
+    /**
+     * Method that determines amount of pillowPoint that each player will get, and then call helper method to actually add them
+     */
+    @Override
+    public void updateScore() {
+        sortPlayersbyWinks();
+        int[] pillowPoints = new int[players.size()];
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).isScared() == 2) {
+                pillowPoints[i] = WAKE_UP;
+            } else if (i == 0) {
+                pillowPoints[i] = getLogic()[i];
+            } else if (getScore(i) == getScore(i - 1)) {
+                pillowPoints[i] = pillowPoints[i - 1];
+            }
+        }
+        updateScore(pillowPoints);
+    }
+    
+    /**
+     * Helper method that adds pillowPoints to each pillow
+     * @param pillowPoints array of pillowPoints
+     */
+    private void updateScore(int[] pillowPoints) {
+        for (int i = 0; i < pillowPoints.length; i++) {
+            getPillowPoints(i, pillowPoints[i]);
+        }
+    }
+
+    /**
+     * method that returns Score object of certain player
+     * @param index index of player in players
+     * @return their Score object
+     */
     protected Score getScore(int index) {
         return players.get(index).getScoreboard();
     }
 
-    protected void getPillowPoints(int index, int score) {
-        getScore(index).setPillowPos(getScore(index).getPillowPos() - score);
+    /**
+     * helper method that substract the pillowPoint from current position of Pillow Token
+     * @param index index of player
+     * @param pillowPoint amount of pillowPoint
+     */
+    protected void getPillowPoints(int index, int pillowPoint) {
+        getScore(index).setPillowPos(getScore(index).getPillowPos() - pillowPoint);
     }
 
+    /**
+     * Method that sort the list<Player> by player's position of Wink Token
+     */
     protected void sortPlayersbyWinks() {
         Collections.sort(players, new CompareByWinks());
     }
 
-    public void updateScore() {
-        sortPlayersbyWinks();
-        int[] scoreAmount = new int[players.size()];
-        for (int i = 0; i < players.size(); i++) {
-            if (players.get(i).isScared() == 2) {
-                scoreAmount[i] = WAKE_UP;
-            } else if (i == 0) {
-                scoreAmount[i] = getLogic()[i];
-            } else if (getScore(i) == getScore(i - 1)) {
-                scoreAmount[i] = scoreAmount[i - 1];
-            }
-        }
-        updateScore(scoreAmount);
-    }
 
-    private void updateScore(int[] scoreAmount) {
-        for (int i = 0; i < scoreAmount.length; i++) {
-            getPillowPoints(i, scoreAmount[i]);
-        }
-    }
 
-    // -1, 0, 2, 0
-
+    /**
+     * Method that returns the list of winner 
+     * @return the list of winner, if there is winner. otherwise empty list
+     */
     public List<Player> getWinner() {
         ArrayList<Player> winners = new ArrayList<>();
         int winningPoints = 0;

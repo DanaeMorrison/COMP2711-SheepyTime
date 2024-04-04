@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 import model.Player;
 
+/**
+ * Subfactory class for TrioLogic
+ * @author Dylan Kim
+ * @version 1.0
+ */
 public class TrioLogicFactory extends ScoreLogicFactory {
 
     @Override
