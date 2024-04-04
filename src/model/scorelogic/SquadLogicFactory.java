@@ -9,7 +9,7 @@ import model.Player;
  * @author Dylan Kim
  * @version 1.0
  */
-public class SquadLogicFactory extends ScoreLogicFactory {
+public class SquadLogicFactory extends MultiPlayerLogicFactory {
 
     @Override
     protected MultiPlayerLogic createLogic(ArrayList<Player> players) {

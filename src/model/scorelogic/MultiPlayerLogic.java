@@ -12,7 +12,7 @@ import model.Score;
  * @author Dylan Kim
  * @version 1.0
  */
-public abstract class MultiPlayerLogic implements ScoreLogic{
+public abstract class MultiPlayerLogic{
 
     private ArrayList<Player> players;
     private final int WAKE_UP = 3;
@@ -24,7 +24,6 @@ public abstract class MultiPlayerLogic implements ScoreLogic{
     /**
      * Method that determines amount of pillowPoint that each player will get, and then call helper method to actually add them
      */
-    @Override
     public void updateScore() {
         sortPlayersbyWinks();
         int[] pillowPoints = new int[players.size()];

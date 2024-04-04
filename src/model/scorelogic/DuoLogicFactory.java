@@ -9,7 +9,7 @@ import model.Player;
  * @author Dylan Kim
  * @version 1.0
  */
-public class DuoLogicFactory extends ScoreLogicFactory {
+public class DuoLogicFactory extends MultiPlayerLogicFactory {
 
     @Override
     protected MultiPlayerLogic createLogic(ArrayList<Player> players) {
