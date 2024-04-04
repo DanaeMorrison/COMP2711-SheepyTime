@@ -26,7 +26,7 @@ public class SoloLogic{
         this.players = players;
     }
 
-    public void updateScore() {
+    public void updateScore(int ) {
 
     }
 

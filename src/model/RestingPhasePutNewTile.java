@@ -62,4 +62,12 @@ public class RestingPhasePutNewTile extends RestingPhaseAction {
         return getBoard().getTile(location).isInfiniteBonus();
     }
 
+    public void putNewTileInSolo(DreamTile tile){
+        for(int i=0; i<10;i++){
+            if(!getBoard().occupied(i)){
+                getBoard().addTile(i,tile);
+            }
+        }
+    }
+
 }
