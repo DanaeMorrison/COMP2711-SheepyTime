@@ -39,9 +39,13 @@ public class RacingPhase {
 
         while(!allPlayersAwake(players)){
             for(int i = 0; i < playerCount; i++){
+
                 curr = players.get(i);
                 if(curr.isAwake()){
                     continue;
+                }
+                if(curr.justCrossed()){
+                    curr.setCrossed(false);
                 }
 
                 fillHand(curr, players, usedCards);
@@ -189,7 +193,7 @@ public class RacingPhase {
         int playerPos = board.getIndex();
         DreamTile tile =dreamTileBoard.getTile(playerPos);
         if(tile.canUse(player)){
-            tile.useTile(player);
+            tile.useTile(player, players, nightmare, dreamTileBoard);
         }
         tile.removePlayerToken(player);
     }
