@@ -17,13 +17,14 @@ public class DreamTileGenerator {
     }
 
     public class DreamTileFactory{
-        public DreamTile createDreamTile(String tileType){
+        public DreamTile createDreamTile(String tileType){ //TODO: add all tiles to this and tileNames[]
             if(tileType.equals("action hero")){
                 //return new ActionHeroTile();
             }
             else if(tileType.equals("final sprint")){
                 //return new FinalSprintTile();
             }
+            //...etc
             else{
                 throw new IllegalArgumentException("No such DreamTile exists!");
             }
