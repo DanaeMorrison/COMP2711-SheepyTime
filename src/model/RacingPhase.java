@@ -9,6 +9,7 @@ public class RacingPhase {
     public final int FIRST_CARD = 0;
     public final int SECOND_CARD = 1;
 
+    private boolean nightmareHasCrossed;
     private ArrayList<Player> players;
     private Deck deck;
     private Nightmare nightmare;
@@ -16,12 +17,13 @@ public class RacingPhase {
     private DreamTileBoard dreamTileBoard;
     private CardPlayer cardPlayer;
 
-    public RacingPhase(ArrayList<Player> players, Deck deck, Nightmare nightmare, DreamTileBoard dreamTileBoard, CardPlayer cardPlayer){
+    public RacingPhase(ArrayList<Player> players, Deck deck, Nightmare nightmare, DreamTileBoard dreamTileBoard){
         this.players = players;
         this.deck = deck;
         this.nightmare = nightmare;
         this.dreamTileBoard = dreamTileBoard;
-        this.cardPlayer = cardPlayer;
+        cardPlayer = new CardPlayer();
+        nightmareHasCrossed = false;
     }
 
     public void addListener(ModelListenerRacingPhase listener) {
@@ -37,12 +39,28 @@ public class RacingPhase {
 
         while(!allPlayersAwake(players)){
             for(int i = 0; i < playerCount; i++){
+
                 curr = players.get(i);
                 if(curr.isAwake()){
                     continue;
                 }
+                if(curr.justCrossed()){
+                    curr.setCrossed(false);
+                }
 
                 fillHand(curr, players, usedCards);
+
+                System.out.println("test1");
+
+                if(nightmareHasCrossed){
+                    for(Player p : players){
+                        if(!p.isAwake()){
+                            p.setWinks(0);
+                            p.setAwake(true);
+                        }
+                    }
+                    return; //racing phase done if nightmare has crossed
+                }
 
                 ArrayList<Card> hand = curr.getHand();
     
@@ -121,7 +139,10 @@ public class RacingPhase {
             if(card.isNightmare()){
                 // new CardViewer(card, nightmare.getType()).rulePrint();
                 notifyListenersPrintCard(card, nightmare.getType());
-                cardPlayer.playNightmareCard(card, nightmare, players);
+                if(cardPlayer.playNightmareCard(card, nightmare, players)){ //ugly syntactically, but it's playing the card *and* returning a true boolean if the nightmare is crossing.
+                    nightmareHasCrossed = true;
+                    return;
+                }
                 j--;
                 continue;
             }
@@ -174,7 +195,7 @@ public class RacingPhase {
         int playerPos = board.getIndex();
         DreamTile tile =dreamTileBoard.getTile(playerPos);
         if(tile.canUse(player)){
-            tile.useTile(player);
+            tile.useTile(player, players, nightmare, dreamTileBoard);
         }
         tile.removePlayerToken(player);
     }

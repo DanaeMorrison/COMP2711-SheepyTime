@@ -90,25 +90,50 @@ public class CardPlayer {
      * @param nightmare nightmare
      * @param players players to scare
      */
-    public void playNightmareCard(Card card, Nightmare nightmare, ArrayList<Player> players){
+    public boolean playNightmareCard(Card card, Nightmare nightmare, ArrayList<Player> players){
         int moves = card.getMoves()[0]; //nightmare cards only have 1 move option
+        boolean nightmareCrossed = false;
+
         if(moves > 0){
+
             int[] path = nightmare.getBoard().traveledSpaces(moves);
+
+            int end = path.length;
+
+            if(nightmare.getBoard().isCrossing(moves)){
+                end = getMaxIndex(path) + 1;
+                nightmareCrossed = true;
+            }
 
             PlayerBoard playerBoard;
             for(Player p : players){
                 playerBoard = p.getBoard();
-                for(int i = 0; i < path.length; i++){
-                    if(playerBoard.occupied(i)){
+                for(int i = 0; i < end; i++){
+                    if(playerBoard.occupied(path[i])){
                         nightmareCollision(p);
                     }
                 }
             }
+
+            nightmare.getBoard().advance(moves);
         }
 
         nightmare.getBoard().jump(card.getJumpPos());
-        //something something spider token
         
+        return nightmareCrossed;
+
+        //TODO: something something spider token for different nightmares?
+        
+    }
+
+    private static int getMaxIndex(int[] in){
+        int maxIndex = 0;
+        for(int i = 0; i < in.length; i++){
+            if(in[i] > in[maxIndex]){
+                maxIndex = i;
+            }
+        }
+        return maxIndex;
     }
 
     /**
@@ -147,6 +172,8 @@ public class CardPlayer {
         if(wakingUp == 1){
             player.setAwake(true);
         }
+
+        player.setCrossed(true);
     }
 
     /**
