@@ -16,6 +16,13 @@ import view.BoardViewer;
 import view.CardViewer;
 import view.RacingPhaseViewer;
 
+/**
+ * RacingPhase Model Class
+ * 
+ * @author Danae Morrison
+ * @version 1.0
+ */
+
 public class RacingPhaseController /**implements ModelListenerRacingPhase, ModelListenerCardPlayer*/ {
     public final int FIRST_CARD = 0;
     public final int SECOND_CARD = 1;
@@ -239,6 +246,9 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
     private void playCard(Card pickedCard, Player currentPlayer, Nightmare nightmare) {
         boolean validInput = false;
         int abilityChoice;
+        int moveAmount;
+        String response;
+
         // cardPlayer.playCard(picked, curr, nightmare);
 
         int secondAbility = cardPlayer.getValidCardOptions(pickedCard);
@@ -254,15 +264,80 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
                 validInput = cardPlayer.isAbilityChoiceValid(abilityChoice, secondAbility);
             } while (!validInput);
 
+            validInput = false;
+
             // if ability choice == 1 and getMoveAmount > 1 then need to ask for the length that the user wants to travel
             // then this info could be passed to a different playCard method
+            if (abilityChoice == 1) {
+                int[] moves = pickedCard.getMoves();
+                if (cardPlayer.getMovesLength(moves) > 1) {
+                    int selectedMove = racingPhaseViewer.getSpecificMove(moves);
+                    validInput = cardPlayer.isSpecificMoveValid(selectedMove, moves);
 
-            // otherwise, this method can be played
-            cardPlayer.playCard(pickedCard, currentPlayer, nightmare, abilityChoice, board);
+                    do {
+                        selectedMove = racingPhaseViewer.getSpecificMoveOnError(moves);
+                        validInput = cardPlayer.isSpecificMoveValid(selectedMove, moves);
+                    } while (!validInput);
 
+                    validInput = false;
+                    moveAmount = selectedMove;
+                } else {
+                    moveAmount = moves[0];
+                }
+
+                if (board.isCrossing(moveAmount)) {
+                    int wakingUp = racingPhaseViewer.getPlayOrCallNight();
+                    validInput = cardPlayer.isWakingUpValid(wakingUp);
+
+                    do {
+                        wakingUp = racingPhaseViewer.getPlayOrCallNightOnError();
+                        validInput = cardPlayer.isWakingUpValid(wakingUp);
+                    } while (!validInput);
+
+                    cardPlayer.resolveFenceCrossing(currentPlayer, wakingUp);
+                }
+
+                response = cardPlayer.movePlayer(currentPlayer, nightmare, board, moveAmount);
+            } else {
+                // otherwise, this method can be played
+                response = cardPlayer.playCard(pickedCard, currentPlayer, nightmare, abilityChoice, board);
+            }
+            // racingPhaseViewer.printCardPlayResponse(response);
+            
             // both of these should be made into booleans so we can know if the player hopped the fence
         } else {
             // make a racingphaseviewer method to print "All abilities on the card will be played"
+            int[] moves = pickedCard.getMoves();
+                if (cardPlayer.getMovesLength(moves) > 1) {
+                    int selectedMove = racingPhaseViewer.getSpecificMove(moves);
+                    validInput = cardPlayer.isSpecificMoveValid(selectedMove, moves);
+
+                    do {
+                        selectedMove = racingPhaseViewer.getSpecificMoveOnError(moves);
+                        validInput = cardPlayer.isSpecificMoveValid(selectedMove, moves);
+                    } while (!validInput);
+
+                    validInput = false;
+                    moveAmount = selectedMove;
+                } else {
+                    moveAmount = moves[0];
+                }
+
+                if (board.isCrossing(moveAmount)) {
+                    int wakingUp = racingPhaseViewer.getPlayOrCallNight();
+                    validInput = cardPlayer.isWakingUpValid(wakingUp);
+
+                    do {
+                        wakingUp = racingPhaseViewer.getPlayOrCallNightOnError();
+                        validInput = cardPlayer.isWakingUpValid(wakingUp);
+                    } while (!validInput);
+
+                    cardPlayer.resolveFenceCrossing(currentPlayer, wakingUp);
+                }
+
+                response = cardPlayer.movePlayer(currentPlayer, nightmare, board, moveAmount);
+                response += cardPlayer.playCard(pickedCard, currentPlayer, nightmare, secondAbility, board);
+                racingPhaseViewer.printCardPlayResponse(response);
         }
     }
 }

@@ -1,6 +1,15 @@
 package model;
 import java.util.ArrayList;
 
+/**
+ * RacingPhase Model Class
+ * 
+ * @author Julien Ouellette
+ * @version 1.0
+ * @author Danae Morrison
+ * @version 2.0- MVC compliant
+ */
+
 public class RacingPhase {
     public final int FIRST_CARD = 0;
     public final int SECOND_CARD = 1;

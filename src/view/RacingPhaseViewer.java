@@ -139,4 +139,8 @@ public class RacingPhaseViewer {
     public void printCardInHand(String playerName, int cardInHand) {
         System.out.println(playerName + "'s card #" + String.valueOf(cardInHand));
     }
+
+    public void printCardPlayResponse(String response) {
+        System.out.println(response);
+    }
 }
