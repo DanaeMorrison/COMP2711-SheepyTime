@@ -27,50 +27,8 @@ public class CardPlayer {
      * @param card Card to be played.
      * @param player Player playing the card.
      */
-    /** public void playCard(Card card, Player player, Nightmare nightmare){
-        int secondAbility = getValidCardOptions(card);
-        PlayerBoard board = player.getBoard();
-        if(!card.bothConditions()) {//"OR" card
-            notifyListenersDisplayAbilityOptions(secondAbility);
-            int ability = notifyListenersRequestAskAbility(secondAbility);
-
-            //make another function of this for controller and model to print out error message
-            while (ability != MOVE_ABILITY && ability != secondAbility) {
-                ability = notifyListenersRepeatRequestAskAbility(secondAbility);
-            }
-
-            switch(ability){
-                case 1:
-                    int moveAmount = getMoveAmount(card.getMoves());
-                    if(board.isCrossing(moveAmount)){
-                        resolveFenceCrossing(player);
-                    }
-                    board.advance(moveAmount);
-                case 2:
-                    player.setWinks(player.getWinks() + card.getWinks());
-                case 3:
-                    //add ztokens and infinite ztokens, no dreamtile functionality yet
-            }
-        }
-        else{ //"AND" card or single-ability card
-            int moveAmount = getMoveAmount(card.getMoves());
-
-
-
-            if(board.isCrossing(moveAmount)){
-                resolveFenceCrossing(player);
-            }
-
-            board.advance(moveAmount);
-            player.setWinks(player.getWinks() + card.getWinks());
-            //player.setZtokens(player.getZtokens() + card.getZtokens()); need to add proper ztoken functionality still  
-        }
-
-        if(board.getIndex() == nightmare.getBoard().getIndex()){
-            nightmareCollision(player);
-        } 
-    }*/
-    // maybe have the method below return a string with a message saying what action was taken
+    
+    // maybe have the method below return a string with a message saying what action was taken.
     // both action and if a player got scared or scared awake
 
     public String playCard(Card card, Player player, Nightmare nightmare, int ability, PlayerBoard board) {
@@ -211,18 +169,6 @@ public class CardPlayer {
      * 
      * @param player Player crossing fence
      
-    public void resolveFenceCrossing(Player player){
-        player.setWinks(player.getWinks() + 5);
-        int wakingUp = notifyListenersRequestResolveFenceCrossing();
-        
-        //make another function of this for controller and model to print out error message
-        while (wakingUp != KEEP_PLAY && wakingUp != CALL_NIGHT) {
-            wakingUp = notifyListenersRepeatRequestResolveFenceCrossing();
-        }
-        
-        if(wakingUp == 1){
-            player.setAwake(true);
-        }
     }*/
 
     public void resolveFenceCrossing(Player player, int wakingUp){
@@ -238,16 +184,9 @@ public class CardPlayer {
     /**
      * Gets a move amount from a user depending on the card's specifications.
      * 
-     * @param in Move array from card
-     * @return Final move amount
+     * @param moves Move array from card
+     * @return Length of array containing moves
      *
-    public int getMoveAmount(int[] in){
-        if(in.length > 1){
-            return multiMoveOptions(in);
-        }
-        else {
-            return in[0];
-        }
     }*/
 
     public int getMovesLength(int[] moves){
@@ -290,65 +229,4 @@ public class CardPlayer {
         }
         return validOption;
     }
-
-    /**
-    private void notifyListenersDisplayAbilityOptions(int secondAbility) {
-        for (ModelListenerCardPlayer listener: listeners) {
-            listener.onRequestDisplayAbilityOptions(secondAbility);
-        }
-    }
-
-    private int notifyListenersRequestAskAbility(int secondAbility) {
-        int abiltyChoice = 0;
-        for (ModelListenerCardPlayer listener: listeners) {
-            abiltyChoice = listener.onRequestAskAbility(secondAbility);
-        }
-
-        return abiltyChoice;
-    }
-
-    private int notifyListenersRepeatRequestAskAbility(int secondAbility) {
-        int abiltyChoice = 0;
-        for (ModelListenerCardPlayer listener: listeners) {
-            abiltyChoice = listener.onRequestRepeatAskAbility(secondAbility);
-        }
-
-        return abiltyChoice;
-    }
-
-    private int notifyListenersRequestSpecificMove(int[] moves) {
-        int specificMove = 0;
-        for (ModelListenerCardPlayer listener: listeners) {
-            specificMove = listener.onRequestSpecificMove(moves);
-        }
-
-        return specificMove;
-    }
-
-    private int notifyListenersRepeatRequestSpecificMove(int[] moves) {
-        int specificMove = 0;
-        for (ModelListenerCardPlayer listener: listeners) {
-            specificMove = listener.onRequestRepeatSpecificMove(moves);
-        }
-
-        return specificMove;
-    }
-
-    private int notifyListenersRequestResolveFenceCrossing() {
-        int playOrCallNight = -1;
-        for (ModelListenerCardPlayer listener: listeners) {
-            playOrCallNight = listener.onRequestResolveFenceCrossing();
-        }
-
-        return playOrCallNight;
-    }
-
-    private int notifyListenersRepeatRequestResolveFenceCrossing() {
-        int playOrCallNight = -1;
-        for (ModelListenerCardPlayer listener: listeners) {
-            playOrCallNight = listener.onRequestRepeatResolveFenceCrossing();
-        }
-
-        return playOrCallNight;
-    }*/
 }
