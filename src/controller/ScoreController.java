@@ -41,15 +41,15 @@ public class ScoreController {
         }
     }
 
-    public void updateScore() {
+    public boolean checkWinner() {
         scoreLogic.updateScore();
         if(scoreLogic.getWinner().equals("")){
             scoreViewer.showContinue();
             shiftPhase();
+            return false;
         }
-        else{
-            scoreViewer.showWinner(scoreLogic.getWinner(), isSolo);
-        }
+        scoreViewer.showWinner(scoreLogic.getWinner(), isSolo);
+        return true;
     }
 
     private void shiftPhase(){
