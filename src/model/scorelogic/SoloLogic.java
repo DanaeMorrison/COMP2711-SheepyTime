@@ -12,7 +12,6 @@ import model.Score;
 public class SoloLogic implements ScoreLogic{
 
     private final int WAKE_UP = 0;
-
     private final int SCOING_RATIO = 5;
 
     private Player player;
@@ -24,20 +23,32 @@ public class SoloLogic implements ScoreLogic{
         scoreBoard = player.getScoreboard();
     }
 
+    /**
+     * Method that determine the score that the player got at the current round
+     */
     public void updateScore() {
+        numRound++;
         int scoreAmount;
         if(player.isScared()==2){
             scoreAmount = WAKE_UP;
         }else{
             scoreAmount = scoreBoard.getWinkPos() / SCOING_RATIO;
         }
-        getPillowScore(scoreAmount);
+        updatePillowScore(scoreAmount);
     }
 
-    private void getPillowScore(int score){
+    /**
+     * Method that updates the position of the pillowToken 
+     * @param score The amount of score that the player got
+     */
+    private void updatePillowScore(int score){
         scoreBoard.setPillowPos(scoreBoard.getPillowPos() -score);
     }
 
+    /**
+     * Method that returns the result
+     * @return Corresponding message depending on the score, if the player wins. Otherwise,  
+     */
     public String getWinner(){
         if(scoreBoard.getDistance() <=0){
             int finalScore = scoreBoard.getWinkPos();
@@ -46,10 +57,6 @@ public class SoloLogic implements ScoreLogic{
             return getResult(finalScore);
         }
         return null;
-    }
-
-    public void setNumRound(int numRound){
-        this.numRound = numRound;
     }
 
     private String getResult(int finalScore){

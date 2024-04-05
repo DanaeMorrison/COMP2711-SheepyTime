@@ -1,5 +1,9 @@
 package view;
 
+/**
+ * @author Dylan Kim
+ * @version 1.0
+ */
 public class ScoreViewer {
 
     public void showWinner(String result, boolean isSolo){

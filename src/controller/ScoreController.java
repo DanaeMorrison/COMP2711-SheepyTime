@@ -12,6 +12,7 @@ import view.ScoreViewer;
 import model.Player;
 
 /**
+ * 
  * @author Dylan Kim
  * @version 1.0
  */
@@ -40,9 +41,18 @@ public class ScoreController {
         }
     }
 
-    public void updateScore() {
+    private void updateScore() {
         scoreLogic.updateScore();
-        scoreViewer.showWinner(scoreLogic.getWinner(), isSolo);
+        if(scoreLogic.getWinner().equals("")){
+            scoreViewer.showContinue();
+        }
+        else{
+            scoreViewer.showWinner(scoreLogic.getWinner(), isSolo);
+        }
+    }
 
+    public void shiftPhase(){
+        updateScore();
+        //Move to the RestingPhase
     }
 }
