@@ -59,6 +59,9 @@ public class SoloLogic implements ScoreLogic{
         return null;
     }
 
+    /**
+     * 
+     */
     private String getResult(int finalScore){
         String result="";
         if(finalScore <10){
