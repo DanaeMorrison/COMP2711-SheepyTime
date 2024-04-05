@@ -115,7 +115,7 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
 
                 //TODO: here, the dreamtile is always being used if it can be used. we need to ask the player if they want to use it or not.
                 // will put in it's own class like CardPlayer
-                dreamTileUser(curr, dreamTileBoard);
+                dreamTileUser(curr, players, nightmare, dreamTileBoard);
 
                 if (onePlayerAsleep(players)) {
                     Card card = deck.takeCard();
@@ -218,14 +218,13 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
         return (asleepCount == 1);
     }
 
-    private void dreamTileUser(Player player, DreamTileBoard dreamTileBoard){
+    private void dreamTileUser(Player player, ArrayList<Player> players, Nightmare nightmare, DreamTileBoard dreamTileBoard){
         PlayerBoard board = player.getBoard();
         int playerPos = board.getIndex();
         DreamTile tile = dreamTileBoard.getTile(playerPos);
         if(tile.canUse(player)){
-            tile.useTile(player);
+            tile.useTile(player, players, nightmare, dreamTileBoard);
         }
-        tile.removePlayerToken(player);
     }
 
     private int askCardChoice() {
