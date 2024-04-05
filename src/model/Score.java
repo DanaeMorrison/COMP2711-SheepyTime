@@ -1,42 +1,41 @@
 package model;
+
 public class Score {
-    private Player player;
-    private int playerPos;
+    private int winkPos;
     private int pillowPos;
     private int pillowMod;
 
-    public Score(Player player){
-        this.player = player;
-        playerPos = 0;
+    public Score() {
+        winkPos = 0;
         pillowPos = 40;
         pillowMod = 0;
     }
 
-    public boolean won(){
-        return (playerPos >= pillowPos);
+    public int getDistance() {
+        return pillowPos-winkPos;
     }
 
-    public void setPlayerPos(int pos){
-        playerPos = pos;
+    public void setWinkPos(int pos) {
+        winkPos = pos;
     }
-    
-    public void setPillowPos(int pos){
+
+    public void setPillowPos(int pos) {
         pillowPos = pos;
     }
 
-    public void setPillowMod(int mod){
+    public void setPillowMod(int mod) {
         pillowMod = mod;
     }
 
-    public int getPlayerPos(){
-        return playerPos;
+    public int getWinkPos() {
+        return winkPos;
     }
 
-    public int getPillowPos(){
+    public int getPillowPos() {
         return pillowPos;
     }
 
-    public int getPillowMod(){
+    public int getPillowMod() {
         return pillowMod;
     }
 }

@@ -4,4 +4,6 @@ public interface BoardInterface {
     public void emptyBoard();
     public int getIndex();
     public void advance(int steps);
+    public void jump(int position);
+    public boolean isCrossing(int steps);
 }

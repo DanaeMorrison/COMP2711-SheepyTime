@@ -12,6 +12,7 @@ public class PlayerBoard implements BoardInterface{
     /**
      * Empties out the board, and resets the player position to 0.
      */
+    @Override
     public void emptyBoard(){
         position = -1;
     }
@@ -22,6 +23,7 @@ public class PlayerBoard implements BoardInterface{
      * @param index index
      * @return true if occupied, false otherwise.
      */
+    @Override
     public boolean occupied(int index){
         return index == position; 
     }
@@ -31,25 +33,33 @@ public class PlayerBoard implements BoardInterface{
      * 
      * @return location of character on board
      */
+    @Override
     public int getIndex(){
         return position;
     }
 
     /**
      * Advances the character forwards by n steps, looping around to 0 if needed.
-     * 
+     * And forces to stay at position 0, if token is trying to pass the fence backward
      * @param steps Steps to advance
      */
+    @Override
     public void advance(int steps){
+        if(position+steps<0){
+            position = 0;
+        }
+        else{
         position = (position+steps) % 10;
+        }
     }
 
     /**
      * Jumps character directly to a tile
      * 
-     * @param n Tile to jump to
+     * @param position Tile to jump to
      */
-    public void jump(int n){
+    @Override
+    public void jump(int position){
         this.position = position%10;
     }
 
@@ -60,6 +70,7 @@ public class PlayerBoard implements BoardInterface{
      * @param steps Steps to be checked
      * @return true if crossing, false if not
      */
+    @Override
     public boolean isCrossing(int steps){
         if((getIndex() + steps) >= 10){
             return true;

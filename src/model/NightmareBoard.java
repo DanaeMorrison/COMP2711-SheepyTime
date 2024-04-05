@@ -37,12 +37,17 @@ public class NightmareBoard implements BoardInterface{
 
     /**
      * Advances the character forwards by n steps, looping around to 0 if needed.
-     * 
-     * @param n Steps to advance
+     * And forces to stay at position 0, if token is trying to pass the fence backward
+     * @param steps Steps to advance
      */
     @Override
     public void advance(int steps) {
+        if(position+steps<0){
+            position = 0;
+        }
+        else{
         position = (position+steps) % 10;
+        }
     }
 
     /**
@@ -66,6 +71,7 @@ public class NightmareBoard implements BoardInterface{
      * 
      * @param position Tile to jump to
      */
+    @Override
     public void jump(int position){
         this.position = position%10;
     }
@@ -77,6 +83,7 @@ public class NightmareBoard implements BoardInterface{
      * @param steps Steps to be checked
      * @return true if crossing, false if not
      */
+    @Override
     public boolean isCrossing(int steps){
         if((getIndex() + steps) >= 10){
             return true;

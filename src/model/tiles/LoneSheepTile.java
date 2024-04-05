@@ -1,5 +1,9 @@
 package model.tiles;
+import java.util.ArrayList;
+
 import model.DreamTile;
+import model.DreamTileBoard;
+import model.Nightmare;
 import model.Player;
 
 public class LoneSheepTile extends DreamTile{
@@ -8,7 +12,17 @@ public class LoneSheepTile extends DreamTile{
     }
 
     @Override
-    public void useTile(Player player){
-        //TODO: ?????
+    public void useTile(Player player, ArrayList<Player> players, Nightmare nightmare, DreamTileBoard dreamTileBoard){
+        int index = player.getBoard().getIndex();
+        boolean hasZ = false;
+        for(int i = (index - 2) % 10; i < (index  + 2) % 10; i++){
+            if(dreamTileBoard.getTile(i).canUse(player)){
+                hasZ = true;
+                break;
+            }
+        }
+        if(!hasZ){
+            player.setWinks(player.getWinks() + 3);
+        }
     }
 }

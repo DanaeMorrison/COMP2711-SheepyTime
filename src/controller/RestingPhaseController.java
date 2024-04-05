@@ -4,7 +4,6 @@ import model.DreamTile;
 import model.DreamTileBoard;
 import model.DreamTileCollection;
 import model.RestingPhase;
-import model.RestingPhaseAction;
 import model.RestingPhaseCatchZ;
 import model.RestingPhasePutNewTile;
 import model.exception.GameLogicViolationException;
@@ -27,19 +26,27 @@ public class RestingPhaseController {
     private DreamTileViewer tileViewer;
     private DreamTileBoardViewer boardViewer;
     private DreamTileBoard tileBoard;
+    private DreamTileCollection dreamTiles;
     private RestingPhaseCatchZ actionCatchZ;
     private RestingPhasePutNewTile actionPutNewTile;
+    private boolean isSolo = false;
     
 
-    public RestingPhaseController(DreamTileBoard tileBoard, DreamTileBoardViewer boardViewer, ArrayList<Player> player,
+    public RestingPhaseController(DreamTileBoard tileBoard, DreamTileBoardViewer boardViewer, ArrayList<Player> players,
     DreamTileCollection dreamTiles, DreamTileViewer tileViewer) {
-        phase = new RestingPhase(player, dreamTiles);
+        phase = new RestingPhase(players, dreamTiles);
         
+        if(players.size()==1){
+            isSolo = true;
+        }
+
         phaseViewer = new RestingPhaseViewer();
         this.boardViewer = boardViewer;
         this.tileViewer = tileViewer;
         
         this.tileBoard = tileBoard;
+
+        this.dreamTiles = dreamTiles;
         
         actionCatchZ = new RestingPhaseCatchZ(phase, tileBoard);
         actionPutNewTile = new RestingPhasePutNewTile(phase, tileBoard);
@@ -65,6 +72,11 @@ public class RestingPhaseController {
             //Show Update
             
         }while(phase.setNextPlayer());
+
+        if(isSolo){
+            actionPutNewTile.putNewTileInSolo(dreamTiles.takeTile());
+        }
+
         //Move to Racing Phase
     }
 
@@ -169,11 +181,11 @@ public class RestingPhaseController {
      */
     private void showMarket(){
         for(int i=0 ; i<4 ; i++){
-            if(getTile(i)==null){
+            if(getTileFromMarket(i)==null){
                 tileViewer.printDreamTile("(Empty)", "");
             }
             else{
-                tileViewer.printDreamTile(getTile(i).getTileName(), getTile(i).getRule());
+                tileViewer.printDreamTile(getTileFromMarket(i).getTileName(), getTileFromMarket(i).getRule());
             }
         }
     }
@@ -183,7 +195,7 @@ public class RestingPhaseController {
      * @param index index in the market
      * @return
      */
-    private DreamTile getTile(int index){
+    private DreamTile getTileFromMarket(int index){
         return phase.getMarket().get(index);
     }
 

@@ -31,6 +31,16 @@ public abstract class DreamTile{
         return false;
     }
 
+    public int getTokenCount(Player player){
+        int count = 0;
+        for(ZToken z : tokens){
+            if(z.getOwner() == player){
+                count++;
+            }
+        }
+        return count;
+    }
+
     /**
      * Adds a z token to the tile.
      * 
@@ -75,7 +85,7 @@ public abstract class DreamTile{
         return tokens;
     }
 
-    public void useTile(Player player){};
+    public void useTile(Player player, ArrayList<Player> players, Nightmare nightmare, DreamTileBoard dreamTileBoard){};
 
     //todo: use method, player param and move/add whatever as required
 }

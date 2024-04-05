@@ -1,5 +1,9 @@
 package model.tiles;
+import java.util.ArrayList;
+
 import model.DreamTile;
+import model.DreamTileBoard;
+import model.Nightmare;
 import model.Player;
 
 public class PerfectLandingTile extends DreamTile{
@@ -8,7 +12,7 @@ public class PerfectLandingTile extends DreamTile{
     }
 
     @Override
-    public void useTile(Player player){
+    public void useTile(Player player, ArrayList<Player> players, Nightmare nightmare, DreamTileBoard dreamTileBoard){
         if(player.justCrossed()){
             player.setWinks(player.getWinks() + player.getBoard().getIndex() + 1);
         }

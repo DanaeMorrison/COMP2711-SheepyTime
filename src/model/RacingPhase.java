@@ -23,7 +23,8 @@ public class RacingPhase {
     // private CardPlayer cardPlayer;
     // private int cardChoice = -1;
 
-    public RacingPhase(ArrayList<Player> players, Deck deck, Nightmare nightmare, DreamTileBoard dreamTileBoard/**, /**CardPlayer cardPlayer*/){
+
+    public RacingPhase(ArrayList<Player> players, Deck deck, Nightmare nightmare, DreamTileBoard dreamTileBoard){
         this.players = players;
         this.deck = deck;
         this.nightmare = nightmare;
@@ -37,7 +38,6 @@ public class RacingPhase {
     public int getPlayerSize() {
         return players.size();
     }
-
 
     public ArrayList<Player> getPlayers() {
         return players;
@@ -82,10 +82,18 @@ public class RacingPhase {
         boolean validChoice = true;
         if (cardChoice != FIRST_CARD && cardChoice != SECOND_CARD) {
             validChoice = false;
-        }
+          }
         /** if (validChoice) {
             // do card player
         }*/
         return validChoice;
     }
+
+    private void dreamTileUser(Player player){
+        PlayerBoard board = player.getBoard();
+        int playerPos = board.getIndex();
+        DreamTile tile =dreamTileBoard.getTile(playerPos);
+        if(tile.canUse(player)){
+            tile.useTile(player, players, nightmare, dreamTileBoard);
+    }  
 }
