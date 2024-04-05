@@ -97,7 +97,7 @@ public class Player{
     public PlayerBoard getBoard(){
         return (PlayerBoard) board;
     }
-
+    // TODO: rename so that it's clear that a count of Ztokens is being returned
     public int getZtokens(){
         return zTokens;
     }

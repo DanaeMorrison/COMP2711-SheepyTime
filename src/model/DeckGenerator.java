@@ -117,6 +117,10 @@ public class DeckGenerator {
      */
     public void makeDeck() {
         //private ArrayList<Boolean> nightmarePlayer2 = new ArrayList<>();
+
+        // TODO: this could be simplified. the sleep cards for 2 players will always be false for
+        // nightmare and both conditions, so the card can be constructed in the loop
+        // with just false passed in those positions
         isNightmarePlayer2 = fillFalse(isNightmarePlayer2);
         bothConditionsPlayer2 = fillFalse(bothConditionsPlayer2);
         //jumpPosPlayer2 = fillZeroPlayerTwo(jumpPosPlayer2);

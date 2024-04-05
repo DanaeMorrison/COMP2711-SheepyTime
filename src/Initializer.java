@@ -9,6 +9,7 @@ import model.Player;
 import model.RacingPhase;
 import model.tiles.DreamJournalTile;
 
+
 public class Initializer {
 
     /**
