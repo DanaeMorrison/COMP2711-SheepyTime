@@ -1,7 +1,6 @@
 package model.scorelogic;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Collections;
 
 import model.Player;
@@ -74,13 +73,11 @@ public abstract class MultiPlayerLogic implements ScoreLogic{
         Collections.sort(players, new CompareByWinks());
     }
 
-
-
     /**
      * Method that returns the list of winner 
      * @return the list of winner, if there is winner. otherwise empty list
      */
-    public List<Player> getWinner() {
+    public String getWinner() {
         ArrayList<Player> winners = new ArrayList<>();
         int winningPoints = 0;
         for (int i = 0; i < players.size(); i++) {
@@ -100,7 +97,16 @@ public abstract class MultiPlayerLogic implements ScoreLogic{
             }
         }
 
-        return winners;
+        return toString(winners);
+    }
+
+    private String toString(ArrayList<Player> winners){
+        String winner = "";
+        for (int i=0 ; i<winners.size() ; i++){
+            winner += winners.get(i).getName();
+        }
+        
+        return winner;
     }
 
     private boolean newWinningPoints(int index, int winningPoints) {

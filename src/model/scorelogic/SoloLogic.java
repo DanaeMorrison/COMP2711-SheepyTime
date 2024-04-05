@@ -17,6 +17,7 @@ public class SoloLogic implements ScoreLogic{
 
     private Player player;
     private Score scoreBoard;
+    private int numRound=0;
 
     public SoloLogic(Player player) {
         this.player = player;
@@ -37,7 +38,7 @@ public class SoloLogic implements ScoreLogic{
         scoreBoard.setPillowPos(scoreBoard.getPillowPos() -score);
     }
 
-    public String getWinner(int numRound){
+    public String getWinner(){
         if(scoreBoard.getDistance() <=0){
             int finalScore = scoreBoard.getWinkPos();
             finalScore += 2*(scoreBoard.getPillowPos() / 5);
@@ -47,8 +48,12 @@ public class SoloLogic implements ScoreLogic{
         return null;
     }
 
+    public void setNumRound(int numRound){
+        this.numRound = numRound;
+    }
+
     private String getResult(int finalScore){
-        String result;
+        String result="";
         if(finalScore <10){
             result = "9 or less points: Restless Sleeper...";
         }
