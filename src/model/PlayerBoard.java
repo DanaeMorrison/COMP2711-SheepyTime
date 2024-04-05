@@ -40,21 +40,26 @@ public class PlayerBoard implements BoardInterface{
 
     /**
      * Advances the character forwards by n steps, looping around to 0 if needed.
-     * 
+     * And forces to stay at position 0, if token is trying to pass the fence backward
      * @param steps Steps to advance
      */
     @Override
     public void advance(int steps){
+        if(position+steps<0){
+            position = 0;
+        }
+        else{
         position = (position+steps) % 10;
+        }
     }
 
     /**
      * Jumps character directly to a tile
      * 
-     * @param n Tile to jump to
+     * @param position Tile to jump to
      */
     @Override
-    public void jump(int n){
+    public void jump(int position){
         this.position = position%10;
     }
 

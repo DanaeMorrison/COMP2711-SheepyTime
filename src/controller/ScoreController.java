@@ -41,18 +41,18 @@ public class ScoreController {
         }
     }
 
-    private void updateScore() {
+    public void updateScore() {
         scoreLogic.updateScore();
         if(scoreLogic.getWinner().equals("")){
             scoreViewer.showContinue();
+            shiftPhase();
         }
         else{
             scoreViewer.showWinner(scoreLogic.getWinner(), isSolo);
         }
     }
 
-    public void shiftPhase(){
-        updateScore();
+    private void shiftPhase(){
         //Move to the RestingPhase
     }
 }
