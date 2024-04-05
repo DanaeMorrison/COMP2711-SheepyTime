@@ -41,18 +41,17 @@ public class ScoreController {
         }
     }
 
+    /**
+     * Method that updates the score of each player, and then returns whether there is any winner or not
+     * @return true if there is a winner, false otherwise
+     */
     public boolean checkWinner() {
         scoreLogic.updateScore();
         if(scoreLogic.getWinner().equals("")){
             scoreViewer.showContinue();
-            shiftPhase();
             return false;
         }
         scoreViewer.showWinner(scoreLogic.getWinner(), isSolo);
         return true;
-    }
-
-    private void shiftPhase(){
-        //Move to the RestingPhase
     }
 }

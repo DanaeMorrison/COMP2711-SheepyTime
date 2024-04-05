@@ -60,7 +60,6 @@ public class RestingPhaseController {
             int numOption = showChoiceList();
             int userChoice = askUserChoice(numOption);
 
-            //get choice from user + check whether input is valid
             if(userChoice == 0){
                 catchZ();
             }
@@ -69,15 +68,12 @@ public class RestingPhaseController {
                 showMarket();
             }
             showBoardStatus();
-            //Show Update
             
         }while(phase.setNextPlayer());
 
         if(isSolo){
             actionPutNewTile.putNewTileInSolo(dreamTiles.takeTile());
         }
-
-        //Move to Racing Phase
     }
 
     /**
@@ -199,11 +195,4 @@ public class RestingPhaseController {
         return phase.getMarket().get(index);
     }
 
-    // public void setRacingPhaseController(RacingPhaseController controller){
-    // racingPhaseController = controller;
-    // }
-
-    // private void nextPhase(){
-    // racingPhaseController.startPhase();
-    // }
 }
