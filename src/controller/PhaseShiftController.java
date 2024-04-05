@@ -1,14 +1,12 @@
-import controller.RacingPhaseController;
-import controller.RestingPhaseController;
-import controller.ScoreController;
+package controller;
 
-public class PhaseShifter {
+public class PhaseShiftController {
 
     RacingPhaseController racingPhaseCon;
     ScoreController scoreCon;
     RestingPhaseController restingPhaseCon;
 
-    public PhaseShifter(RacingPhaseController racingPhaseCon, ScoreController ScoreCon,
+    public PhaseShiftController(RacingPhaseController racingPhaseCon, ScoreController ScoreCon,
             RestingPhaseController RestingPhaseCon) {
         this.racingPhaseCon = racingPhaseCon;
         this.scoreCon = ScoreCon;

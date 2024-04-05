@@ -25,15 +25,11 @@ public class RestingPhaseCatchZ extends RestingPhaseAction {
      * @param location  index number of the desired DreamTile
      * @param numZToken desired amount of Z Token
      * 
-     * @throw BoardIndexOutOfBoundsException If the player input is out of boundary
-     *        [1,10]
-     * @throw EmptyBoardIndexException If there is no dreamtile on the board at
-     *        desired index
-     * @throw IllegalZTokenCatchException If player is trying to catch more than 2
-     *        ZToken
+     * @throw BoardIndexOutOfBoundsException If the player input is out of boundary [1,10]
+     * @throw EmptyBoardIndexException If there is no dreamtile on the board at desired index
+     * @throw IllegalZTokenCatchException If player is trying to catch more than 2 ZToken
      * 
-     * @return false if the player catches only one Z Token, true if player catches
-     *         all 2 Z Tokens
+     * @return false if the player catches only one Z Token, true if player catches all 2 Z Tokens
      */
     public boolean catchZ(int location, int numZToken) {
         if (location < 1 || location > 10) {
