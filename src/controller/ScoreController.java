@@ -12,7 +12,7 @@ import view.ScoreViewer;
 import model.Player;
 
 /**
- * 
+ * Controller class that manages the scoring process after each racing phase
  * @author Dylan Kim
  * @version 1.0
  */

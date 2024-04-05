@@ -1,6 +1,7 @@
 package view;
 
 /**
+ * Viewer class that informs either the final result at the end of the game, or there is no winner yet, thus proceed to resting phase
  * @author Dylan Kim
  * @version 1.0
  */

@@ -60,7 +60,8 @@ public class SoloLogic implements ScoreLogic{
     }
 
     /**
-     * 
+     * Method that returns the corresponding result statement depend on the final score
+     * @return result statement
      */
     private String getResult(int finalScore){
         String result="";

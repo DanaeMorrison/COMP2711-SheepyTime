@@ -25,11 +25,14 @@ public class RestingPhase {
     /**
      * Method that checks whether user's input for choosing behaviour(catchZ or putNewTile) is valid or not
      * @param userChoice user's choice
-     * @param numOption number of options for user
+     * @param canPutTile whether user is allowed to put new tile or not
      * @return whether the user's choice is valid or not
      */
-    public boolean isChoiceValid(int userChoice, int numOption) {
-        return ((userChoice >= 0) && (userChoice < numOption));
+    public boolean isChoiceValid(int userChoice, boolean canPutTile) {
+        if(canPutTile){
+            return (userChoice ==1)||(userChoice == 2);
+        }
+        return userChoice == 1;
     }
 
     /**

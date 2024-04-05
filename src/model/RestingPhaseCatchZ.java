@@ -39,8 +39,7 @@ public class RestingPhaseCatchZ extends RestingPhaseAction {
         if (location < 1 || location > 10) {
             throw new BoardIndexOutOfBoundsException("Please type from 1 to 10!");
         } else if (!board.occupied(location)) {
-            throw new EmptyBoardIndexException(
-                    "There is no Dream Tile on this location, please choose other location!");
+            throw new EmptyBoardIndexException("There is no Dream Tile on this location, please choose other location!");
         } else if (numZToken < 1 || numZToken > 2) {
             throw new IllegalZTokenAmountException("You can put either 1 or 2 Z Tokens!");
         }
