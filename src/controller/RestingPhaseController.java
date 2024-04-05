@@ -171,13 +171,18 @@ public class RestingPhaseController {
      * market
      */
     private void showMarket() {
+        String[] tileNames = new String[phase.getMarketSize()];
+        String[] tileRules = new String[phase.getMarketSize()];
         for (int i = 0; i < 4; i++) {
             if (getTileFromMarket(i) == null) {
-                tileViewer.printDreamTile("(Empty)", "");
+                tileNames[i] = "(Empty)";
+                tileRules[i] = "";
             } else {
-                tileViewer.printDreamTile(getTileFromMarket(i).getTileName(), getTileFromMarket(i).getRule());
+                tileNames[i] = getTileFromMarket(i).getTileName();
+                tileRules[i] = getTileFromMarket(i).getRule();
             }
         }
+        tileViewer.printMarket(tileNames, tileRules);
     }
 
     /**

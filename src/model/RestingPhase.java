@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class RestingPhase {
 
+    private final int MARKET_SIZE = 4;
     private ArrayList<Player> players;
     private DreamTileCollection dreamTiles;
     private ArrayList<DreamTile> market;
@@ -61,7 +62,7 @@ public class RestingPhase {
      */
     private void createMarket() {
         market = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < MARKET_SIZE; i++) {
             market.add(dreamTiles.takeTile());
         }
     }
@@ -71,7 +72,7 @@ public class RestingPhase {
      * 
      */
     public void fillMarket() {
-        if (market.size() == 4) {
+        if (market.size() == MARKET_SIZE) {
             return;
         }
         market.add(dreamTiles.takeTile());
@@ -84,6 +85,14 @@ public class RestingPhase {
      */
     public ArrayList<DreamTile> getMarket() {
         return market;
+    }
+
+    /**
+     * getter method for market size
+     * @return market size = 4
+     */
+    public int getMarketSize(){
+        return MARKET_SIZE;
     }
            
 }
