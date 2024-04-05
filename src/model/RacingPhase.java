@@ -17,12 +17,12 @@ public class RacingPhase {
     private DreamTileBoard dreamTileBoard;
     private CardPlayer cardPlayer;
 
-    public RacingPhase(ArrayList<Player> players, Deck deck, Nightmare nightmare, DreamTileBoard dreamTileBoard, CardPlayer cardPlayer){
+    public RacingPhase(ArrayList<Player> players, Deck deck, Nightmare nightmare, DreamTileBoard dreamTileBoard){
         this.players = players;
         this.deck = deck;
         this.nightmare = nightmare;
         this.dreamTileBoard = dreamTileBoard;
-        this.cardPlayer = cardPlayer;
+        cardPlayer = new CardPlayer();
         nightmareHasCrossed = false;
     }
 
@@ -49,6 +49,8 @@ public class RacingPhase {
                 }
 
                 fillHand(curr, players, usedCards);
+
+                System.out.println("test1");
 
                 if(nightmareHasCrossed){
                     for(Player p : players){

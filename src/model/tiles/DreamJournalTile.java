@@ -1,5 +1,9 @@
 package model.tiles;
+import java.util.ArrayList;
+
 import model.DreamTile;
+import model.DreamTileBoard;
+import model.Nightmare;
 import model.Player;
 
 public class DreamJournalTile extends DreamTile{
@@ -8,7 +12,7 @@ public class DreamJournalTile extends DreamTile{
     }
 
     @Override
-    public void useTile(Player player){
+    public void useTile(Player player, ArrayList<Player> players, Nightmare nightmare, DreamTileBoard dreamTileBoard){
         player.setScaredStatus(1);
         int HAS_TO_GET_DONE;
     }

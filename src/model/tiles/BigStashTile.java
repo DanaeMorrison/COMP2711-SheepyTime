@@ -1,16 +1,21 @@
 package model.tiles;
+import java.util.ArrayList;
+
 import model.DreamTile;
+import model.DreamTileBoard;
+import model.Nightmare;
 import model.Player;
 
-public class ActionHeroTile extends DreamTile{
-    public ActionHeroTile(){
-        super("Action Hero", true, "Catch 1 Zzz. You may become Brave.");
+public class BigStashTile extends DreamTile{
+    public BigStashTile(){
+        super("Big Stash", false, "Gain 2 winks for each Zzz you have here, then remove all your Zzz from here.");
     }
 
     @Override
-    public void useTile(Player player){
-        if(player.isScared() >= 1){
-            player.setWinks(player.getWinks() + 3);
+    public void useTile(Player player, ArrayList<Player> players, Nightmare nightmare, DreamTileBoard dreamTileBoard){
+        player.setWinks(player.getWinks() + (getTokenCount(player) * 2));
+        for(int i = 0; i < getTokenCount(player); i++){
+            removePlayerToken(player);
         }
     }
 }

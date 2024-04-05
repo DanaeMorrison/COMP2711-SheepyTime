@@ -3,9 +3,11 @@ import java.util.Scanner;
 
 import model.Deck;
 import model.DeckGenerator;
+import model.DreamTileBoard;
 import model.Nightmare;
 import model.Player;
 import model.RacingPhase;
+import model.tiles.DreamJournalTile;
 
 public class Initializer {
 
@@ -47,6 +49,7 @@ public class Initializer {
         Initializer init = new Initializer();
         int playerCount = init.generateParams();
         ArrayList<Player> players = init.generatePlayers(playerCount);
+        DreamTileBoard dreamTileBoard = new DreamTileBoard();
 
         Nightmare nightmare = new Nightmare("Wolf", 1); //eventually ask for nightmare
 
@@ -54,7 +57,7 @@ public class Initializer {
         
         init.generateCards(deck, players, nightmare);
 
-        RacingPhase racingPhase = new RacingPhase(players, deck, nightmare);
+        RacingPhase racingPhase = new RacingPhase(players, deck, nightmare, dreamTileBoard); //need dreamtileboard in constructor here after nightmare
 
         racingPhase.startPhase();
         init.resetScaredStatus(players);

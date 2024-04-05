@@ -172,6 +172,8 @@ public class CardPlayer {
         if(wakingUp == 1){
             player.setAwake(true);
         }
+
+        player.setCrossed(true);
     }
 
     /**

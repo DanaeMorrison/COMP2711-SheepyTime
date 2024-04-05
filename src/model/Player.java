@@ -8,6 +8,7 @@ public class Player{
     private BoardInterface board;
     private int scaredStatus;
     private boolean isAwake;
+    private boolean justCrossed;
     private int winks;
     private int zTokens;
 
@@ -20,10 +21,12 @@ public class Player{
         BoardFactory factory = new BoardFactory();
         board = factory.createBoard("Player");
 
+        justCrossed = false;
         hand = new ArrayList<>();
         this.name = name;
         this.orderPosition = orderPosition;
         isAwake = false;
+        justCrossed = false;
         winks = 0;
         zTokens = 0;
         scoreboard = new Score(this);
@@ -32,6 +35,14 @@ public class Player{
 
     public boolean isAwake(){
         return isAwake;
+    }
+
+    public boolean justCrossed(){
+        return justCrossed;
+    }
+
+    public void setCrossed(boolean in){
+        justCrossed = in;
     }
 
     public void setAwake(boolean isAwake){

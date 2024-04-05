@@ -1,5 +1,9 @@
 package model.tiles;
+import java.util.ArrayList;
+
 import model.DreamTile;
+import model.DreamTileBoard;
+import model.Nightmare;
 import model.Player;
 
 public class HideOrSeekTile extends DreamTile{
@@ -8,7 +12,12 @@ public class HideOrSeekTile extends DreamTile{
     }
 
     @Override
-    public void useTile(Player player){
-        int HAS_TO_GET_DONE; //need to know nightmare position
+    public void useTile(Player player, ArrayList<Player> players, Nightmare nightmare, DreamTileBoard dreamTileBoard){
+        if(nightmare.getBoard().getIndex() % 2 == 0){
+            player.getBoard().advance(2);
+        }
+        else{
+            player.setWinks(player.getWinks() + 2);
+        }
     }
 }
