@@ -1,7 +1,6 @@
 package model;
 import java.util.ArrayList;
 
-import controller.ModelListenerCardPlayer;
 
 /**
  * @author Julien Ouellette
@@ -15,11 +14,7 @@ public class CardPlayer {
     public final int KEEP_PLAY = 0;
     public final int CALL_NIGHT = 1;
 
-    private ArrayList<ModelListenerCardPlayer> listeners = new ArrayList<>();
 
-    public void addListener(ModelListenerCardPlayer listener) {
-        listeners.add(listener);
-    }
     //public final int MAX_ABILITY_OPTIONS = 3;
     /**
      * Plays a card and performs the appropriate operations specified by a card for the given player.

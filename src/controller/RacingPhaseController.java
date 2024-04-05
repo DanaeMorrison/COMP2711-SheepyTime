@@ -6,6 +6,7 @@ import model.Card;
 import model.Player;
 import model.Nightmare;
 import model.CardPlayer;
+import model.DreamTilePlayer;
 import model.RacingPhase;
 import model.Deck;
 import model.DreamTile;
@@ -29,6 +30,7 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
     
     private RacingPhase racingPhase;
     CardPlayer cardPlayer = new CardPlayer();
+    DreamTilePlayer dreamTilePlayer;
     CardViewer cardViewer = new CardViewer();
     RacingPhaseViewer racingPhaseViewer = new RacingPhaseViewer();
 
@@ -43,6 +45,7 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
         int playerCount = racingPhase.getPlayerSize();
         Nightmare nightmare = racingPhase.getNightmare();
         DreamTileBoard dreamTileBoard = racingPhase.getDreamTileBoard();
+        dreamTilePlayer = new DreamTilePlayer(dreamTileBoard);
         Deck deck = racingPhase.getDeck();
         // boolean nightmareHasCrossed = racingPhase.getNightmareHasCrossed();
         boolean nightmareHasCrossed = false;
@@ -112,10 +115,15 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
                 // player model class
                 playCard(picked, curr, nightmare);
 
-
+                PlayerBoard board = curr.getBoard();
+                int playerPosition = board.getIndex();
+                if (dreamTilePlayer.isUsableTilePresent(playerPosition, curr)) {
+                    DreamTile thisDreamTile = dreamTileBoard.getTile(playerPosition);
+                    racingPhaseViewer.getUseTileChoice(thisDreamTile);
+                }
                 //TODO: here, the dreamtile is always being used if it can be used. we need to ask the player if they want to use it or not.
                 // will put in it's own class like CardPlayer
-                dreamTileUser(curr, players, nightmare, dreamTileBoard);
+                useDreamTile(curr, players, nightmare, dreamTileBoard);
 
                 if (onePlayerAsleep(players)) {
                     Card card = deck.takeCard();
@@ -218,13 +226,14 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
         return (asleepCount == 1);
     }
 
-    private void dreamTileUser(Player player, ArrayList<Player> players, Nightmare nightmare, DreamTileBoard dreamTileBoard){
+    private void useDreamTile(Player player, ArrayList<Player> players, Nightmare nightmare, DreamTileBoard dreamTileBoard){
         PlayerBoard board = player.getBoard();
         int playerPos = board.getIndex();
         DreamTile tile = dreamTileBoard.getTile(playerPos);
         if(tile.canUse(player)){
             tile.useTile(player, players, nightmare, dreamTileBoard);
         }
+        //should remove tile before the tile is used
     }
 
     private int askCardChoice() {

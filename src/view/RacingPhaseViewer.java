@@ -2,6 +2,8 @@ package view;
 
 import java.util.Scanner;
 
+import model.DreamTile;
+
 public class RacingPhaseViewer {
     // public final int FIRST_CARD = 0;
     // public final int SECOND_CARD = 1;
@@ -110,8 +112,8 @@ public class RacingPhaseViewer {
 
     public int getPlayOrCallNight() {
         System.out.println("You've crossed the fence. Would you like to call it a night, or keep playing?");
-        System.out.println("0: Keep playing");
-        System.out.println("1: Call it a night");
+        System.out.println("Enter 0 to Keep playing");
+        System.out.println("Enter 1 to Call it a night");
         System.out.print("Your choice: ");
         int playOrCallNight = scanner.nextInt();
 
@@ -134,6 +136,19 @@ public class RacingPhaseViewer {
         System.out.println("");
 
         return playOrCallNight;
+    }
+
+    public int getUseTileChoice(DreamTile dreamTile) {
+        System.out.println("This position has a dream tile");
+        System.out.println("");
+        System.out.println(dreamTile.getTileName() + ": " + dreamTile.getRule());
+        System.out.println("You have a Ztoken on this dream tile. Would you like to use it?");
+        System.out.println("Enter 0 for No");
+        System.out.println("Enter 1 for Yes");
+        System.out.print("Your choice: ");
+        int useTile = scanner.nextInt();
+
+        return useTile;
     }
 
     public void printCardInHand(String playerName, int cardInHand) {
