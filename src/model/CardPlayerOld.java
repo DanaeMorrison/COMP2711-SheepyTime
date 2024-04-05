@@ -1,16 +1,17 @@
 package model;
 import java.util.ArrayList;
+//TODO CodeSmell: unused package
 
 import controller.ModelListenerCardPlayer;
 
 /**
  * @author Julien Ouellette
- * @version 1.0
+ * @version 1
  * @author Danae Morrison
- * @version 2.0- MVC compliant
+ * @version 2- MVC compliant
  */
 
-public class CardPlayer {
+public class CardPlayerOld {
     public final int MOVE_ABILITY = 1;
     public final int KEEP_PLAY = 0;
     public final int CALL_NIGHT = 1;
@@ -27,10 +28,10 @@ public class CardPlayer {
      * @param card Card to be played.
      * @param player Player playing the card.
      */
-    /** public void playCard(Card card, Player player, Nightmare nightmare){
+    public void playCard(Card card, Player player, Nightmare nightmare){
         int secondAbility = getValidCardOptions(card);
         PlayerBoard board = player.getBoard();
-        if(!card.bothConditions()) {//"OR" card
+        if(!card.bothConditions()){ //"OR" card
             notifyListenersDisplayAbilityOptions(secondAbility);
             int ability = notifyListenersRequestAskAbility(secondAbility);
 
@@ -63,35 +64,12 @@ public class CardPlayer {
 
             board.advance(moveAmount);
             player.setWinks(player.getWinks() + card.getWinks());
-            //player.setZtokens(player.getZtokens() + card.getZtokens()); need to add proper ztoken functionality still  
-        }
+            //player.setZtokens(player.getZtokens() + card.getZtokens()); need to add proper ztoken functionality still
 
-        if(board.getIndex() == nightmare.getBoard().getIndex()){
-            nightmareCollision(player);
-        } 
-    }*/
-    // maybe have the method below return a string with a message saying what action was taken
-    // both action and if a player got scared or scared awake
-
-    public String playCard(Card card, Player player, Nightmare nightmare, int ability, PlayerBoard board) {
-        String response = player.getName();
-        switch(ability){
-            case 2:
-                player.setWinks(player.getWinks() + card.getWinks());
-                response += " has gained " + String.valueOf(player.getWinks()) + " winks";
-            case 3:
-                //add ztokens and infinite ztokens, no dreamtile functionality yet
+            if(board.getIndex() == nightmare.getBoard().getIndex()){
+                nightmareCollision(player);
+            }   
         }
-        return response; 
-    }
-
-    public String movePlayer(Player player, Nightmare nightmare, PlayerBoard board, int moveAmount) {
-        board.advance(moveAmount);
-        String response = player.getName() + " has moved by " + String.valueOf(moveAmount) + " spaces\n";
-        if(board.getIndex() == nightmare.getBoard().getIndex()){
-            response += nightmareCollision(player);
-        }
-        return response;
     }
 
     /**
@@ -99,26 +77,11 @@ public class CardPlayer {
      * 
      * @param player Player to get scared!
      */
-
-    /** public void nightmareCollision(Player player){
+    public void nightmareCollision(Player player){
         player.setScaredStatus(player.isScared() + 1);
         if(player.isScared() > 1){
             player.setAwake(true);
         }
-    }*/
-
-    public String nightmareCollision(Player player) {
-        String status;
-        player.setScaredStatus(player.isScared() + 1);
-        if(player.isScared() > 1){
-            player.setAwake(true);
-            status = player.getName() + " got scared awake!\n";
-            // functionality to reduce winks to 0
-            player.setWinks(0);
-            return status;
-        }
-        status = player.getName() + " got scared!\n";
-        return status;
     }
 
     /**
@@ -128,72 +91,33 @@ public class CardPlayer {
      * @param nightmare nightmare
      * @param players players to scare
      */
-    public boolean playNightmareCard(Card card, Nightmare nightmare, ArrayList<Player> players) {
-        // should rename "moves" to "move"
-        PlayerBoard playerBoard;
-        NightmareBoard nightmareBoard = nightmare.getBoard();
-
+    public void playNightmareCard(Card card, Nightmare nightmare, ArrayList<Player> players){
         int moves = card.getMoves()[0]; //nightmare cards only have 1 move option
-        boolean nightmareCrossed = false;
+        if(moves > 0){
+            int[] path = nightmare.getBoard().traveledSpaces(moves);
 
-        if(moves > 0 && moves != 10) {
-
-            int[] path = nightmareBoard.traveledSpaces(moves);
-
-            int end = path.length;
-
-            if(nightmare.getBoard().isCrossing(moves)){
-                end = getMaxIndex(path) + 1;
-                nightmareCrossed = true;
-            }
-
+            PlayerBoard playerBoard;
             for(Player p : players){
                 playerBoard = p.getBoard();
-                for(int i = 0; i < end; i++){
-                    if(playerBoard.occupied(path[i])){
+                for(int i = 0; i < path.length; i++){
+                    if(playerBoard.occupied(i)){
                         nightmareCollision(p);
                     }
-                }
-            }
-            nightmare.getBoard().advance(moves);
-        }
-
-        if (moves == 10) {
-            for(Player p : players) {
-                playerBoard = p.getBoard();
-                if (playerBoard.getIndex() == ((nightmareBoard.getIndex() - 1) % 10) || playerBoard.getIndex() == nightmareBoard.getIndex() || playerBoard.getIndex() == ((nightmareBoard.getIndex() + 1) % 10)) {
-                    nightmareCollision(p);
                 }
             }
         }
 
         nightmare.getBoard().jump(card.getJumpPos());
+        //something something spider token
         
-        return nightmareCrossed;
-
-        //TODO: something something spider token for different nightmares?
-        // spider nightmare uses spiderMove
-        // Bump nightmare uses jumpPost
-        
-    }
-
-    private static int getMaxIndex(int[] in){
-        int maxIndex = 0;
-        for(int i = 0; i < in.length; i++){
-            if(in[i] > in[maxIndex]){
-                maxIndex = i;
-            }
-        }
-        return maxIndex;
     }
 
     /**
-    /*
      * Returns the amount of moves from a given int[] taken from a card, depending on user input.
      * 
      * @param moves Array of moves from a card.
      * @return Returns the appropriate amount of moves depending on user input.
-     *
+     */
     private int multiMoveOptions(int[] moves){
         int firstMove = moves[0];
         int secondMove = moves[1];
@@ -206,11 +130,11 @@ public class CardPlayer {
         return selectedMove;
     }
 
-    /*
+    /**
      * Deals with and resolves a player crossing the fence by adding 5 winks to the player, and allows the player to wake up if desired.
      * 
      * @param player Player crossing fence
-     
+     */
     public void resolveFenceCrossing(Player player){
         player.setWinks(player.getWinks() + 5);
         int wakingUp = notifyListenersRequestResolveFenceCrossing();
@@ -223,16 +147,6 @@ public class CardPlayer {
         if(wakingUp == 1){
             player.setAwake(true);
         }
-    }*/
-
-    public void resolveFenceCrossing(Player player, int wakingUp){
-        player.setWinks(player.getWinks() + 5);
-        
-        if(wakingUp == 1){
-            player.setAwake(true);
-        }
-
-        player.setCrossed(true);
     }
 
     /**
@@ -240,7 +154,7 @@ public class CardPlayer {
      * 
      * @param in Move array from card
      * @return Final move amount
-     *
+     */
     public int getMoveAmount(int[] in){
         if(in.length > 1){
             return multiMoveOptions(in);
@@ -248,13 +162,9 @@ public class CardPlayer {
         else {
             return in[0];
         }
-    }*/
-
-    public int getMovesLength(int[] moves){
-            return moves.length;
     }
 
-    public int getValidCardOptions(Card card) {
+    private int getValidCardOptions(Card card) {
         int secondAbility = 0;
 
         if (card.getWinks() != 0) {
@@ -265,33 +175,6 @@ public class CardPlayer {
         return secondAbility;
     }
 
-    public boolean isSpecificMoveValid(int selectedMove, int[] moves) {
-        int firstMove = moves[0];
-        int secondMove = moves[1];
-
-        if (selectedMove != firstMove && selectedMove != secondMove) {
-            return false;
-        }
-        return true;
-    }
-
-    public boolean isAbilityChoiceValid(int abilityChoice, int secondAbility) {
-        boolean validOption = true;
-        if (abilityChoice != MOVE_ABILITY && abilityChoice != secondAbility) {
-            validOption = false;
-        }
-        return validOption;
-    }
-
-    public boolean isWakingUpValid(int wakingUp) {
-        boolean validOption = true;
-        if (wakingUp != KEEP_PLAY && wakingUp != CALL_NIGHT) {
-            validOption = false;
-        }
-        return validOption;
-    }
-
-    /**
     private void notifyListenersDisplayAbilityOptions(int secondAbility) {
         for (ModelListenerCardPlayer listener: listeners) {
             listener.onRequestDisplayAbilityOptions(secondAbility);
@@ -350,5 +233,5 @@ public class CardPlayer {
         }
 
         return playOrCallNight;
-    }*/
+    }
 }
