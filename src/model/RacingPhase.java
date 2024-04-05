@@ -88,12 +88,4 @@ public class RacingPhase {
         }*/
         return validChoice;
     }
-
-    private void dreamTileUser(Player player){
-        PlayerBoard board = player.getBoard();
-        int playerPos = board.getIndex();
-        DreamTile tile =dreamTileBoard.getTile(playerPos);
-        if(tile.canUse(player)){
-            tile.useTile(player, players, nightmare, dreamTileBoard);
-    }  
 }
