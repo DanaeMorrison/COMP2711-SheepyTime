@@ -83,7 +83,6 @@ public class RacingPhaseController {
 
                 playCard(picked, currPlayer, nightmare, dreamTileBoard);
 
-                // DreamTile Section
                 PlayerBoard board = currPlayer.getBoard();
                 int playerPosition = board.getIndex();
                 if (dreamTilePlayer.isUsableTilePresent(playerPosition, currPlayer)) {
@@ -102,15 +101,12 @@ public class RacingPhaseController {
                     }
                 }
 
-                // Check to see if there is currently only one player asleep in the phase
-                // This is to satisfy the rule that a card has to be played
                 if (onePlayerAsleep(players)) {
                     Card card = deck.takeCard();
                     usedCards.add(card);
             
                     if(card.isNightmare()){
                         printCard(card, nightmare);
-                        // print that a nightmare card has been drawn
                         playNightmareCard(card, nightmare, players);
                         if(racingPhase.getNightmareHasCrossed()){
                             resetPlayerInfo(players);
@@ -118,9 +114,7 @@ public class RacingPhaseController {
                         }
                     }
                 }
-                // refills a player's hand at the end of their turn
-                // code smell: put the loops below this together in another function
-                // to run at the same time
+
                 fillHand(currPlayer, players, usedCards, deck, nightmare);
 
                 if(racingPhase.getNightmareHasCrossed()){
@@ -158,7 +152,7 @@ public class RacingPhaseController {
             toFill.add(temp);
             used.remove(temp);
         }
-        toFill.shuffle(); // shouldn't be needed anymore with new style of getting a random card from deck
+        toFill.shuffle();
     }
 
     public void fillHand(Player player, ArrayList<Player> players, ArrayList<Card> usedCards, Deck deck, Nightmare nightmare){
