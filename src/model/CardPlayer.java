@@ -25,9 +25,6 @@ public class CardPlayer {
      * @param player Player playing the card.
      */
 
-    // maybe have the method below return a string with a message saying what action
-    // was taken.
-    // both action and if a player got scared or scared awake
 
     public String playCard(Card card, Player player, Nightmare nightmare, int ability) {
         String response = player.getName();
@@ -70,101 +67,7 @@ public class CardPlayer {
         status = player.getName() + " got scared!\n";
         return status;
     }
-
-    /**
-     * Deals with playing Nightmare cards, and executes all the given moves from
-     * given card.
-     * 
-     * @param card      nightmare card
-     * @param nightmare nightmare
-     * @param players   players to scare
-     */
-    /** public boolean playNightmareCard(Card card, Nightmare nightmare, ArrayList<Player> players) {
-        // should rename "moves" to "move"
-        PlayerBoard playerBoard;
-        NightmareBoard nightmareBoard = nightmare.getBoard();
-
-        int moves = card.getMoves()[0]; // nightmare cards only have 1 move option
-        boolean nightmareCrossed = false;
-
-        // boolean nightmareCrossed = false;
-
-        if (moves < 0 || moves > 10) {
-            throw new IllegalMovementException("BackEnd Error: value should be in 0 and 10");
-        }
-
-        if(moves > 0 && moves != 10) {
-
-            int[] path = nightmareBoard.traveledSpaces(moves);
-
-            int end = path.length;
-
-            if(nightmareBoard.isCrossing(moves)){
-                // end = getMaxIndex(path) + 1;
-                // nightmareCrossed = true;
-                return true;
-            }
-
-            for(Player p : players){
-                // specify that this should be for players that are currently not awake
-                playerBoard = p.getBoard();
-                for(int i = 0; i < end; i++){
-                    if(playerBoard.occupied(path[i])){
-                        nightmareCollision(p);
-                    }
-                }
-            }
-            nightmare.getBoard().advance(moves);
-        
-
-        if (moves == 10) {
-            for (Player p : players) {
-                playerBoard = p.getBoard();
-                if (isAdjacent(playerBoard.getIndex(), nightmareBoard.getIndex())) {
-                    nightmareCollision(p);
-                }
-            }
-            return false;
-        }
-
-        if (jumpPos != 0) {
-            if(nightmareBoard.isCrossing(jumpPos)){
-                // end = getMaxIndex(path) + 1;
-                //nightmareCrossed = true;
-                return true;
-            }
-
-            for(Player p : players) {
-                playerBoard = p.getBoard();
-                if (playerBoard.getIndex() == nightmareBoard.getIndex()) {
-                    nightmareCollision(p);
-                }
-            }
-
-            nightmare.getBoard().advance(moves);
-
-        }
-
-        for (Player p : players) {
-            // specify that this should be for players that are currently not awake
-            playerBoard = p.getBoard();
-            for (int i = 0; i < end; i++) {
-                if (playerBoard.occupied(path[i])) {
-                    nightmareCollision(p);
-                }
-            }
-        }
-        nightmare.getBoard().advance(moves);
-
-        nightmare.getBoard().jump(card.getJumpMove());
-
-        return nightmareCrossed;
-
-        // TODO: something something spider token for different nightmares?
-        // spider nightmare uses spiderMove
-        // Bump nightmare uses jumpPos
-        
-    }*/
+    
     /**
      * Determines if playing a nightmare card will result in the nightmare jumping the fence
      * @param card contains the information of the nightmare's movement
@@ -189,16 +92,22 @@ public class CardPlayer {
         return false;
     }
 
+    /**
+     * Deals with playing Nightmare cards, and executes appropriate move from
+     * given card.
+     * 
+     * @param card      nightmare card
+     * @param nightmare nightmare
+     * @param players   players to scare
+     * @return String with the actions that were taken
+     */
     public String playNightmareCard(Card card, Nightmare nightmare, ArrayList<Player> players) {
-        // should rename "moves" to "move"
         String response = "";
         PlayerBoard playerBoard;
         NightmareBoard nightmareBoard = nightmare.getBoard();
 
-        int moves = card.getMoves()[0]; //nightmare cards only have 1 move option
+        int moves = card.getMoves()[0];
         int jumpPos = card.getJumpMove();
-
-        // boolean nightmareCrossed = false;
 
         if (moves < 0 || moves > 10) {
             throw new IllegalMovementException("BackEnd Error: value should be in 0 and 10");
@@ -211,7 +120,6 @@ public class CardPlayer {
             int end = path.length;
 
             for(Player p : players){
-                // specify that this should be for players that are currently not awake
                 playerBoard = p.getBoard();
                 for(int i = 0; i < end; i++){
                     if(playerBoard.occupied(path[i])){
@@ -245,16 +153,6 @@ public class CardPlayer {
         return response;
     }
 
-    
-    /* private static int getMaxIndex(int[] in) {
-        int maxIndex = 0;
-        for (int i = 0; i < in.length; i++) {
-            if (in[i] > in[maxIndex]) {
-                maxIndex = i;
-            }
-        }
-        return maxIndex;
-    }*/
 
     public void resolveFenceCrossing(Player player, int wakingUp) {
         player.setWinks(player.getWinks() + 5);
