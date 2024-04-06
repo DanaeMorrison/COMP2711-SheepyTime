@@ -9,6 +9,9 @@ import java.util.ArrayList;
  */
 
 public class DreamTilePlayer {
+    public final int DONT_USE_TILE = 0;
+    public final int USE_TILE = 1;
+
     private DreamTileBoard dreamTileBoard;
 
     public DreamTilePlayer (DreamTileBoard dreamTileBoard) {
@@ -26,5 +29,12 @@ public class DreamTilePlayer {
             }
         }
         return false;
+    }
+
+    public boolean isUseTileChoiceValid(int useTileChoice) {
+        if (useTileChoice != DONT_USE_TILE && useTileChoice != USE_TILE) {
+            return false;
+        }
+        return true;
     }
 }

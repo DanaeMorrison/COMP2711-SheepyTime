@@ -47,8 +47,8 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
         DreamTileBoard dreamTileBoard = racingPhase.getDreamTileBoard();
         dreamTilePlayer = new DreamTilePlayer(dreamTileBoard);
         Deck deck = racingPhase.getDeck();
-        // boolean nightmareHasCrossed = racingPhase.getNightmareHasCrossed();
-        boolean nightmareHasCrossed = false;
+        boolean nightmareHasCrossed = racingPhase.getNightmareHasCrossed();
+        // boolean nightmareHasCrossed = false;
         // boolean oneSleepingPlayer;
 
         Player curr;
@@ -111,20 +111,29 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
                 usedCards.add(picked);
                 hand.remove(cardChoice);
 
-                // make separate method here that will handle the controller settings for the card
-                // player model class
                 playCard(picked, curr, nightmare);
 
+                // DreamTile Section
                 PlayerBoard board = curr.getBoard();
                 int playerPosition = board.getIndex();
                 if (dreamTilePlayer.isUsableTilePresent(playerPosition, curr)) {
                     DreamTile thisDreamTile = dreamTileBoard.getTile(playerPosition);
-                    racingPhaseViewer.getUseTileChoice(thisDreamTile);
-                }
-                //TODO: here, the dreamtile is always being used if it can be used. we need to ask the player if they want to use it or not.
-                // will put in it's own class like CardPlayer
-                useDreamTile(curr, players, nightmare, dreamTileBoard);
+                    int useTileChoice = racingPhaseViewer.getUseTileChoice(thisDreamTile);
 
+                    boolean validInput = dreamTilePlayer.isUseTileChoiceValid(useTileChoice);
+
+                    do {
+                        useTileChoice = racingPhaseViewer.getUseTileChoice(thisDreamTile);
+                        validInput = dreamTilePlayer.isUseTileChoiceValid(useTileChoice);
+                    } while (!validInput);
+
+                    if (useTileChoice == 1) {
+                        useDreamTile(curr, players, nightmare, dreamTileBoard);
+                    }
+                }
+                
+                // Check to see if there is currently only one player asleep in the phase
+                // This is to satisfy the rule that a card has to be played
                 if (onePlayerAsleep(players)) {
                     Card card = deck.takeCard();
                     usedCards.add(card);
@@ -139,19 +148,20 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
                 }
 
                 // refills a player's hand at the end of their turn
-                // code smell: put fillHand and the loop below it together in another function
+                // code smell: put the loops below this together in another function
                 // to run at the same time
                 fillHand(curr, players, usedCards, deck, nightmare);
 
                 if(nightmareHasCrossed){
+                    // make method to print out that the nightmare has jumped the fence (in RacingPhaseViewer)
                     for(Player p : players){
                         if(!p.isAwake()){
                             p.setWinks(0);
                             p.setScaredStatus(2);
                             p.setAwake(true);
+                            // make method to print "PlayerName got scared awake!"
                         }
                     }
-                    // make method to print out that the nightmare has jumped the fence (in RacingPhaseViewer)
                     return; //racing phase done if nightmare has crossed
                 }
 
@@ -234,6 +244,8 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
             tile.useTile(player, players, nightmare, dreamTileBoard);
         }
         //should remove tile before the tile is used
+        // make DreamTilePlayer throw exceptions for different scenarios of bad things that can occur?
+        // go to the useTile function in each of the tiles to 
     }
 
     private int askCardChoice() {

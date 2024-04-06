@@ -68,6 +68,7 @@ public class CardPlayer {
             status = player.getName() + " got scared awake!\n";
             // functionality to reduce winks to 0
             player.setWinks(0);
+            // functionality to reset position to -1
             return status;
         }
         status = player.getName() + " got scared!\n";
@@ -101,6 +102,7 @@ public class CardPlayer {
             }
 
             for(Player p : players){
+                // specify that this should be for players that are currently not awake
                 playerBoard = p.getBoard();
                 for(int i = 0; i < end; i++){
                     if(playerBoard.occupied(path[i])){

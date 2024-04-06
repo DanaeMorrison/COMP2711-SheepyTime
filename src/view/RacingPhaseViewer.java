@@ -129,8 +129,8 @@ public class RacingPhaseViewer {
 
     public int getPlayOrCallNightOnError() {
         System.out.println("You did not enter a valid number. Please type in either 0 or 1");
-        System.out.println("0: Keep playing");
-        System.out.println("1: Call it a night");
+        System.out.println("Enter 0 to Keep playing");
+        System.out.println("Enter 1 to Call it a night");
         System.out.print("Your choice: ");
         int playOrCallNight = scanner.nextInt();
         System.out.println("");
@@ -146,6 +146,19 @@ public class RacingPhaseViewer {
         System.out.println("Enter 0 for No");
         System.out.println("Enter 1 for Yes");
         System.out.print("Your choice: ");
+        int useTile = scanner.nextInt();
+        System.out.println("");
+
+        return useTile;
+    }
+
+    public int getUseTileChoiceOnError(DreamTile dreamTile) {
+        System.out.println("You did not enter a valid number. Please type in either 0 or 1");
+        System.out.println("");
+        System.out.println("Enter 0 for No");
+        System.out.println("Enter 1 for Yes");
+        System.out.print("Your choice: ");
+        System.out.println("");
         int useTile = scanner.nextInt();
 
         return useTile;
