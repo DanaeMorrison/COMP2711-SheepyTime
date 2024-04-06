@@ -90,10 +90,10 @@ public class RacingPhaseController {
 
                     boolean validInput = dreamTilePlayer.isUseTileChoiceValid(useTileChoice);
 
-                    do {
+                    while (!validInput){
                         useTileChoice = racingPhaseViewer.getUseTileChoice(thisDreamTile);
                         validInput = dreamTilePlayer.isUseTileChoiceValid(useTileChoice);
-                    } while (!validInput);
+                    };
 
                     if (useTileChoice == 1) {
                         useDreamTile(currPlayer, players, nightmare, dreamTileBoard, thisDreamTile);
@@ -154,7 +154,7 @@ public class RacingPhaseController {
      */
     public void replaceUsedCards(ArrayList<Card> used, Deck toFill) {
         while (!used.isEmpty()) {
-            Card temp = used.get(1); // get()?
+            Card temp = used.get(0); // get()?
             toFill.add(temp);
             used.remove(temp);
         }
@@ -236,10 +236,10 @@ public class RacingPhaseController {
         validInput = racingPhase.isCardChoiceValid(cardChoice);
         // follow something like "success = racingPhase.resolveCard(cardChoice);"
 
-        do {
+        while (!validInput){
             cardChoice = racingPhaseViewer.getCardChoiceOnError();
             validInput = racingPhase.isCardChoiceValid(cardChoice);
-        } while (!validInput);
+        }
         return cardChoice;
     }
 
@@ -259,10 +259,10 @@ public class RacingPhaseController {
             abilityChoice = racingPhaseViewer.getAbilityChoice();
             validInput = cardPlayer.isAbilityChoiceValid(abilityChoice, secondAbility);
 
-            do {
+            while (!validInput){
                 abilityChoice = racingPhaseViewer.getAbilityChoiceOnError(secondAbility);
                 validInput = cardPlayer.isAbilityChoiceValid(abilityChoice, secondAbility);
-            } while (!validInput);
+            }
 
             validInput = false;
 
@@ -275,10 +275,10 @@ public class RacingPhaseController {
                     int selectedMove = racingPhaseViewer.getSpecificMove(moves);
                     validInput = cardPlayer.isSpecificMoveValid(selectedMove, moves);
 
-                    do {
+                    while (!validInput){
                         selectedMove = racingPhaseViewer.getSpecificMoveOnError(moves);
                         validInput = cardPlayer.isSpecificMoveValid(selectedMove, moves);
-                    } while (!validInput);
+                    }
 
                     validInput = false;
                     moveAmount = selectedMove;
@@ -290,10 +290,10 @@ public class RacingPhaseController {
                     int wakingUp = racingPhaseViewer.getPlayOrCallNight();
                     validInput = cardPlayer.isWakingUpValid(wakingUp);
 
-                    do {
+                    while (!validInput){
                         wakingUp = racingPhaseViewer.getPlayOrCallNightOnError();
                         validInput = cardPlayer.isWakingUpValid(wakingUp);
-                    } while (!validInput);
+                    }
 
                     cardPlayer.resolveFenceCrossing(currentPlayer, wakingUp);
                 }
@@ -311,10 +311,10 @@ public class RacingPhaseController {
                 int selectedMove = racingPhaseViewer.getSpecificMove(moves);
                 validInput = cardPlayer.isSpecificMoveValid(selectedMove, moves);
 
-                do {
+                while (!validInput){
                     selectedMove = racingPhaseViewer.getSpecificMoveOnError(moves);
                     validInput = cardPlayer.isSpecificMoveValid(selectedMove, moves);
-                } while (!validInput);
+                }
 
                 validInput = false;
                 moveAmount = selectedMove;
@@ -326,10 +326,10 @@ public class RacingPhaseController {
                 int wakingUp = racingPhaseViewer.getPlayOrCallNight();
                 validInput = cardPlayer.isWakingUpValid(wakingUp);
 
-                do {
+                while (!validInput){
                     wakingUp = racingPhaseViewer.getPlayOrCallNightOnError();
                     validInput = cardPlayer.isWakingUpValid(wakingUp);
-                } while (!validInput);
+                }
 
                 cardPlayer.resolveFenceCrossing(currentPlayer, wakingUp);
             }

@@ -19,7 +19,7 @@ public class RacingPhaseViewer {
 
     public int getCardChoice() {
         System.out.print("Input which card you would like to choose from your hand. 0 or 1: ");
-        return getCardChoice();
+        return getIntegerInput();
     }
 
         /**
@@ -53,14 +53,14 @@ public class RacingPhaseViewer {
         int userInput = 0;
         boolean valid = false;
         System.out.print("Your Choice: ");
-        do {
+        while (!valid){
             try {
                 userInput = scanner.nextInt();
                 valid = true;
             } catch (InputMismatchException ime) {
                 System.out.print("\nInvalid Input: Please enter integer value only: ");
             }
-        } while (!valid);
+        }
         return userInput;
     }
 
