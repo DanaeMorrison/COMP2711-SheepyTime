@@ -153,7 +153,11 @@ public class CardPlayer {
         return response;
     }
 
-
+    /**
+     * Carries out resolution of crossing the fence based on the player's choice to stay in the game or call it a night
+     * @param player player that has crossed the fence
+     * @param wakingUp decision from player to wake up or not
+     */
     public void resolveFenceCrossing(Player player, int wakingUp) {
         player.setWinks(player.getWinks() + 5);
 
