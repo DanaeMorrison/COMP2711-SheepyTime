@@ -48,10 +48,10 @@ public class Initializer {
         System.out.println("How many players would you like?");
         int playerCount = scanner.nextInt();
 
-        do {
+        while (playerCount != 1){
             System.out.println("The game is currently designed to only be solo player. Please enter 1");
             playerCount = scanner.nextInt();
-        } while (playerCount != 1);
+        } 
 
         return playerCount;
     }
@@ -79,10 +79,10 @@ public class Initializer {
         System.out.println("Enter 2 for Bump in the Night nightmare");
         int nightmareChoice = scanner.nextInt();
         
-        do {
+        while (nightmareChoice != 1 && nightmareChoice != 2){
             System.out.println("You did not enter a valid input. Please enter 1 or 2");
             nightmareChoice = scanner.nextInt();
-        } while (nightmareChoice != 1 && nightmareChoice != 2);
+        }
 
         return nightmareChoice;
     }

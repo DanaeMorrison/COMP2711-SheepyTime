@@ -12,6 +12,9 @@ public class DreamTileBoard /*implements BoardInterface*/{
     }
 
     public boolean occupied(int n){
+        if(n < 0){
+            n = 0;
+        }
         return (board[n] != null);
     }
 
@@ -57,6 +60,9 @@ public class DreamTileBoard /*implements BoardInterface*/{
 
     private String printZToken(int location, Player currPlayer) {
         DreamTile tile = getTile(location);
+        if(tile == null){
+            return "No Tile!";
+        }
         ArrayList<ZToken> zTokens = tile.getTokens();
         String result = "";
         for (int i = 0; i < zTokens.size(); i++) {
