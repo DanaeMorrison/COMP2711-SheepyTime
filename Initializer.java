@@ -13,7 +13,12 @@ import model.RacingPhase;
 import view.DreamTileBoardViewer;
 import view.DreamTileViewer;
 
-public class NewInitializer {
+
+/**
+ * @author Dylan Kim
+ * @version 2.0
+ */
+public class Initializer {
     private static Scanner scanner = new Scanner(System.in);
 
     /**

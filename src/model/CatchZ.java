@@ -11,7 +11,8 @@ import model.exception.IllegalZTokenAmountException;
  * @author Dylan Kim
  * @version 1.0
  */
-public class CatchZ extends UserAction {
+public class CatchZ extends UserAction
+{
 
     private DreamTileBoard board;
 

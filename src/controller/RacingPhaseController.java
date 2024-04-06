@@ -362,7 +362,7 @@ public class RacingPhaseController {
             }
 
             response = cardPlayer.movePlayer(currentPlayer, nightmare, board, moveAmount);
-            response += cardPlayer.playCard(pickedCard, currentPlayer, nightmare, secondAbility, board);
+            response += cardPlayer.playCard(pickedCard, currentPlayer, nightmare, secondAbility);
             racingPhaseViewer.printCardPlayResponse(response);
         }
     }

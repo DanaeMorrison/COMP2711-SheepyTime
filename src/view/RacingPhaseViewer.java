@@ -6,12 +6,7 @@ import java.util.Scanner;
 import model.DreamTile;
 
 public class RacingPhaseViewer {
-    // private final int FIRST_CARD = 0;
-    // private final int SECOND_CARD = 1;
-    // private final int MOVE_ABILITY = 1;
     private final int WINK_ABILITY = 2;
-    private final int KEEP_PLAY = 0;
-    private final int CALL_NIGHT = 1;
 
     private Scanner scanner = new Scanner(System.in); // maybe move all this to a turnviewer class?
 

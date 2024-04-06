@@ -41,6 +41,8 @@ public class CardPlayer {
         return response;
     }
 
+    private String
+
     public String movePlayer(Player player, Nightmare nightmare, PlayerBoard board, int moveAmount) {
         board.advance(moveAmount);
         String response = player.getName() + " has moved by " + String.valueOf(moveAmount) + " spaces\n";
