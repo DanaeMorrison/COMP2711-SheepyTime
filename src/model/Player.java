@@ -12,9 +12,6 @@ public class Player{
     private int winks;
     private int zTokens;
 
-    //TODO CodeSmell unussedvariable
-    private int infiniteZTokens;
-
     private Score scoreboard;
     
     public Player(String name, int orderPosition){

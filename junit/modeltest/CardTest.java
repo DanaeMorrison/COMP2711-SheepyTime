@@ -17,7 +17,7 @@ public class CardTest {
 
     @Test
     public void testCardBuilder() {
-        int[] moves = {1, 2, 3};
+        int[] moves = { 1, 2, 3 };
         int zTokens = 5;
         int winks = 2;
         int jumpPos = 4;
@@ -42,7 +42,7 @@ public class CardTest {
 
     @Test
     public void testCardSettersAndGetters() {
-        int[] moves = {1, 2, 3};
+        int[] moves = { 1, 2, 3 };
         int zTokens = 5;
         int winks = 2;
         int jumpPos = 4;
@@ -56,7 +56,7 @@ public class CardTest {
                 .withSpiderMove(spiderMove)
                 .build();
 
-        int[] newMoves = {4, 5};
+        int[] newMoves = { 4, 5 };
         int newZTokens = 10;
         int newWinks = 3;
         int newJumpPos = 6;

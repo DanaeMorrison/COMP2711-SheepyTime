@@ -18,7 +18,6 @@ public class DeckGenerator {
     private static final int NIGHTMARELEN = 10;
     private static final int PLAYERTWOLEN = 30;
     
-    private Deck deck;
     private int players;
     private int nightmare;
 
@@ -63,14 +62,13 @@ public class DeckGenerator {
      * @param players stores the number of players for a given game
      * @param nightmare stores the int associated with the chosen nightmare for a game
      */
-    public DeckGenerator (Deck deck, int players, int nightmare) {
-        this.deck = deck;
+    public DeckGenerator (int players, int nightmare) {
         this.players = players;
         this.nightmare = nightmare;
     }
 
     //Solo and 2 player information
-    public ArrayList<Boolean> fillFalse(ArrayList<Boolean> playerCards) {
+    private ArrayList<Boolean> fillFalse(ArrayList<Boolean> playerCards) {
         for (int i = 0; i < PLAYERTWOLEN; i++) {
             playerCards.add(false);
         }
@@ -83,7 +81,7 @@ public class DeckGenerator {
         }
     }
     */
-    public ArrayList<Integer> fillZeroPlayerTwo(ArrayList<Integer> cards) {
+    private ArrayList<Integer> fillZeroPlayerTwo(ArrayList<Integer> cards) {
         for (int i = 0; i < PLAYERTWOLEN; i++) {
             cards.add(0);
         }
@@ -91,21 +89,21 @@ public class DeckGenerator {
     }
 
     //Nightmare information
-    public ArrayList<Boolean> fillTrue(ArrayList<Boolean> nightmareCards) {
+    private ArrayList<Boolean> fillTrue(ArrayList<Boolean> nightmareCards) {
         for (int i = 0; i < NIGHTMARELEN; i++) {
             nightmareCards.add(true);
         }
         return nightmareCards;
     }
 
-    public ArrayList<Boolean> fillFalseNightmare(ArrayList<Boolean> cards) {
+    private ArrayList<Boolean> fillFalseNightmare(ArrayList<Boolean> cards) {
         for (int i = 0; i < NIGHTMARELEN; i++) {
             cards.add(false);
         }
         return cards;
     }
 
-    public ArrayList<Integer> fillZeroNightmare(ArrayList<Integer> cards) {
+    private ArrayList<Integer> fillZeroNightmare(ArrayList<Integer> cards) {
         for (int i = 0; i < NIGHTMARELEN; i++) {
             cards.add(0);
         }
@@ -115,7 +113,7 @@ public class DeckGenerator {
     /**
      * This method cretaes and add cards to the deck for the game
      */
-    public void makeDeck() {
+    public Deck makeDeck(Deck deck) {
         //private ArrayList<Boolean> nightmarePlayer2 = new ArrayList<>();
 
         // TODO: this could be simplified. the sleep cards for 2 players will always be false for
@@ -166,6 +164,7 @@ public class DeckGenerator {
         }
 
         // isn't just one loop needed to check values for a given index for one card?
+        return deck;
     }
 
 }

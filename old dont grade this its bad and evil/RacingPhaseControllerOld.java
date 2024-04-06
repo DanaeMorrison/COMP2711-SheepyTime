@@ -9,13 +9,13 @@ import view.RacingPhaseViewer;
 
 public class RacingPhaseControllerOld implements ModelListenerRacingPhase, ModelListenerCardPlayer {
     private RacingPhaseOld racingPhase;
-    //private CardPlayer cardPlayer;
+    // private CardPlayer cardPlayer;
     CardViewer cardViewer = new CardViewer();
     RacingPhaseViewer playerDecision = new RacingPhaseViewer();
 
-    public RacingPhaseControllerOld(RacingPhaseOld racingPhase/*, CardPlayer cardPlayer*/) {
+    public RacingPhaseControllerOld(RacingPhaseOld racingPhase/* , CardPlayer cardPlayer */) {
         this.racingPhase = racingPhase;
-        //this.cardPlayer = cardPlayer;
+        // this.cardPlayer = cardPlayer;
     }
 
     public void startPhase() {
@@ -29,7 +29,8 @@ public class RacingPhaseControllerOld implements ModelListenerRacingPhase, Model
 
     @Override
     public void onRequestPrintCard(Card card, int nightmare) {
-        cardViewer.rulePrint(card.getMoves(), card.getJumpPos(), card.getSpiderMove(), card.getWinks(), card.getZtokens(), nightmare, card.isNightmare(), card.bothConditions());
+        cardViewer.rulePrint(card.getMoves(), card.getJumpMoveos(), card.getSpiderMove(), card.getWinks(),
+                card.getZtokens(), nightmare, card.isNightmare(), card.bothConditions());
     }
 
     @Override
@@ -87,9 +88,4 @@ public class RacingPhaseControllerOld implements ModelListenerRacingPhase, Model
         return playerDecision.getPlayOrCallNightOnError();
     }
 
-    
-   
-
-
-    
 }
