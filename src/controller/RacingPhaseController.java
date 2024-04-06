@@ -21,9 +21,9 @@ import view.DreamTileBoardViewer;
 import view.RacingPhaseViewer;
 
 /**
- * RacingPhase Model Class
+ * RacingPhase Controller Class
  * 
- * @author Danae Morrison
+ * @author Danae Morrison, Dylan Kim
  * @version 1.0
  */
 
@@ -131,6 +131,12 @@ public class RacingPhaseController {
         return dreamTileBoard;
     }
 
+    /**
+     * Helper method that prints the hand of a player
+     * @param hand the cards in a player's hand
+     * @param currPlayer the player whose hand we are printing
+     * @param nightmare the nightmare of this game's instantiation
+     */
     private void showHand(ArrayList<Card> hand, Player currPlayer, Nightmare nightmare) {
         for (int j = 0; j < hand.size(); j++) {
             Card currCard = currPlayer.getHand().get(j);
@@ -155,6 +161,14 @@ public class RacingPhaseController {
         toFill.shuffle();
     }
 
+    /**
+     * Method that ensures a player's hand is filled with two cards, resolving any nightmare cards that might be called
+     * @param player the player whose hand is being filled
+     * @param players all the players of the game
+     * @param usedCards the cards that have been played
+     * @param deck contains the sheep and nightmare cards of the game that haven't been drawn yet
+     * @param nightmare the nightmare for this games's instantiation
+     */
     public void fillHand(Player player, ArrayList<Player> players, ArrayList<Card> usedCards, Deck deck, Nightmare nightmare){
         
         for(int j = player.getHand().size(); j < 2; j++){
@@ -174,13 +188,22 @@ public class RacingPhaseController {
         }
     }
 
-
+    /**
+     * Helper method that prints the rules of a card
+     * @param card current card being looked at
+     * @param nightmare the nightmare of this game's instatiation
+     */
     private void printCard(Card card, Nightmare nightmare) {
         cardViewer.rulePrint(card.getMoves(), card.getJumpMove(), card.getSpiderMove(), card.getWinks(),
                 card.getZtokens(), nightmare.getType(), card.isNightmare(), card.bothConditions());
     }
 
-    public boolean allPlayersAwake(ArrayList<Player> players) {
+    /**
+     * Method used to determine if all players are awake
+     * @param players the players of the game
+     * @return true if all players are awake. false if at least one player is still asleep
+     */
+    private boolean allPlayersAwake(ArrayList<Player> players) {
         int awakeCount = 0;
         for (Player p : players) {
             if (p.isAwake()) {
@@ -189,8 +212,13 @@ public class RacingPhaseController {
         }
         return (awakeCount == players.size());
     }
-
-    public boolean onePlayerAsleep(ArrayList<Player> players) {
+    /**
+     * Helper method that determines if onlt one player is currently asleep so that specific game
+     * functionality can be carried out
+     * @param players list of players in the game
+     * @return true if only one player is asleep. False if more than one player is asleep
+     */
+    private boolean onePlayerAsleep(ArrayList<Player> players) {
         int asleepCount = 0;
         for (Player p : players) {
             if (!p.isAwake()) {
@@ -199,14 +227,25 @@ public class RacingPhaseController {
         }
         return (asleepCount == 1);
     }
-
+    /**
+     * Method that facilitates the use of a dream tile. It removes a token of the player from the dream tile
+     * and adds it back to their supply of available ztokens
+     * @param player the current player using the dream tile
+     * @param players list of all players in the game
+     * @param nightmare current nightmare for this game's instantiation
+     * @param dreamTileBoard board containing the position of dream tiles
+     * @param tile the current dream tile being used
+     */
     private void useDreamTile(Player player, ArrayList<Player> players, Nightmare nightmare,
             DreamTileBoard dreamTileBoard, DreamTile tile) {
         tile.removePlayerToken(player);
         player.setZtokens(player.getZtokens() + 1);
         tile.useTile(player, players, nightmare, dreamTileBoard);
     }
-
+    /**
+     * Method that asks the user for the card in their hand that they want to play
+     * @return an integer representing the first or second card in the player's hand
+     */
     private int askCardChoice() {
         boolean validInput = false;
         int cardChoice;
