@@ -41,7 +41,7 @@ public class RestingPhaseController {
         this.boardViewer = boardViewer;
         this.tileViewer = tileViewer;
         this.dreamTiles = dreamTiles;
-
+        
         this.actionCatchZ = actionCatchZ;
         this.actionPutNewTile = actionPutNewTile;
     }

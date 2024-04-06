@@ -39,12 +39,14 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
         //this.cardPlayer = cardPlayer;
     }
 
-    public void startPhase() {
+    public DreamTileBoard startPhase(DreamTileBoard dreamTileBoard) {
+        //TODO Update
+        racingPhase.setDreamTileBoard(dreamTileBoard);
         // racingPhase.startPhase();
         ArrayList<Player> players = racingPhase.getPlayers();
         int playerCount = racingPhase.getPlayerSize();
         Nightmare nightmare = racingPhase.getNightmare();
-        DreamTileBoard dreamTileBoard = racingPhase.getDreamTileBoard();
+        // TODO Update: DreamTileBoard dreamTileBoard = racingPhase.getDreamTileBoard();
         dreamTilePlayer = new DreamTilePlayer(dreamTileBoard);
         Deck deck = racingPhase.getDeck();
         boolean nightmareHasCrossed = racingPhase.getNightmareHasCrossed();
@@ -74,7 +76,8 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
                             p.setAwake(true);
                         }
                     }
-                    return; // racing phase done if nightmare has crossed. Perhaps some details should be returned with it/updated in racing phase, such as the setting the phase's dreamtileboard to be equal to the one
+                    return dreamTileBoard; 
+                            // racing phase done if nightmare has crossed. Perhaps some details should be returned with it/updated in racing phase, such as the setting the phase's dreamtileboard to be equal to the one
                             // present at the end of the phase. we need to make sure that whenever a racing phase begins again, appropriate information is stored in RacingPhase to facilitate continuing the game
                             // from the start of a new racing phase, but with updated details (the new dreamtile board from the resting phase, for example. This means that the resting phase has to be able to access the 
                             // final )
@@ -162,7 +165,8 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
                             // make method to print "PlayerName got scared awake!"
                         }
                     }
-                    return; //racing phase done if nightmare has crossed
+                    // make method to print out that the nightmare has jumped the fence (in RacingPhaseViewer)
+                    return dreamTileBoard; //racing phase done if nightmare has crossed
                 }
 
                 for(int j = 0; j < hand.size(); j++){
@@ -178,6 +182,8 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
         // here is where more code should be written to update RacingPhase before the startPhase method closes
         // e.g. racingPhase.setDreamTileBoard(dreamTileBoard); This method hasn't been created yet.
         // loop through all players and access their boards to reset their positions to -1. Same with nightmare 
+    
+        return dreamTileBoard;
     }
 
     /**
