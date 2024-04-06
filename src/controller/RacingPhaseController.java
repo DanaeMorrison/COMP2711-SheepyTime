@@ -118,15 +118,7 @@ public class RacingPhaseController {
                     Card card = deck.takeCard();
                     usedCards.add(card);
 
-                    if (card.isNightmare()) {
-                        printCard(card, nightmare);
-                        if (cardPlayer.playNightmareCard(card, nightmare, players)) { // ugly syntactically, but it's
-                                                                                      // playing the card *and*
-                                                                                      // returning a true boolean if the
-                                                                                      // nightmare is crossing.
-                            racingPhase.setNightmareHasCrossed(true);
-                        }
-                    }
+                    checkNightmareCrossFence(card, players, nightmare);
                 }
 
                 // refills a player's hand at the end of their turn
@@ -199,10 +191,7 @@ public class RacingPhaseController {
             usedCards.add(card);
 
             if (card.isNightmare()) {
-                printCard(card, nightmare);
-                if (cardPlayer.playNightmareCard(card, nightmare, players)) { // ugly syntactically, but it's playing
-                                                                              // the card *and* returning a true boolean
-                                                                              // if the nightmare is crossing.
+                if(checkNightmareCrossFence(card, players, nightmare)){
                     return true;
                 }
                 j--;
@@ -210,6 +199,17 @@ public class RacingPhaseController {
             }
 
             player.getHand().add(card);
+        }
+        return false;
+    }
+
+    private boolean checkNightmareCrossFence(Card card, ArrayList<Player> players, Nightmare nightmare){
+        printCard(card, nightmare);
+        if (cardPlayer.playNightmareCard(card, nightmare, players)) { // ugly syntactically, but it's playing
+                                                                        // the card *and* returning a true boolean
+                                                                        // if the nightmare is crossing.
+            nightmareCrossFence(players);
+            return true;
         }
         return false;
     }

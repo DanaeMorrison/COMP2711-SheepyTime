@@ -14,8 +14,6 @@ import java.util.ArrayList;
 public class RacingPhase {
     private final int FIRST_CARD = 0;
     private final int SECOND_CARD = 1;
-
-    private boolean nightmareHasCrossed;
     private ArrayList<Player> players;
     private Deck deck;
     private Nightmare nightmare;
@@ -30,10 +28,6 @@ public class RacingPhase {
         this.nightmare = nightmare;
         DeckGenerator generator = new DeckGenerator(players.size(), nightmare.getType());
         deck = generator.makeDeck(deck);
-        // this.dreamTileBoard = dreamTileBoard;
-
-        // this.cardPlayer = cardPlayer;
-        nightmareHasCrossed = false;
     }
 
     // getter and setter methods
@@ -68,35 +62,12 @@ public class RacingPhase {
         this.dreamTileBoard = dreamTileBoard;
     }
 
-    public boolean getNightmareHasCrossed() {
-        return nightmareHasCrossed;
-    }
-
-    public void setNightmareHasCrossed(boolean nightmareHasCrossed) {
-        this.nightmareHasCrossed = nightmareHasCrossed;
-    }
-
-    /**
-     * public void setCardChoice(int cardChoice) {
-     * if (cardChoice != FIRST_CARD && cardChoice != SECOND_CARD) {
-     * //throw some error. should it be try and catch?
-     * } else {
-     * this.cardChoice = cardChoice;
-     * }
-     * }
-     */
-
     // rename resolveCard. IGNORE for now
     public boolean isCardChoiceValid(int cardChoice) {
         boolean validChoice = true;
         if (cardChoice != FIRST_CARD && cardChoice != SECOND_CARD) {
             validChoice = false;
         }
-        /**
-         * if (validChoice) {
-         * // do card player
-         * }
-         */
         return validChoice;
     }
 }
