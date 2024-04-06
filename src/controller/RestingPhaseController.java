@@ -26,17 +26,20 @@ public class RestingPhaseController {
     private DreamTileViewer tileViewer;
     private DreamTileBoardViewer boardViewer;
     private DreamTileBoard tileBoard;
+    private DreamTileCollection dreamTiles;
     private RestingPhaseCatchZ actionCatchZ;
     private RestingPhasePutNewTile actionPutNewTile;
     private boolean isSolo = false;
 
     public RestingPhaseController(DreamTileBoardViewer boardViewer, ArrayList<Player> players,
          DreamTileViewer tileViewer) {
-        phase = new RestingPhase(players);
+        
         if (players.size() == 1) {
             isSolo = true;
         }
         phaseViewer = new RestingPhaseViewer();
+        dreamTiles = new DreamTileCollection();
+        phase = new RestingPhase(players, dreamTiles);
         this.boardViewer = boardViewer;
         this.tileViewer = tileViewer;
         

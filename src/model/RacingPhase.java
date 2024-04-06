@@ -28,7 +28,8 @@ public class RacingPhase {
         this.players = players;
         this.deck = deck;
         this.nightmare = nightmare;
-        
+        DeckGenerator generator = new DeckGenerator(players.size(), nightmare.getType());
+        deck = generator.makeDeck(deck);
         //this.dreamTileBoard = dreamTileBoard;
         
         // this.cardPlayer = cardPlayer;
