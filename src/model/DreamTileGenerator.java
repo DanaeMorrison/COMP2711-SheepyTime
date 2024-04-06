@@ -8,7 +8,7 @@ import model.tiles.*;
 public class DreamTileGenerator {
     private String[] tileNames = {"ActionHero", "HideOrSeek", "Moonwalk", "RestingSpot",  
                                     "IntenseDreams", "PerfectLanding", "Run", "SnoozeMovesBounceAhead", 
-                                    "LoneSheep", "StepBackCoolKidsClub", "ShortcutBigStash",
+                                    "LoneSheep", "StepBackCoolKidsClub", 
                                      "LucidDreams", "RecurringDream", "SecondWind"};
 
     //private DreamTileCollection tileCollection;

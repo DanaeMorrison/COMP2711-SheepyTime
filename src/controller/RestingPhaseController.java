@@ -4,7 +4,7 @@ import model.DreamTile;
 import model.DreamTileBoard;
 import model.DreamTileCollection;
 import model.RestingPhase;
-import model.CatchZ;
+import model.RestingPhaseCatchZ;
 import model.RestingPhasePutNewTile;
 import model.exception.GameLogicViolationException;
 import view.DreamTileBoardViewer;
@@ -27,7 +27,7 @@ public class RestingPhaseController {
     private DreamTileBoardViewer boardViewer;
     private DreamTileBoard tileBoard;
     private DreamTileCollection dreamTiles;
-    private CatchZ actionCatchZ;
+    private RestingPhaseCatchZ actionCatchZ;
     private RestingPhasePutNewTile actionPutNewTile;
     private boolean isSolo = false;
 
@@ -43,7 +43,7 @@ public class RestingPhaseController {
         this.boardViewer = boardViewer;
         this.tileViewer = tileViewer;
 
-        actionCatchZ = new CatchZ(phase);
+        actionCatchZ = new RestingPhaseCatchZ(phase);
         actionPutNewTile = new RestingPhasePutNewTile(phase);
     }
 

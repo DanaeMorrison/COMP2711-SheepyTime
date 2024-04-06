@@ -11,13 +11,15 @@ import model.exception.IllegalZTokenAmountException;
  * @author Dylan Kim
  * @version 1.0
  */
-public class CatchZ extends UserAction {
+public class RestingPhaseCatchZ extends RestingPhaseAction
+{
 
-    private DreamTileBoard board;
+    private DreamTileBoard tileBoard;
 
-    public CatchZ(RestingPhase phase) {
+    public RestingPhaseCatchZ(RestingPhase phase) {
         super(phase);
     }
+    
 
     /**
      * Method to catch a desired amount of Z Token on the desired DreamTile
@@ -38,7 +40,7 @@ public class CatchZ extends UserAction {
     public boolean catchZ(int location, int numZToken) {
         if (location < 1 || location > 10) {
             throw new BoardIndexOutOfBoundsException("Please type from 1 to 10!");
-        } else if (!board.occupied(location)) {
+        } else if (!tileBoard.occupied(location)) {
             throw new EmptyBoardIndexException(
                     "There is no Dream Tile on this location, please choose other location!");
         } else if (numZToken < 1 || numZToken > 2) {

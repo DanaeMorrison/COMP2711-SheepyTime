@@ -8,6 +8,8 @@ import model.Nightmare;
 import model.CardPlayer;
 import model.DreamTilePlayer;
 import model.RacingPhase;
+import model.RacingPhaseCatchZ;
+import model.exception.GameLogicViolationException;
 import model.Deck;
 import model.DreamTile;
 import model.DreamTileBoard;
@@ -15,6 +17,7 @@ import model.PlayerBoard;
 
 import view.BoardViewer;
 import view.CardViewer;
+import view.DreamTileBoardViewer;
 import view.RacingPhaseViewer;
 
 /**
@@ -27,10 +30,10 @@ import view.RacingPhaseViewer;
 public class RacingPhaseController {
 
     private RacingPhase racingPhase;
-    CardPlayer cardPlayer = new CardPlayer();
-    DreamTilePlayer dreamTilePlayer;
-    CardViewer cardViewer = new CardViewer();
-    RacingPhaseViewer racingPhaseViewer = new RacingPhaseViewer();
+    private CardPlayer cardPlayer = new CardPlayer();
+    private DreamTilePlayer dreamTilePlayer;
+    private CardViewer cardViewer = new CardViewer();
+    private RacingPhaseViewer racingPhaseViewer = new RacingPhaseViewer();
 
     public RacingPhaseController(RacingPhase racingPhase) {
         this.racingPhase = racingPhase;
@@ -76,7 +79,7 @@ public class RacingPhaseController {
                 usedCards.add(picked);
                 hand.remove(cardChoice);
 
-                playCard(picked, currPlayer, nightmare);
+                playCard(picked, currPlayer, nightmare, dreamTileBoard);
 
                 // DreamTile Section
                 PlayerBoard board = currPlayer.getBoard();
@@ -240,7 +243,7 @@ public class RacingPhaseController {
         return cardChoice;
     }
 
-    private void playCard(Card pickedCard, Player currentPlayer, Nightmare nightmare) {
+    private void playCard(Card pickedCard, Player currentPlayer, Nightmare nightmare, DreamTileBoard dreamTileBoard) {
         boolean validInput = false;
         int abilityChoice;
         int moveAmount;
@@ -332,7 +335,12 @@ public class RacingPhaseController {
             }
 
             response = cardPlayer.movePlayer(currentPlayer, nightmare, board, moveAmount);
-            response += cardPlayer.playCard(pickedCard, currentPlayer, nightmare, secondAbility);
+            if(secondAbility ==2){
+                response += cardPlayer.playCard(pickedCard, currentPlayer, nightmare, secondAbility);
+            }
+            else if(secondAbility == 3 ){
+                catchZ(dreamTileBoard, currentPlayer);
+            }
             racingPhaseViewer.printCardPlayResponse(response);
         }
     }
@@ -359,5 +367,47 @@ public class RacingPhaseController {
             }
         }
         racingPhaseViewer.printNightmareHasCrossed(response);
+    }
+
+    /**
+     * Helper method that handles when the user decides to catch Z Token
+     */
+    private String catchZ(DreamTileBoard dreamTileBoard, Player currPlayer) {
+        DreamTileBoardViewer dreamTileBoardViewer = new DreamTileBoardViewer();
+        RacingPhaseCatchZ catchZ = new RacingPhaseCatchZ(dreamTileBoard, currPlayer);
+        int location;
+        int numZToken;
+        String response="";
+        showBoardStatus(dreamTileBoardViewer, dreamTileBoard, currPlayer);
+        boolean actionTermination = false;
+        do {
+            if (currPlayer.getZtokens()==0 && dreamTileBoard.isFull()) {
+                racingPhaseViewer.showErrorMessage(
+                        "Uh oh! You don't have ZToken anymore, and there is no empty space for another dreamTile in the board!\n"
+                                +
+                                "Unfortunately, there is no other option left for you...");
+                break;
+            }
+
+            location = racingPhaseViewer.askTileLocationToCatch();
+            numZToken = racingPhaseViewer.askNumZTokenToCatch();
+
+            try {
+                actionTermination = catchZ.catchZ(location, numZToken);
+                response += (currPlayer.getName() + " catched " + numZToken + "Z Token(s)\n");
+            } catch (GameLogicViolationException glve) {
+                racingPhaseViewer.showErrorMessage(glve.getMessage());
+                continue;
+            }
+        } while (!actionTermination);
+
+        return response;
+    }
+
+        /**
+     * Method that tells the viewer to show the board Status
+     */
+    private void showBoardStatus(DreamTileBoardViewer dreamTileBoardViewer, DreamTileBoard dreamTileBoard, Player currPlayer) {
+        dreamTileBoardViewer.showBoardStatus(dreamTileBoard.getBoardStatus(currPlayer));
     }
 }

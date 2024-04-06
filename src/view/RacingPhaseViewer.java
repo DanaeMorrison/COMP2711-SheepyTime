@@ -11,9 +11,6 @@ import model.DreamTile;
  */
 
 public class RacingPhaseViewer {
-    // private final int FIRST_CARD = 0;
-    // private final int SECOND_CARD = 1;
-    // private final int MOVE_ABILITY = 1;
     private final int WINK_ABILITY = 2;
     // private final int KEEP_PLAY = 0;
     // private final int CALL_NIGHT = 1;
@@ -23,6 +20,33 @@ public class RacingPhaseViewer {
     public int getCardChoice() {
         System.out.print("Input which card you would like to choose from your hand. 0 or 1: ");
         return getCardChoice();
+    }
+
+        /**
+     * Method that prints received error messages
+     * 
+     * @param errorMessage
+     */
+    public void showErrorMessage(String errorMessage) {
+        System.out.println(errorMessage);
+    }
+
+    /**
+     * Method that asks the user to choose the position of the tile
+     * @return user input
+     */
+    public int askTileLocationToCatch() {
+        System.out.print("Where Do you want to catch your Z Token? Please type from 1~10");
+        return getIntegerInput();
+    }
+
+    /**
+     * Method that asks the user to choose the number of Z Token to catch 
+     * @return user input
+     */
+    public int askNumZTokenToCatch() {
+        System.out.print("How many Z Tokens do you want to catch here? please type either 1 or 2");
+        return getIntegerInput();
     }
 
     private int getIntegerInput() {
@@ -131,4 +155,5 @@ public class RacingPhaseViewer {
         response += "The nightmare has jumped over the fence!\n";
         System.out.println(response);
     }
+    
 }

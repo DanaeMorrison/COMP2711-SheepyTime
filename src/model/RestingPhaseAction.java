@@ -9,12 +9,12 @@ import model.exception.NotEnoughZTokenInSupplyException;
  * @author Dylan Kim
  * @version 1.0
  */
-public class UserAction {
+public class RestingPhaseAction {
 
     private RestingPhase phase;
     private DreamTileBoard tileBoard;
 
-    public UserAction(RestingPhase phase) {
+    public RestingPhaseAction(RestingPhase phase) {
         this.phase = phase;
     }
 
