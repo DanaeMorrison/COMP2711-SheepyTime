@@ -171,4 +171,9 @@ public class RacingPhaseViewer {
     public void printCardPlayResponse(String response) {
         System.out.println(response);
     }
+
+    public void printNightmareHasCrossed(String response) {
+        response += "The nightmare has jumped over the fence!\n";
+        System.out.println(response);
+    }
 }
