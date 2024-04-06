@@ -4,7 +4,7 @@ import model.DreamTile;
 import model.DreamTileBoard;
 import model.DreamTileCollection;
 import model.RestingPhase;
-import model.RestingPhaseCatchZ;
+import model.CatchZ;
 import model.RestingPhasePutNewTile;
 import model.exception.GameLogicViolationException;
 import view.DreamTileBoardViewer;
@@ -27,13 +27,13 @@ public class RestingPhaseController {
     private DreamTileBoardViewer boardViewer;
     private DreamTileBoard tileBoard;
     private DreamTileCollection dreamTiles;
-    private RestingPhaseCatchZ actionCatchZ;
+    private CatchZ actionCatchZ;
     private RestingPhasePutNewTile actionPutNewTile;
     private boolean isSolo = false;
 
     public RestingPhaseController(DreamTileBoardViewer boardViewer, ArrayList<Player> players,
-         DreamTileViewer tileViewer) {
-        
+            DreamTileViewer tileViewer) {
+
         if (players.size() == 1) {
             isSolo = true;
         }
@@ -42,8 +42,8 @@ public class RestingPhaseController {
         phase = new RestingPhase(players, dreamTiles);
         this.boardViewer = boardViewer;
         this.tileViewer = tileViewer;
-        
-        actionCatchZ = new RestingPhaseCatchZ(phase);
+
+        actionCatchZ = new CatchZ(phase);
         actionPutNewTile = new RestingPhasePutNewTile(phase);
     }
 
@@ -86,9 +86,11 @@ public class RestingPhaseController {
         showBoardStatus();
         boolean actionTermination = false;
         do {
-            if (playerDoesNotHaveZ()&&tileBoard.isFull()) {
-                phaseViewer.showErrorMessage("Uh oh! You don't have ZToken anymore, and there is no empty space for another dreamTile in the board!\n"+ 
-                                            "Unfortunately, there is no other option left for you...");
+            if (playerDoesNotHaveZ() && tileBoard.isFull()) {
+                phaseViewer.showErrorMessage(
+                        "Uh oh! You don't have ZToken anymore, and there is no empty space for another dreamTile in the board!\n"
+                                +
+                                "Unfortunately, there is no other option left for you...");
                 return;
             }
 

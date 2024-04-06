@@ -13,7 +13,7 @@ import model.exception.MarketIndexOutOfBoundsException;
  * @author Dylan Kim
  * @version 1.0
  */
-public class RestingPhasePutNewTile extends RestingPhaseAction {
+public class RestingPhasePutNewTile extends UserAction {
 
     private ArrayList<DreamTile> market;
 

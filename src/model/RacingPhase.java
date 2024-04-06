@@ -1,4 +1,5 @@
 package model;
+
 import java.util.ArrayList;
 
 /**
@@ -11,8 +12,8 @@ import java.util.ArrayList;
  */
 
 public class RacingPhase {
-    public final int FIRST_CARD = 0;
-    public final int SECOND_CARD = 1;
+    private final int FIRST_CARD = 0;
+    private final int SECOND_CARD = 1;
 
     private boolean nightmareHasCrossed;
     private ArrayList<Player> players;
@@ -23,15 +24,14 @@ public class RacingPhase {
     // private CardPlayer cardPlayer;
     // private int cardChoice = -1;
 
-
-    public RacingPhase(ArrayList<Player> players, Deck deck, Nightmare nightmare){
+    public RacingPhase(ArrayList<Player> players, Deck deck, Nightmare nightmare) {
         this.players = players;
         this.deck = deck;
         this.nightmare = nightmare;
         DeckGenerator generator = new DeckGenerator(players.size(), nightmare.getType());
         deck = generator.makeDeck(deck);
-        //this.dreamTileBoard = dreamTileBoard;
-        
+        // this.dreamTileBoard = dreamTileBoard;
+
         // this.cardPlayer = cardPlayer;
         nightmareHasCrossed = false;
     }
@@ -55,9 +55,10 @@ public class RacingPhase {
     }
 
     /**
-    public int getCardChoice() {
-        return cardChoice;
-    }*/
+     * public int getCardChoice() {
+     * return cardChoice;
+     * }
+     */
 
     public DreamTileBoard getDreamTileBoard() {
         return dreamTileBoard;
@@ -76,23 +77,26 @@ public class RacingPhase {
     }
 
     /**
-    public void setCardChoice(int cardChoice) {
-        if (cardChoice != FIRST_CARD && cardChoice != SECOND_CARD) {
-            //throw some error. should it be try and catch? 
-        } else {
-            this.cardChoice = cardChoice;
-        }
-    }*/
-    
+     * public void setCardChoice(int cardChoice) {
+     * if (cardChoice != FIRST_CARD && cardChoice != SECOND_CARD) {
+     * //throw some error. should it be try and catch?
+     * } else {
+     * this.cardChoice = cardChoice;
+     * }
+     * }
+     */
+
     // rename resolveCard. IGNORE for now
     public boolean isCardChoiceValid(int cardChoice) {
         boolean validChoice = true;
         if (cardChoice != FIRST_CARD && cardChoice != SECOND_CARD) {
             validChoice = false;
-          }
-        /** if (validChoice) {
-            // do card player
-        }*/
+        }
+        /**
+         * if (validChoice) {
+         * // do card player
+         * }
+         */
         return validChoice;
     }
 }
