@@ -21,6 +21,7 @@ public class RacingPhase {
     private DreamTileBoard dreamTileBoard;
     // private CardPlayer cardPlayer;
     // private int cardChoice = -1;
+    private boolean nightmareHasCrossed;
 
     public RacingPhase(ArrayList<Player> players, Deck deck, Nightmare nightmare) {
         this.players = players;
@@ -28,6 +29,7 @@ public class RacingPhase {
         this.nightmare = nightmare;
         DeckGenerator generator = new DeckGenerator(players.size(), nightmare.getType());
         deck = generator.makeDeck(deck);
+        nightmareHasCrossed = false;
     }
 
     // getter and setter methods
@@ -60,6 +62,14 @@ public class RacingPhase {
 
     public void setDreamTileBoard(DreamTileBoard dreamTileBoard) {
         this.dreamTileBoard = dreamTileBoard;
+    }
+
+    public boolean getNightmareHasCrossed() {
+        return nightmareHasCrossed;
+    }
+
+    public void setNightmareHasCrossed(boolean nightmareHasCrossed) {
+        this.nightmareHasCrossed = nightmareHasCrossed;
     }
 
     // rename resolveCard. IGNORE for now

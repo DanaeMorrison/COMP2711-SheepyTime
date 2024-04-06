@@ -7,6 +7,8 @@ import model.DreamTile;
 
 public class RacingPhaseViewer {
     private final int WINK_ABILITY = 2;
+    // private final int KEEP_PLAY = 0;
+    // private final int CALL_NIGHT = 1;
 
     private Scanner scanner = new Scanner(System.in); // maybe move all this to a turnviewer class?
 
@@ -117,8 +119,8 @@ public class RacingPhaseViewer {
         System.out.println(response);
     }
 
-    public void nightmareCrossFence() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'nightmareCrossFence'");
+    public void printNightmareHasCrossed(String response) {
+        response += "The nightmare has jumped over the fence!\n";
+        System.out.println(response);
     }
 }

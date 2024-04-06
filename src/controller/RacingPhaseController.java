@@ -43,49 +43,34 @@ public class RacingPhaseController {
         Nightmare nightmare = racingPhase.getNightmare();
         dreamTilePlayer = new DreamTilePlayer(dreamTileBoard);
         Deck deck = racingPhase.getDeck();
+        // boolean nightmareHasCrossed = racingPhase.getNightmareHasCrossed();
+        // boolean nightmareHasCrossed = false;
+        // boolean oneSleepingPlayer;
 
         Player currPlayer;
         Card picked;
         int cardChoice;
         ArrayList<Card> usedCards = new ArrayList<>();
 
-        while (!allPlayersAwake(players)) {
-            for (int i = 0; i < playerCount; i++) {
+        while(!allPlayersAwake(players)){
+            for(int i = 0; i < playerCount; i++){
                 currPlayer = players.get(i);
-                if (currPlayer.isAwake()) {
+                if(currPlayer.isAwake()){
                     continue;
                 }
 
-                if(fillHand(currPlayer, players, usedCards, deck, nightmare)){
-                    nightmareCrossFence(players);
-                    break;
+                fillHand(currPlayer, players, usedCards, deck, nightmare);
+
+                if(racingPhase.getNightmareHasCrossed()){
+                    resetPlayerInfo(players);
+                    return dreamTileBoard;
                 }
 
                 ArrayList<Card> hand = currPlayer.getHand();
-
+                
                 showHand(hand, currPlayer, nightmare);
-
-                // should the model be updated to store the currently chosen card?
-                // cardChoice = racingPhaseViewer.getCardChoice();
+                
                 cardChoice = askCardChoice();
-                // IGNORE
-                // instead: make a handle card method that will go through taking in input,
-                // choosing a card from the hand based on the input, and playing the card.
-                // if the player's hand and the usedCards are handed to the method, then the
-                // picked card can be added to the usedCards and removed from the hand within
-                // that method. Otherwise:
-                // make the method return the integer that was picked so that the matching card
-                // can be added to used cards and so it can be removed from the player's hand
-                //
-                // cardChoice = notifyListenersAskCardChoice();
-
-                // make a version that says if thrown an error, will ask for new input
-                // will replace this one
-                /**
-                 * while (cardChoice != FIRST_CARD && cardChoice != SECOND_CARD) {
-                 * cardChoice = racingPhaseViewer.getCardChoiceOnError();
-                 * }
-                 */
 
                 picked = hand.get(cardChoice);
                 usedCards.add(picked);
@@ -115,19 +100,29 @@ public class RacingPhaseController {
                 // Check to see if there is currently only one player asleep in the phase
                 // This is to satisfy the rule that a card has to be played
                 if (onePlayerAsleep(players)) {
+                    // TODO: check if deck is empty. if empty, refill with replaceUsedCards. setter method
+                    // may need to be used to access the new Deck after fillHand is complete
                     Card card = deck.takeCard();
                     usedCards.add(card);
-
-                    checkNightmareCrossFence(card, players, nightmare);
+            
+                    if(card.isNightmare()){
+                        printCard(card, nightmare);
+                        // print that a nightmare card has been drawn
+                        playNightmareCard(card, nightmare, players);
+                        if(racingPhase.getNightmareHasCrossed()){
+                            resetPlayerInfo(players);
+                            return dreamTileBoard;
+                        }
+                    }
                 }
-
                 // refills a player's hand at the end of their turn
                 // code smell: put the loops below this together in another function
                 // to run at the same time
-                
-                if(fillHand(currPlayer, players, usedCards, deck, nightmare)){
-                    nightmareCrossFence(players);
-                    break;
+                fillHand(currPlayer, players, usedCards, deck, nightmare);
+
+                if(racingPhase.getNightmareHasCrossed()){
+                    resetPlayerInfo(players);
+                    return dreamTileBoard;
                 }
 
                 showHand(hand, currPlayer, nightmare);
@@ -135,12 +130,6 @@ public class RacingPhaseController {
             }
         }
         
-        // here is where more code should be written to update RacingPhase before the
-        // startPhase method closes
-        // e.g. racingPhase.setDreamTileBoard(dreamTileBoard); This method hasn't been
-        // created yet.
-        // loop through all players and access their boards to reset their positions to
-        // -1. Same with nightmare
         replaceUsedCards(usedCards, deck);
         return dreamTileBoard;
     }
@@ -152,21 +141,6 @@ public class RacingPhaseController {
             printCard(currCard, nightmare);
 
         }
-    }
-
-    private void nightmareCrossFence(ArrayList<Player> players) {
-        // make method to print out that the nightmare has jumped the fence (in
-        // RacingPhaseViewer)
-        for (Player p : players) {
-            if (!p.isAwake()) {
-                p.setWinks(0);
-                p.setScaredStatus(2);
-                p.setAwake(true);
-                p.getBoard().emptyBoard();
-                // make method to print "PlayerName got scared awake!"
-            }
-        }
-        racingPhaseViewer.nightmareCrossFence();
     }
 
     /**
@@ -184,15 +158,25 @@ public class RacingPhaseController {
         toFill.shuffle(); // shouldn't be needed anymore with new style of getting a random card from deck
     }
 
-    public boolean fillHand(Player player, ArrayList<Player> players, ArrayList<Card> usedCards, Deck deck,
-            Nightmare nightmare) {
-        for (int j = player.getHand().size(); j < 2; j++) {
+    public void fillHand(Player player, ArrayList<Player> players, ArrayList<Card> usedCards, Deck deck, Nightmare nightmare){
+        
+        for(int j = player.getHand().size(); j < 2; j++){
+            // TODO: check if deck is empty. if empty, refill with replaceUsedCards. setter method
+            //          may need to be used to access the new Deck after fillHand is complete
             Card card = deck.takeCard();
             usedCards.add(card);
-
-            if (card.isNightmare()) {
-                if(checkNightmareCrossFence(card, players, nightmare)){
-                    return true;
+            
+            if(card.isNightmare()){
+                // print that a nightmare card has been pulled
+                printCard(card, nightmare);
+                /*if(cardPlayer.playNightmareCard(card, nightmare, players)){ //ugly syntactically, but it's playing the card *and* returning a true boolean if the nightmare is crossing.
+                    racingPhase.setNightmareHasCrossed(true);
+                    return;
+                }*/
+                playNightmareCard(card, nightmare, players);
+                // check if nightmarehascrossed == true to return
+                if (racingPhase.getNightmareHasCrossed()) {
+                    return;
                 }
                 j--;
                 continue;
@@ -200,19 +184,8 @@ public class RacingPhaseController {
 
             player.getHand().add(card);
         }
-        return false;
     }
 
-    private boolean checkNightmareCrossFence(Card card, ArrayList<Player> players, Nightmare nightmare){
-        printCard(card, nightmare);
-        if (cardPlayer.playNightmareCard(card, nightmare, players)) { // ugly syntactically, but it's playing
-                                                                        // the card *and* returning a true boolean
-                                                                        // if the nightmare is crossing.
-            nightmareCrossFence(players);
-            return true;
-        }
-        return false;
-    }
 
     private void printCard(Card card, Nightmare nightmare) {
         cardViewer.rulePrint(card.getMoves(), card.getJumpMove(), card.getSpiderMove(), card.getWinks(),
@@ -245,6 +218,7 @@ public class RacingPhaseController {
         // int playerPos = board.getIndex();
         // DreamTile tile = dreamTileBoard.getTile(playerPos);
         tile.removePlayerToken(player);
+        player.setZtokens(player.getZtokens() + 1);
         tile.useTile(player, players, nightmare, dreamTileBoard);
         // make DreamTilePlayer throw exceptions for different scenarios of bad things
         // that can occur?
@@ -326,10 +300,6 @@ public class RacingPhaseController {
                 // otherwise, this method can be played
                 response = cardPlayer.playCard(pickedCard, currentPlayer, nightmare, abilityChoice);
             }
-            // racingPhaseViewer.printCardPlayResponse(response);
-
-            // both of these should be made into booleans so we can know if the player
-            // hopped the fence
         } else {
             // make a racingphaseviewer method to print "All abilities on the card will be
             // played"
@@ -365,5 +335,29 @@ public class RacingPhaseController {
             response += cardPlayer.playCard(pickedCard, currentPlayer, nightmare, secondAbility);
             racingPhaseViewer.printCardPlayResponse(response);
         }
+    }
+
+    private void playNightmareCard(Card card, Nightmare nightmare, ArrayList<Player> players) {
+        if (cardPlayer.isNightmareCrossing(card, nightmare)) {
+            racingPhase.setNightmareHasCrossed(true);
+        } else {
+            String response = cardPlayer.playNightmareCard(card, nightmare, players);
+            racingPhaseViewer.printCardPlayResponse(response);
+        }
+    }
+
+    //make local method to check if nightmare has crossed to modify player info and return dreamtileboard
+    private void resetPlayerInfo(ArrayList<Player> players) {
+        String response = "";
+        for(Player p : players){
+            if(!p.isAwake()){
+                p.setWinks(0);
+                p.setScaredStatus(2);
+                p.setAwake(true);
+                p.getBoard().emptyBoard();
+                response += p.getName() + "got scared awake!\n";
+            }
+        }
+        racingPhaseViewer.printNightmareHasCrossed(response);
     }
 }

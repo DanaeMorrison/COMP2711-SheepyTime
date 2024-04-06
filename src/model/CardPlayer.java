@@ -81,7 +81,7 @@ public class CardPlayer {
      * @param nightmare nightmare
      * @param players   players to scare
      */
-    public boolean playNightmareCard(Card card, Nightmare nightmare, ArrayList<Player> players) {
+    /** public boolean playNightmareCard(Card card, Nightmare nightmare, ArrayList<Player> players) {
         // should rename "moves" to "move"
         PlayerBoard playerBoard;
         NightmareBoard nightmareBoard = nightmare.getBoard();
@@ -95,6 +95,30 @@ public class CardPlayer {
             throw new IllegalMovementException("BackEnd Error: value should be in 0 and 10");
         }
 
+        if(moves > 0 && moves != 10) {
+
+            int[] path = nightmareBoard.traveledSpaces(moves);
+
+            int end = path.length;
+
+            if(nightmareBoard.isCrossing(moves)){
+                // end = getMaxIndex(path) + 1;
+                // nightmareCrossed = true;
+                return true;
+            }
+
+            for(Player p : players){
+                // specify that this should be for players that are currently not awake
+                playerBoard = p.getBoard();
+                for(int i = 0; i < end; i++){
+                    if(playerBoard.occupied(path[i])){
+                        nightmareCollision(p);
+                    }
+                }
+            }
+            nightmare.getBoard().advance(moves);
+        
+
         if (moves == 10) {
             for (Player p : players) {
                 playerBoard = p.getBoard();
@@ -105,13 +129,22 @@ public class CardPlayer {
             return false;
         }
 
-        int[] path = nightmareBoard.traveledSpaces(moves);
+        if (jumpPos != 0) {
+            if(nightmareBoard.isCrossing(jumpPos)){
+                // end = getMaxIndex(path) + 1;
+                //nightmareCrossed = true;
+                return true;
+            }
 
-        int end = path.length;
+            for(Player p : players) {
+                playerBoard = p.getBoard();
+                if (playerBoard.getIndex() == nightmareBoard.getIndex()) {
+                    nightmareCollision(p);
+                }
+            }
 
-        if (nightmare.getBoard().isCrossing(moves)) {
-            end = getMaxIndex(path) + 1;
-            nightmareCrossed = true;
+            nightmare.getBoard().advance(moves);
+
         }
 
         for (Player p : players) {
@@ -131,15 +164,91 @@ public class CardPlayer {
 
         // TODO: something something spider token for different nightmares?
         // spider nightmare uses spiderMove
-        // Bump nightmare uses jumpPost
+        // Bump nightmare uses jumpPos
+        
+    }*/
+    /**
+     * Determines if playing a nightmare card will result in the nightmare jumping the fence
+     * @param card contains the information of the nightmare's movement
+     * @param nightmare contains the nightmare board to determine the nightmare's position
+     * @return true if the nightmare would cross the fence as a result of their movement,
+     *          false if the nightmare will not cross the fence as a result of their movement
+     */
+    public boolean isNightmareCrossing(Card card, Nightmare nightmare) {
+        NightmareBoard nightmareBoard = nightmare.getBoard();
 
+        int moves = card.getMoves()[0];
+        int jumpPos = card.getJumpMove();
+
+        if(nightmareBoard.isCrossing(moves)){
+            return true;
+        }
+
+        if(nightmareBoard.isCrossing(jumpPos)){
+            return true;
+        }
+
+        return false;
     }
 
-    private boolean isAdjacent(int position1, int position2) {
-        return Math.abs(position1 - position2) <= 1;
+    public String playNightmareCard(Card card, Nightmare nightmare, ArrayList<Player> players) {
+        // should rename "moves" to "move"
+        String response = "";
+        PlayerBoard playerBoard;
+        NightmareBoard nightmareBoard = nightmare.getBoard();
+
+        int moves = card.getMoves()[0]; //nightmare cards only have 1 move option
+        int jumpPos = card.getJumpMove();
+
+        // boolean nightmareCrossed = false;
+
+        if (moves < 0 || moves > 10) {
+            throw new IllegalMovementException("BackEnd Error: value should be in 0 and 10");
+        }
+
+        if(moves > 0 && moves != 10) {
+
+            int[] path = nightmareBoard.traveledSpaces(moves);
+
+            int end = path.length;
+
+            for(Player p : players){
+                // specify that this should be for players that are currently not awake
+                playerBoard = p.getBoard();
+                for(int i = 0; i < end; i++){
+                    if(playerBoard.occupied(path[i])){
+                        response += nightmareCollision(p);
+                    }
+                }
+            }
+            nightmare.getBoard().advance(moves);
+        }
+
+        if (moves == 10) {
+            for(Player p : players) {
+                playerBoard = p.getBoard();
+                if (playerBoard.getIndex() == ((nightmareBoard.getIndex() - 1) % 10) || playerBoard.getIndex() == nightmareBoard.getIndex() || playerBoard.getIndex() == ((nightmareBoard.getIndex() + 1) % 10)) {
+                    response += nightmareCollision(p);
+                }
+            }
+        }
+
+        if (jumpPos != 0) {
+            for(Player p : players) {
+                playerBoard = p.getBoard();
+                if (playerBoard.getIndex() == nightmareBoard.getIndex()) {
+                    response += nightmareCollision(p);
+                }
+            }
+
+            nightmare.getBoard().advance(moves);
+        }
+
+        return response;
     }
 
-    private static int getMaxIndex(int[] in) {
+    
+    /* private static int getMaxIndex(int[] in) {
         int maxIndex = 0;
         for (int i = 0; i < in.length; i++) {
             if (in[i] > in[maxIndex]) {
@@ -147,13 +256,14 @@ public class CardPlayer {
             }
         }
         return maxIndex;
-    }
+    }*/
 
     public void resolveFenceCrossing(Player player, int wakingUp) {
         player.setWinks(player.getWinks() + 5);
 
         if (wakingUp == 1) {
             player.setAwake(true);
+            player.getBoard().emptyBoard();
         }
 
         player.setCrossed(true);
