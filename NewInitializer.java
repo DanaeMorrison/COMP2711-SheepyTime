@@ -44,6 +44,11 @@ public class NewInitializer {
         System.out.println("How many players would you like?");
         int playerCount = scanner.nextInt();
 
+        do {
+            System.out.println("The game is currently designed to only be solo player. Please enter 1");
+            playerCount = scanner.nextInt();
+        } while (playerCount != 1);
+
         return playerCount;
     }
 
