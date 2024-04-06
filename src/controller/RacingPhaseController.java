@@ -131,7 +131,7 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
                     } while (!validInput);
 
                     if (useTileChoice == 1) {
-                        useDreamTile(curr, players, nightmare, dreamTileBoard);
+                        useDreamTile(curr, players, nightmare, dreamTileBoard, thisDreamTile);
                     }
                 }
                 
@@ -162,6 +162,7 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
                             p.setWinks(0);
                             p.setScaredStatus(2);
                             p.setAwake(true);
+                            p.getBoard().emptyBoard();
                             // make method to print "PlayerName got scared awake!"
                         }
                     }
@@ -242,14 +243,12 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
         return (asleepCount == 1);
     }
 
-    private void useDreamTile(Player player, ArrayList<Player> players, Nightmare nightmare, DreamTileBoard dreamTileBoard){
-        PlayerBoard board = player.getBoard();
-        int playerPos = board.getIndex();
-        DreamTile tile = dreamTileBoard.getTile(playerPos);
-        if(tile.canUse(player)){
-            tile.useTile(player, players, nightmare, dreamTileBoard);
-        }
-        //should remove tile before the tile is used
+    private void useDreamTile(Player player, ArrayList<Player> players, Nightmare nightmare, DreamTileBoard dreamTileBoard, DreamTile tile){
+        // PlayerBoard board = player.getBoard();
+        // int playerPos = board.getIndex();
+        // DreamTile tile = dreamTileBoard.getTile(playerPos);
+        tile.removePlayerToken(player);
+        tile.useTile(player, players, nightmare, dreamTileBoard);
         // make DreamTilePlayer throw exceptions for different scenarios of bad things that can occur?
         // go to the useTile function in each of the tiles to 
     }

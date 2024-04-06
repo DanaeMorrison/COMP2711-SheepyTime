@@ -26,7 +26,7 @@ public class CardPlayer {
     // maybe have the method below return a string with a message saying what action was taken.
     // both action and if a player got scared or scared awake
 
-    public String playCard(Card card, Player player, Nightmare nightmare, int ability, PlayerBoard board) {
+    public String playCard(Card card, Player player, Nightmare nightmare, int ability) {
         String response = player.getName();
         switch(ability){
             case 2:
