@@ -225,11 +225,8 @@ public class CardPlayer {
         if (moves == 10) {
             for(Player p : players) {
                 playerBoard = p.getBoard();
-                /*if (playerBoard.getIndex() == ((nightmareBoard.getIndex() - 1) % 10) || playerBoard.getIndex() == nightmareBoard.getIndex() || playerBoard.getIndex() == ((nightmareBoard.getIndex() + 1) % 10)) {
+                if (playerBoard.getIndex() == ((nightmareBoard.getIndex() - 1) % 10) || playerBoard.getIndex() == nightmareBoard.getIndex() || playerBoard.getIndex() == ((nightmareBoard.getIndex() + 1) % 10)) {
                     response += nightmareCollision(p);
-                }*/
-                if (isAdjacent(playerBoard.getIndex(), nightmareBoard.getIndex())) {
-                    nightmareCollision(p);
                 }
             }
         }
@@ -246,11 +243,6 @@ public class CardPlayer {
         }
 
         return response;
-    }
-
-
-    private boolean isAdjacent(int position1, int position2) {
-        return Math.abs(position1 - position2) <= 1;
     }
 
     
