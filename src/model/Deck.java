@@ -3,6 +3,11 @@ import java.util.ArrayList;
 // import java.util.Collections;
 import java.util.Random;
 
+/**
+ * @author Julien Ouellette
+ * @version 1.0
+ */
+
 public class Deck {
     private ArrayList<Card> deck;
     private Random random;

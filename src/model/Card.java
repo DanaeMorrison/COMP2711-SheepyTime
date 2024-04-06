@@ -2,6 +2,7 @@ package model;
 
 /**
  * @author Danae Morrison
+ * @version 1.0
  */
 
 // import java.util.ArrayList;

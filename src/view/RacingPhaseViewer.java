@@ -5,6 +5,11 @@ import java.util.Scanner;
 
 import model.DreamTile;
 
+/**
+ * @author Danae Morrison
+ * @version 1.0
+ */
+
 public class RacingPhaseViewer {
     // private final int FIRST_CARD = 0;
     // private final int SECOND_CARD = 1;
