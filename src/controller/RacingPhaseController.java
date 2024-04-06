@@ -299,10 +299,14 @@ public class RacingPhaseController {
                 }
 
                 response = cardPlayer.movePlayer(currentPlayer, nightmare, board, moveAmount);
-            } else {
+            } else if (abilityChoice == 2) {
                 // otherwise, this method can be played
                 response = cardPlayer.playCard(pickedCard, currentPlayer, nightmare, abilityChoice);
+            } else {
+                response = "";
+                catchZ(dreamTileBoard, currentPlayer);
             }
+            racingPhaseViewer.printCardPlayResponse(response);
         } else {
             // make a racingphaseviewer method to print "All abilities on the card will be
             // played"
