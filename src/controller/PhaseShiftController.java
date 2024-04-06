@@ -2,6 +2,11 @@
 
 import model.DreamTileBoard;
 
+/**
+ * Controller that manages the sequence in RacingPhase, update the score, and then RestingPhase
+ * @author Dylan Kim
+ * @version 1.0
+ */
 public class PhaseShiftController {
 
     private RacingPhaseController racingPhaseCon;
@@ -16,9 +21,11 @@ public class PhaseShiftController {
         this.restingPhaseCon = RestingPhaseCon;
         this.tileBoard = tileBoard;
     }
-//DreamTileBoard
-//PhaseShiftController -> RacingPhaseController getDreamTileBoard()
 
+
+    /**
+     * Method that let the game will loop until the winner is determined
+     */
     public void loopRound(){
         boolean noWinner = true;
         do{

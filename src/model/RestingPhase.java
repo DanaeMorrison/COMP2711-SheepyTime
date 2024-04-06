@@ -20,6 +20,8 @@ public class RestingPhase {
         this.players = players;
         currPlayerIndex = 0;
         this.dreamTiles = dreamTiles;
+        DreamTileGenerator generator = new DreamTileGenerator();
+        generator.makeDreamTiles(dreamTiles);
         createMarket();
     }
 

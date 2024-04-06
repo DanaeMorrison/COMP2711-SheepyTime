@@ -24,7 +24,7 @@ public class RacingPhase {
     // private int cardChoice = -1;
 
 
-    public RacingPhase(ArrayList<Player> players, Deck deck, Nightmare nightmare/* , DreamTileBoard dreamTileBoard*/){
+    public RacingPhase(ArrayList<Player> players, Deck deck, Nightmare nightmare){
         this.players = players;
         this.deck = deck;
         this.nightmare = nightmare;

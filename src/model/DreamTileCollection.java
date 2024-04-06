@@ -7,7 +7,7 @@ public class DreamTileCollection{
 
     public DreamTileCollection(){
         tileCollection = new ArrayList<>();
-    }
+    }   
 
     /**
      * Shuffles the tiles.
