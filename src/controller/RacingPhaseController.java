@@ -303,6 +303,7 @@ public class RacingPhaseController {
                 // otherwise, this method can be played
                 response = cardPlayer.playCard(pickedCard, currentPlayer, nightmare, abilityChoice);
             } else {
+                response = "";
                 catchZ(dreamTileBoard, currentPlayer);
             }
             racingPhaseViewer.printCardPlayResponse(response);
