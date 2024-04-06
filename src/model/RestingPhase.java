@@ -16,10 +16,10 @@ public class RestingPhase {
     private ArrayList<DreamTile> market;
     private int currPlayerIndex;
 
-    public RestingPhase(ArrayList<Player> players, DreamTileCollection dreamTiles) {
+    public RestingPhase(ArrayList<Player> players) {
         this.players = players;
         currPlayerIndex = 0;
-        this.dreamTiles = dreamTiles;
+        this.dreamTiles = new DreamTileCollection();
         DreamTileGenerator generator = new DreamTileGenerator();
         generator.makeDreamTiles(dreamTiles);
         createMarket();

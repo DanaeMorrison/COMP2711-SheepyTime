@@ -16,13 +16,18 @@ public class DreamTileGenerator {
     public void makeDreamTiles(DreamTileCollection tileCollection) {
         DreamTileFactory factory = new DreamTileFactory();
         for (int i = 0; i < tileNames.length; i++) {
-            DreamTile tile = factory.createDreamTile(tileNames[i]);
-            tileCollection.add(tile);
+            try{
+                DreamTile tile = factory.createDreamTile(tileNames[i]);
+                tileCollection.add(tile);
+            }
+            catch (IllegalArgumentException iae) {
+                continue;
+            }
         }
     }
 
     public class DreamTileFactory{
-        public DreamTile createDreamTile(String tileType){ //TODO: add all tiles to this and tileNames[]
+        public DreamTile createDreamTile(String tileType){
             if(tileType.equals("ActionHero")){ return new ActionHeroTile(); }
             
             else if(tileType.equals("DeepSleep")){ return new DeepSleepTile(); }
