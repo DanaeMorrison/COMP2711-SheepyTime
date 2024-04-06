@@ -12,13 +12,13 @@ public class RestingPhaseAction {
     private RestingPhase phase;
     private DreamTileBoard tileBoard;
 
-    public RestingPhaseAction(RestingPhase phase, DreamTileBoard tileBoard) {
+    public RestingPhaseAction(RestingPhase phase) {
         this.phase = phase;
-        this.tileBoard = tileBoard;
     }
 
-    // Getter Methods
+    // Setter & Getter Methods
     public DreamTileBoard getBoard() { return tileBoard; }
+    public void setBoard(DreamTileBoard tileBoard) {this.tileBoard = tileBoard;}
     public RestingPhase getRestingPhase() { return phase; }
 
     /**

@@ -12,7 +12,7 @@ import model.Player;
 public class DuoLogicFactory extends MultiPlayerLogicFactory {
 
     @Override
-    protected MultiPlayerLogic createLogic(ArrayList<Player> players) {
+    protected DuoLogic createLogic(ArrayList<Player> players) {
         return new DuoLogic(players);
     }
 

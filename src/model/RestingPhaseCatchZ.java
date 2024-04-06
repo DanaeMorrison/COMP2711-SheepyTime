@@ -15,8 +15,8 @@ public class RestingPhaseCatchZ extends RestingPhaseAction {
 
     private DreamTileBoard board;
 
-    public RestingPhaseCatchZ(RestingPhase phase, DreamTileBoard tileBoard) {
-        super(phase, tileBoard);
+    public RestingPhaseCatchZ(RestingPhase phase) {
+        super(phase);
     }
 
     /**
