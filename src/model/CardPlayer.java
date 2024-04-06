@@ -86,8 +86,6 @@ public class CardPlayer {
 
         int moves = card.getMoves()[0]; // nightmare cards only have 1 move option
         boolean nightmareCrossed = false;
-        int moves = card.getMoves()[0]; // nightmare cards only have 1 move option
-        int jumpPos = card.getJumpMove();
 
         // boolean nightmareCrossed = false;
 
