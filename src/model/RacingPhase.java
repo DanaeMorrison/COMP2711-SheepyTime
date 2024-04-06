@@ -24,11 +24,13 @@ public class RacingPhase {
     // private int cardChoice = -1;
 
 
-    public RacingPhase(ArrayList<Player> players, Deck deck, Nightmare nightmare, DreamTileBoard dreamTileBoard){
+    public RacingPhase(ArrayList<Player> players, Deck deck, Nightmare nightmare/* , DreamTileBoard dreamTileBoard*/){
         this.players = players;
         this.deck = deck;
         this.nightmare = nightmare;
-        this.dreamTileBoard = dreamTileBoard;
+        
+        //this.dreamTileBoard = dreamTileBoard;
+        
         // this.cardPlayer = cardPlayer;
         nightmareHasCrossed = false;
     }
@@ -58,6 +60,10 @@ public class RacingPhase {
 
     public DreamTileBoard getDreamTileBoard() {
         return dreamTileBoard;
+    }
+
+    public void setDreamTileBoard(DreamTileBoard dreamTileBoard) {
+        this.dreamTileBoard = dreamTileBoard;
     }
 
     public boolean getNightmareHasCrossed() {
