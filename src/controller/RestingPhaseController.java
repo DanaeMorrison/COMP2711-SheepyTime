@@ -145,9 +145,9 @@ public class RestingPhaseController {
      * @return
      */
     private boolean canPutNewTile() {
-        boolean canPutTile = false;
-        if (!tileBoard.isFull()) {
-            canPutTile = true;
+        boolean canPutTile = true;
+        if (tileBoard.isFull()) {
+            canPutTile = false;
         }
         return canPutTile;
     }

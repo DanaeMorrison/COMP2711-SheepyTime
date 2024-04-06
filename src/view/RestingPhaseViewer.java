@@ -75,6 +75,7 @@ public class RestingPhaseViewer {
         do {
             try {
                 userInput = scanner.nextInt();
+                validInput = true;
             } catch (InputMismatchException ime) {
                 System.out.print("\nWrong input format! Please Type integer");
             }

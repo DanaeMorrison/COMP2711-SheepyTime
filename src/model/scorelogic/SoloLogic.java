@@ -56,7 +56,7 @@ public class SoloLogic implements ScoreLogic{
             finalScore -= 5*numRound;
             return getResult(finalScore);
         }
-        return null;
+        return "";
     }
 
     /**

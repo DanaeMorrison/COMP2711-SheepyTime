@@ -37,12 +37,13 @@ public class DreamTileBoard /*implements BoardInterface*/{
      * @return true if there is, otherwise false
      */
     public boolean isFull() {
+        int counter = 0;
         for (int i = 0; i < 10; i++) {
-            if (!occupied(i)) {
-                return true;
+            if (occupied(i)) {
+                counter++;
             }
         }
-        return false;
+        return counter == 10;
     }
 
     public String[] getBoardStatus(Player currPlayer) {
@@ -61,7 +62,7 @@ public class DreamTileBoard /*implements BoardInterface*/{
     private String printZToken(int location, Player currPlayer) {
         DreamTile tile = getTile(location);
         if(tile == null){
-            return "No Tile!";
+            return "";
         }
         ArrayList<ZToken> zTokens = tile.getTokens();
         String result = "";
