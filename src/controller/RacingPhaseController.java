@@ -186,6 +186,7 @@ public class RacingPhaseController {
         }
     }
 
+
     private void printCard(Card card, Nightmare nightmare) {
         cardViewer.rulePrint(card.getMoves(), card.getJumpMove(), card.getSpiderMove(), card.getWinks(),
                 card.getZtokens(), nightmare.getType(), card.isNightmare(), card.bothConditions());
