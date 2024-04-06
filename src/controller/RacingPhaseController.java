@@ -8,6 +8,7 @@ import model.Nightmare;
 import model.CardPlayer;
 import model.DreamTilePlayer;
 import model.RacingPhase;
+import model.RacingPhaseCatchZ;
 import model.exception.GameLogicViolationException;
 import model.Deck;
 import model.DreamTile;
@@ -78,7 +79,7 @@ public class RacingPhaseController {
                 usedCards.add(picked);
                 hand.remove(cardChoice);
 
-                playCard(picked, currPlayer, nightmare);
+                playCard(picked, currPlayer, nightmare, dreamTileBoard);
 
                 // DreamTile Section
                 PlayerBoard board = currPlayer.getBoard();
@@ -242,7 +243,7 @@ public class RacingPhaseController {
         return cardChoice;
     }
 
-    private void playCard(Card pickedCard, Player currentPlayer, Nightmare nightmare) {
+    private void playCard(Card pickedCard, Player currentPlayer, Nightmare nightmare, DreamTileBoard dreamTileBoard) {
         boolean validInput = false;
         int abilityChoice;
         int moveAmount;
@@ -338,7 +339,7 @@ public class RacingPhaseController {
                 response += cardPlayer.playCard(pickedCard, currentPlayer, nightmare, secondAbility);
             }
             else if(secondAbility == 3 ){
-                catchZ();
+                catchZ(dreamTileBoard, currentPlayer);
             }
             racingPhaseViewer.printCardPlayResponse(response);
         }
@@ -371,31 +372,42 @@ public class RacingPhaseController {
     /**
      * Helper method that handles when the user decides to catch Z Token
      */
-    private String catchZ(DreamTileBoard dreamTileBoard) {
+    private String catchZ(DreamTileBoard dreamTileBoard, Player currPlayer) {
         DreamTileBoardViewer dreamTileBoardViewer = new DreamTileBoardViewer();
+        RacingPhaseCatchZ catchZ = new RacingPhaseCatchZ(dreamTileBoard, currPlayer);
         int location;
         int numZToken;
-        String responese;
-        showBoardStatus();
+        String response="";
+        showBoardStatus(dreamTileBoardViewer, dreamTileBoard, currPlayer);
         boolean actionTermination = false;
         do {
-            if (playerDoesNotHaveZ() && dreamTileBoard.isFull()) {
+            if (currPlayer.getZtokens()==0 && dreamTileBoard.isFull()) {
                 racingPhaseViewer.showErrorMessage(
                         "Uh oh! You don't have ZToken anymore, and there is no empty space for another dreamTile in the board!\n"
                                 +
                                 "Unfortunately, there is no other option left for you...");
-                return;
+                break;
             }
 
             location = racingPhaseViewer.askTileLocationToCatch();
             numZToken = racingPhaseViewer.askNumZTokenToCatch();
 
             try {
-                actionTermination = actionCatchZ.catchZ(location, numZToken);
+                actionTermination = catchZ.catchZ(location, numZToken);
+                response += (currPlayer.getName() + " catched " + numZToken + "Z Token(s)\n");
             } catch (GameLogicViolationException glve) {
-                phaseViewer.showErrorMessage(glve.getMessage());
+                racingPhaseViewer.showErrorMessage(glve.getMessage());
                 continue;
             }
         } while (!actionTermination);
+
+        return response;
+    }
+
+        /**
+     * Method that tells the viewer to show the board Status
+     */
+    private void showBoardStatus(DreamTileBoardViewer dreamTileBoardViewer, DreamTileBoard dreamTileBoard, Player currPlayer) {
+        dreamTileBoardViewer.showBoardStatus(dreamTileBoard.getBoardStatus(currPlayer));
     }
 }

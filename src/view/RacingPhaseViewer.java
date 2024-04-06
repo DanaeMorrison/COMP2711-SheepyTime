@@ -17,6 +17,33 @@ public class RacingPhaseViewer {
         return getCardChoice();
     }
 
+        /**
+     * Method that prints received error messages
+     * 
+     * @param errorMessage
+     */
+    public void showErrorMessage(String errorMessage) {
+        System.out.println(errorMessage);
+    }
+
+    /**
+     * Method that asks the user to choose the position of the tile
+     * @return user input
+     */
+    public int askTileLocationToCatch() {
+        System.out.print("Where Do you want to catch your Z Token? Please type from 1~10");
+        return getIntegerInput();
+    }
+
+    /**
+     * Method that asks the user to choose the number of Z Token to catch 
+     * @return user input
+     */
+    public int askNumZTokenToCatch() {
+        System.out.print("How many Z Tokens do you want to catch here? please type either 1 or 2");
+        return getIntegerInput();
+    }
+
     private int getIntegerInput() {
         int userInput = 0;
         boolean valid = false;
@@ -123,4 +150,5 @@ public class RacingPhaseViewer {
         response += "The nightmare has jumped over the fence!\n";
         System.out.println(response);
     }
+    
 }
