@@ -32,18 +32,18 @@ public class RestingPhaseController {
     private boolean isSolo = false;
 
     public RestingPhaseController(DreamTileBoardViewer boardViewer, ArrayList<Player> players,
-        DreamTileCollection dreamTiles, DreamTileViewer tileViewer, RestingPhaseCatchZ actionCatchZ, RestingPhasePutNewTile actionPutNewTile) {
+         DreamTileViewer tileViewer) {
         phase = new RestingPhase(players, dreamTiles);
         if (players.size() == 1) {
             isSolo = true;
         }
         phaseViewer = new RestingPhaseViewer();
+        dreamTiles = new DreamTileCollection();
         this.boardViewer = boardViewer;
         this.tileViewer = tileViewer;
-        this.dreamTiles = dreamTiles;
         
-        this.actionCatchZ = actionCatchZ;
-        this.actionPutNewTile = actionPutNewTile;
+        actionCatchZ = new RestingPhaseCatchZ(phase);
+        actionPutNewTile = new RestingPhasePutNewTile(phase);
     }
 
     /**

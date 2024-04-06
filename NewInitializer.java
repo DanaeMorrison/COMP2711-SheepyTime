@@ -1,7 +1,18 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import controller.PhaseShiftController;
+import controller.RacingPhaseController;
+import controller.RestingPhaseController;
+import controller.ScoreController;
+import model.Deck;
+import model.DreamTileBoard;
+import model.DreamTileCollection;
+import model.Nightmare;
 import model.Player;
+import model.RacingPhase;
+import view.DreamTileBoardViewer;
+import view.DreamTileViewer;
 
 public class NewInitializer {
     private static Scanner scanner = new Scanner(System.in);
@@ -38,6 +49,20 @@ public class NewInitializer {
 
     public static void main(String[] args) {
         ArrayList<Player> players = generatePlayers();
+        Nightmare nightmare = new Nightmare("wolf", 1);
+        DreamTileBoard dreamTileBoard = new DreamTileBoard();
+        Deck deck  = new Deck();
+        RacingPhase racingPhase = new RacingPhase(players, deck, nightmare);
+
+        DreamTileBoardViewer boardViewer = new DreamTileBoardViewer();
+        DreamTileViewer tileViewer = new DreamTileViewer();
+        
+        ScoreController scoreController = new ScoreController(players);
+        RacingPhaseController racingPhaseController = new RacingPhaseController(racingPhase);
+        RestingPhaseController restingPhaseController = new RestingPhaseController(boardViewer, players, tileViewer);
+    
+        PhaseShiftController phaseShifter = new PhaseShiftController(racingPhaseController, scoreController, restingPhaseController, dreamTileBoard);
+        phaseShifter.loopRound();
     }
 
 }
