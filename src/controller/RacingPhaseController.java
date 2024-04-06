@@ -88,7 +88,7 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
                 for(int j = 0; j < hand.size(); j++){
                     Card currCard = curr.getHand().get(j);
                     racingPhaseViewer.printCardInHand(curr.getName(), j);
-                    cardViewer.rulePrint(currCard.getMoves(), currCard.getJumpPos(), currCard.getSpiderMove(), currCard.getWinks(), currCard.getZtokens(), nightmare.getType(), currCard.isNightmare(), currCard.bothConditions());
+                    cardViewer.rulePrint(currCard.getMoves(), currCard.getJumpMove(), currCard.getSpiderMove(), currCard.getWinks(), currCard.getZtokens(), nightmare.getType(), currCard.isNightmare(), currCard.bothConditions());
                 }
                 // should the model be updated to store the currently chosen card?
                 //cardChoice = racingPhaseViewer.getCardChoice();
@@ -142,8 +142,8 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
                     usedCards.add(card);
             
                     if(card.isNightmare()){
-                        // new CardViewer(card, nightmare.getType()).rulePrint();
-                        cardViewer.rulePrint(card.getMoves(), card.getJumpPos(), card.getSpiderMove(), card.getWinks(), card.getZtokens(), nightmare.getType(), card.isNightmare(), card.bothConditions());
+                        // print that a nightmare card has been drawn
+                        cardViewer.rulePrint(card.getMoves(), card.getJumpMove(), card.getSpiderMove(), card.getWinks(), card.getZtokens(), nightmare.getType(), card.isNightmare(), card.bothConditions());
                         if(cardPlayer.playNightmareCard(card, nightmare, players)){ //ugly syntactically, but it's playing the card *and* returning a true boolean if the nightmare is crossing.
                             racingPhase.setNightmareHasCrossed(true);
                         }
@@ -173,7 +173,7 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
                 for(int j = 0; j < hand.size(); j++){
                     Card currCard = curr.getHand().get(j);
                     racingPhaseViewer.printCardInHand(curr.getName(), j);
-                    cardViewer.rulePrint(currCard.getMoves(), currCard.getJumpPos(), currCard.getSpiderMove(), currCard.getWinks(), currCard.getZtokens(), nightmare.getType(), currCard.isNightmare(), currCard.bothConditions());
+                    cardViewer.rulePrint(currCard.getMoves(), currCard.getJumpMove(), currCard.getSpiderMove(), currCard.getWinks(), currCard.getZtokens(), nightmare.getType(), currCard.isNightmare(), currCard.bothConditions());
                 }
 
                 BoardViewer.showBoard(players, nightmare);
@@ -209,8 +209,8 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
             usedCards.add(card);
             
             if(card.isNightmare()){
-                // new CardViewer(card, nightmare.getType()).rulePrint();
-                cardViewer.rulePrint(card.getMoves(), card.getJumpPos(), card.getSpiderMove(), card.getWinks(), card.getZtokens(), nightmare.getType(), card.isNightmare(), card.bothConditions());
+                // print that a nightmare card has been pulled
+                cardViewer.rulePrint(card.getMoves(), card.getJumpMove(), card.getSpiderMove(), card.getWinks(), card.getZtokens(), nightmare.getType(), card.isNightmare(), card.bothConditions());
                 if(cardPlayer.playNightmareCard(card, nightmare, players)){ //ugly syntactically, but it's playing the card *and* returning a true boolean if the nightmare is crossing.
                     racingPhase.setNightmareHasCrossed(true);
                     return;
@@ -325,7 +325,7 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
                 response = cardPlayer.movePlayer(currentPlayer, nightmare, board, moveAmount);
             } else {
                 // otherwise, this method can be played
-                response = cardPlayer.playCard(pickedCard, currentPlayer, nightmare, abilityChoice, board);
+                response = cardPlayer.playCard(pickedCard, currentPlayer, nightmare, abilityChoice);
             }
             // racingPhaseViewer.printCardPlayResponse(response);
             
@@ -361,7 +361,7 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
                 }
 
                 response = cardPlayer.movePlayer(currentPlayer, nightmare, board, moveAmount);
-                response += cardPlayer.playCard(pickedCard, currentPlayer, nightmare, secondAbility, board);
+                response += cardPlayer.playCard(pickedCard, currentPlayer, nightmare, secondAbility);
                 racingPhaseViewer.printCardPlayResponse(response);
         }
     }

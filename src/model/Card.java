@@ -16,7 +16,7 @@ public class Card {
     private int[] moves;
     private int Ztokens;
     private int winks;
-    private int jumpPos;
+    private int jumpMove;
     private int spiderMove;
 
     /**
@@ -39,18 +39,18 @@ public class Card {
      *              should be moved on the board
      * @param Ztokens contains the number of Ztokens a card potentially says can be caught by the player
      * @param winks contains the number of winks a card potentially says can be gained by the player
-     * @param jumpPos contains the position on a board a bump nightmare should jump to
+     * @param jumpMove contains the number of moves forward or backward that a bump nightmare should jump
      * @param spiderMove contains the number of positions a spider nightmare's web token should be
      *                      moved forward if the spider is already on the token or if the token is
      *                      not currently on the board
      */
-    public Card (boolean bothConditions, boolean isNightmare, int[] moves, int Ztokens, int winks, int jumpPos, int spiderMove) {
+    public Card (boolean bothConditions, boolean isNightmare, int[] moves, int Ztokens, int winks, int jumpMove, int spiderMove) {
         this.bothConditions = bothConditions;
         this.isNightmare = isNightmare;
         this.moves = moves;
         this.Ztokens = Ztokens;
         this.winks = winks;
-        this.jumpPos = jumpPos;
+        this.jumpMove = jumpMove;
         this.spiderMove = spiderMove;
     }
     /**
@@ -77,11 +77,11 @@ public class Card {
         this.winks = winks;
     }
     /**
-     * This method allows a card to be initialized with the board position a bump nightmare should jump to
-     * @param jumpPos contains the board position a bump nightmare will jump to
+     * This method allows a card to be initialized with the number of moves forward or backward that a bump nightmare should jump
+     * @param jumpMove number of moves forward or backward that a bump nightmare should jump
      */
-    public void setJumpPos(int jumpPos) {
-        this.jumpPos = jumpPos;
+    public void setJumpMove(int jumpMove) {
+        this.jumpMove = jumpMove;
     }
     /**
      * This method allows a card to be initialized with the number of positions a spider nightmare's 
@@ -114,11 +114,11 @@ public class Card {
         return winks;
     }
     /**
-     * This method gives the board position that is assigned to a card
-     * @return int containing the board position stored in a card for a bump nightmare
+     * This method gives the number of moves forward or backward that a bump nightmare should jump that is assigned to a card
+     * @return int containing the the number of positions a spider nightmare's web token would be moved forward
      */
-    public int getJumpPos() {
-        return jumpPos;
+    public int getJumpMove() {
+        return jumpMove;
     }
     /**
      * This method gives the number of moves for a spider nightmare's web token that is assigned to a card
@@ -235,7 +235,7 @@ public class Card {
             card.setMoves(moves);
             card.setZtokens(Ztokens);
             card.setWinks(winks);
-            card.setJumpPos(jumpPos);
+            card.setJumpMove(jumpPos);
             card.setSpiderMove(spiderMove);
             return card;
         }

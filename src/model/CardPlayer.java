@@ -88,7 +88,9 @@ public class CardPlayer {
         NightmareBoard nightmareBoard = nightmare.getBoard();
 
         int moves = card.getMoves()[0]; //nightmare cards only have 1 move option
-        boolean nightmareCrossed = false;
+        int jumpPos = card.getJumpMove();
+
+        // boolean nightmareCrossed = false;
 
         if(moves > 0 && moves != 10) {
 
@@ -97,8 +99,9 @@ public class CardPlayer {
             int end = path.length;
 
             if(nightmare.getBoard().isCrossing(moves)){
-                end = getMaxIndex(path) + 1;
-                nightmareCrossed = true;
+                // end = getMaxIndex(path) + 1;
+                // nightmareCrossed = true;
+                return true;
             }
 
             for(Player p : players){
@@ -122,9 +125,19 @@ public class CardPlayer {
             }
         }
 
-        nightmare.getBoard().jump(card.getJumpPos());
+        if (jumpPos != 0) {
+            if(nightmare.getBoard().isCrossing(jumpPos)){
+                // end = getMaxIndex(path) + 1;
+                //nightmareCrossed = true;
+                return true;
+            }
+            nightmare.getBoard().advance(moves);
+
+        }
+
+        // nightmare.getBoard().jump(card.getJumpMove());
         
-        return nightmareCrossed;
+        return false;
 
         //TODO: something something spider token for different nightmares?
         // spider nightmare uses spiderMove
@@ -132,6 +145,7 @@ public class CardPlayer {
         
     }
 
+    /**
     private static int getMaxIndex(int[] in){
         int maxIndex = 0;
         for(int i = 0; i < in.length; i++){
@@ -140,7 +154,7 @@ public class CardPlayer {
             }
         }
         return maxIndex;
-    }
+    } */
 
     /**
     /*

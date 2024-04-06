@@ -36,7 +36,7 @@ public class CardTest {
         assertArrayEquals(moves, card.getMoves());
         assertEquals(zTokens, card.getZtokens());
         assertEquals(winks, card.getWinks());
-        assertEquals(jumpPos, card.getJumpPos());
+        assertEquals(jumpPos, card.getJumpMove());
         assertEquals(spiderMove, card.getSpiderMove());
     }
 
@@ -65,7 +65,7 @@ public class CardTest {
         card.setMoves(newMoves);
         card.setZtokens(newZTokens);
         card.setWinks(newWinks);
-        card.setJumpPos(newJumpPos);
+        card.setJumpMove(newJumpPos);
         card.setSpiderMove(newSpiderMove);
 
         assertEquals(true, card.bothConditions());
@@ -73,7 +73,7 @@ public class CardTest {
         assertArrayEquals(newMoves, card.getMoves());
         assertEquals(newZTokens, card.getZtokens());
         assertEquals(newWinks, card.getWinks());
-        assertEquals(newJumpPos, card.getJumpPos());
+        assertEquals(newJumpPos, card.getJumpMove());
         assertEquals(newSpiderMove, card.getSpiderMove());
     }
 }

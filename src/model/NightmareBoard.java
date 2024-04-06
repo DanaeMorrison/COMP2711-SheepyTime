@@ -42,11 +42,13 @@ public class NightmareBoard implements BoardInterface{
      */
     @Override
     public void advance(int steps) {
-        if(position+steps<0){
+        if (position == -1 && (position + steps) < 0) {
+            position = -1;
+        } else if(position+steps<0){
             position = 0;
         }
-        else{
-        position = (position+steps) % 10;
+        else {
+            position = (position+steps) % 10;
         }
     }
 
