@@ -47,9 +47,40 @@ public class NewInitializer {
         return playerCount;
     }
 
+    /**
+     * Uses the chosen nightmare integer from the user to create the corresponding nightmare
+     * @return a nightmare object corresponding to the one chosen by the user
+     */
+    private static Nightmare generateNightmare() {
+        int nightmareChoice = generateNightmareParams();
+        
+        if (nightmareChoice == 1) {
+            return new Nightmare("wolf", 1);
+        }
+        return new Nightmare("bump", 2);
+    }
+
+    /**
+     * Prompts the user for which nightmare they'd like to play the game with
+     * @return integer representing the chosen nightmare
+     */
+    private static int generateNightmareParams(){
+        System.out.println("Which nightmare would you like?");
+        System.out.println("Enter 1 for Wolf nightmare");
+        System.out.println("Enter 2 for Bump in the Night nightmare");
+        int nightmareChoice = scanner.nextInt();
+        
+        do {
+            System.out.println("You did not enter a valid input. Please enter 1 or 2");
+            nightmareChoice = scanner.nextInt();
+        } while (nightmareChoice != 1 && nightmareChoice != 2);
+
+        return nightmareChoice;
+    }
+
     public static void main(String[] args) {
         ArrayList<Player> players = generatePlayers();
-        Nightmare nightmare = new Nightmare("wolf", 1);
+        Nightmare nightmare = generateNightmare();
         DreamTileBoard dreamTileBoard = new DreamTileBoard();
         Deck deck  = new Deck();
         RacingPhase racingPhase = new RacingPhase(players, deck, nightmare);
