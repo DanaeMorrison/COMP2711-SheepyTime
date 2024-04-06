@@ -35,13 +35,11 @@ public class CardPlayer {
             case 2:
                 player.setWinks(player.getWinks() + card.getWinks());
                 response += " has gained " + String.valueOf(player.getWinks()) + " winks";
-            case 3:
-                // add ztokens and infinite ztokens, no dreamtile functionality yet
+
         }
         return response;
     }
 
-    private String
 
     public String movePlayer(Player player, Nightmare nightmare, PlayerBoard board, int moveAmount) {
         board.advance(moveAmount);
