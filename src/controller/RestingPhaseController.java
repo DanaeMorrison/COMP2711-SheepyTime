@@ -31,26 +31,26 @@ public class RestingPhaseController {
     private RestingPhasePutNewTile actionPutNewTile;
     private boolean isSolo = false;
 
-    public RestingPhaseController(DreamTileBoard tileBoard, DreamTileBoardViewer boardViewer, ArrayList<Player> players,
-        DreamTileCollection dreamTiles, DreamTileViewer tileViewer, RestingPhase phase) {
-        this.phase = phase;
+    public RestingPhaseController(DreamTileBoardViewer boardViewer, ArrayList<Player> players,
+        DreamTileCollection dreamTiles, DreamTileViewer tileViewer, RestingPhaseCatchZ actionCatchZ, RestingPhasePutNewTile actionPutNewTile) {
+        phase = new RestingPhase(players, dreamTiles);
         if (players.size() == 1) {
             isSolo = true;
         }
         phaseViewer = new RestingPhaseViewer();
         this.boardViewer = boardViewer;
         this.tileViewer = tileViewer;
-        this.tileBoard = tileBoard;
         this.dreamTiles = dreamTiles;
 
-        actionCatchZ = new RestingPhaseCatchZ(phase, tileBoard);
-        actionPutNewTile = new RestingPhasePutNewTile(phase, tileBoard);
+        this.actionCatchZ = actionCatchZ;
+        this.actionPutNewTile = actionPutNewTile;
     }
 
     /**
      * Method that starts the phase
      */
-    public void startPhase() {
+    public DreamTileBoard startPhase(DreamTileBoard tileBoard) {
+        setTileBoard(tileBoard);
         do {
             boolean canPutTile = canPutNewTile();
             int userChoice = askUserChoice(canPutTile);
@@ -68,6 +68,12 @@ public class RestingPhaseController {
         if (isSolo) {
             actionPutNewTile.putNewTileInSolo(dreamTiles.takeTile());
         }
+        return actionPutNewTile.getBoard();
+    }
+
+    private void setTileBoard(DreamTileBoard tileBoard) {
+        actionCatchZ.setBoard(tileBoard);
+        actionPutNewTile.setBoard(tileBoard);
     }
 
     /**
