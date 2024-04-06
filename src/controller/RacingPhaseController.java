@@ -24,74 +24,64 @@ import view.RacingPhaseViewer;
  * @version 1.0
  */
 
-public class RacingPhaseController /**implements ModelListenerRacingPhase, ModelListenerCardPlayer*/ {
-    public final int FIRST_CARD = 0;
-    public final int SECOND_CARD = 1;
-    
+public class RacingPhaseController {
+
     private RacingPhase racingPhase;
     CardPlayer cardPlayer = new CardPlayer();
     DreamTilePlayer dreamTilePlayer;
     CardViewer cardViewer = new CardViewer();
     RacingPhaseViewer racingPhaseViewer = new RacingPhaseViewer();
 
-    public RacingPhaseController(RacingPhase racingPhase/*, CardPlayer cardPlayer*/) {
+    public RacingPhaseController(RacingPhase racingPhase) {
         this.racingPhase = racingPhase;
-        //this.cardPlayer = cardPlayer;
     }
 
     public DreamTileBoard startPhase(DreamTileBoard dreamTileBoard) {
-        //TODO Update
         racingPhase.setDreamTileBoard(dreamTileBoard);
-        // racingPhase.startPhase();
         ArrayList<Player> players = racingPhase.getPlayers();
         int playerCount = racingPhase.getPlayerSize();
         Nightmare nightmare = racingPhase.getNightmare();
-        // TODO Update: DreamTileBoard dreamTileBoard = racingPhase.getDreamTileBoard();
         dreamTilePlayer = new DreamTilePlayer(dreamTileBoard);
         Deck deck = racingPhase.getDeck();
         // boolean nightmareHasCrossed = racingPhase.getNightmareHasCrossed();
         // boolean nightmareHasCrossed = false;
         // boolean oneSleepingPlayer;
 
-        Player curr;
+        Player currPlayer;
         Card picked;
         int cardChoice;
         ArrayList<Card> usedCards = new ArrayList<>();
 
-
         while(!allPlayersAwake(players)){
             for(int i = 0; i < playerCount; i++){
-                curr = players.get(i);
-                if(curr.isAwake()){
+                currPlayer = players.get(i);
+                if(currPlayer.isAwake()){
                     continue;
                 }
 
-                fillHand(curr, players, usedCards, deck, nightmare);
+                fillHand(currPlayer, players, usedCards, deck, nightmare);
 
                 if(racingPhase.getNightmareHasCrossed()){
                     resetPlayerInfo(players);
-                    return dreamTileBoard; 
+                    return dreamTileBoard;
                 }
 
-                ArrayList<Card> hand = curr.getHand();
-    
-                for(int j = 0; j < hand.size(); j++){
-                    Card currCard = curr.getHand().get(j);
-                    racingPhaseViewer.printCardInHand(curr.getName(), j);
-                    cardViewer.rulePrint(currCard.getMoves(), currCard.getJumpMove(), currCard.getSpiderMove(), currCard.getWinks(), currCard.getZtokens(), nightmare.getType(), currCard.isNightmare(), currCard.bothConditions());
-                }
+                ArrayList<Card> hand = currPlayer.getHand();
+                
+                showHand(hand, currPlayer, nightmare);
+                
                 cardChoice = askCardChoice();
 
                 picked = hand.get(cardChoice);
                 usedCards.add(picked);
                 hand.remove(cardChoice);
 
-                playCard(picked, curr, nightmare);
+                playCard(picked, currPlayer, nightmare);
 
                 // DreamTile Section
-                PlayerBoard board = curr.getBoard();
+                PlayerBoard board = currPlayer.getBoard();
                 int playerPosition = board.getIndex();
-                if (dreamTilePlayer.isUsableTilePresent(playerPosition, curr)) {
+                if (dreamTilePlayer.isUsableTilePresent(playerPosition, currPlayer)) {
                     DreamTile thisDreamTile = dreamTileBoard.getTile(playerPosition);
                     int useTileChoice = racingPhaseViewer.getUseTileChoice(thisDreamTile);
 
@@ -103,10 +93,10 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
                     } while (!validInput);
 
                     if (useTileChoice == 1) {
-                        useDreamTile(curr, players, nightmare, dreamTileBoard, thisDreamTile);
+                        useDreamTile(currPlayer, players, nightmare, dreamTileBoard, thisDreamTile);
                     }
                 }
-                
+
                 // Check to see if there is currently only one player asleep in the phase
                 // This is to satisfy the rule that a card has to be played
                 if (onePlayerAsleep(players)) {
@@ -116,54 +106,56 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
                     usedCards.add(card);
             
                     if(card.isNightmare()){
+                        printCard(card, nightmare);
                         // print that a nightmare card has been drawn
-                        cardViewer.rulePrint(card.getMoves(), card.getJumpMove(), card.getSpiderMove(), card.getWinks(), card.getZtokens(), nightmare.getType(), card.isNightmare(), card.bothConditions());
-                        /*if(cardPlayer.playNightmareCard(card, nightmare, players)){ //ugly syntactically, but it's playing the card *and* returning a true boolean if the nightmare is crossing.
-                            racingPhase.setNightmareHasCrossed(true);
-                        }*/
                         playNightmareCard(card, nightmare, players);
                         if(racingPhase.getNightmareHasCrossed()){
                             resetPlayerInfo(players);
                             return dreamTileBoard;
                         }
                     }
-
+                }
                 // refills a player's hand at the end of their turn
                 // code smell: put the loops below this together in another function
                 // to run at the same time
-                fillHand(curr, players, usedCards, deck, nightmare);
+                fillHand(currPlayer, players, usedCards, deck, nightmare);
 
                 if(racingPhase.getNightmareHasCrossed()){
                     resetPlayerInfo(players);
                     return dreamTileBoard;
                 }
 
-                for(int j = 0; j < hand.size(); j++){
-                    Card currCard = curr.getHand().get(j);
-                    racingPhaseViewer.printCardInHand(curr.getName(), j);
-                    cardViewer.rulePrint(currCard.getMoves(), currCard.getJumpMove(), currCard.getSpiderMove(), currCard.getWinks(), currCard.getZtokens(), nightmare.getType(), currCard.isNightmare(), currCard.bothConditions());
-                }
-
+                showHand(hand, currPlayer, nightmare);
                 BoardViewer.showBoard(players, nightmare);
             }
         }
+        
         replaceUsedCards(usedCards, deck);
         return dreamTileBoard;
+    }
+
+    private void showHand(ArrayList<Card> hand, Player currPlayer, Nightmare nightmare) {
+        for (int j = 0; j < hand.size(); j++) {
+            Card currCard = currPlayer.getHand().get(j);
+            racingPhaseViewer.printCardInHand(currPlayer.getName(), j);
+            printCard(currCard, nightmare);
+
+        }
     }
 
     /**
      * Used to shuffle back in all the used cards.
      * 
-     * @param used used cards to fill "toFill" deck
+     * @param used   used cards to fill "toFill" deck
      * @param toFill deck to be filled by the used deck
      */
-    public void replaceUsedCards(ArrayList<Card> used, Deck toFill){
-        while(!used.isEmpty()){
-            Card temp = used.get(1); //get()?
+    public void replaceUsedCards(ArrayList<Card> used, Deck toFill) {
+        while (!used.isEmpty()) {
+            Card temp = used.get(1); // get()?
             toFill.add(temp);
             used.remove(temp);
         }
-        toFill.shuffle(); //shouldn't be needed anymore with new style of getting a random card from deck
+        toFill.shuffle(); // shouldn't be needed anymore with new style of getting a random card from deck
     }
 
     public void fillHand(Player player, ArrayList<Player> players, ArrayList<Card> usedCards, Deck deck, Nightmare nightmare){
@@ -176,7 +168,7 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
             
             if(card.isNightmare()){
                 // print that a nightmare card has been pulled
-                cardViewer.rulePrint(card.getMoves(), card.getJumpMove(), card.getSpiderMove(), card.getWinks(), card.getZtokens(), nightmare.getType(), card.isNightmare(), card.bothConditions());
+                printCard(card, nightmare);
                 /*if(cardPlayer.playNightmareCard(card, nightmare, players)){ //ugly syntactically, but it's playing the card *and* returning a true boolean if the nightmare is crossing.
                     racingPhase.setNightmareHasCrossed(true);
                     return;
@@ -194,35 +186,42 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
         }
     }
 
-    public boolean allPlayersAwake(ArrayList<Player> players){
+    private void printCard(Card card, Nightmare nightmare) {
+        cardViewer.rulePrint(card.getMoves(), card.getJumpMove(), card.getSpiderMove(), card.getWinks(),
+                card.getZtokens(), nightmare.getType(), card.isNightmare(), card.bothConditions());
+    }
+
+    public boolean allPlayersAwake(ArrayList<Player> players) {
         int awakeCount = 0;
-        for(Player p : players){
-            if(p.isAwake()){
+        for (Player p : players) {
+            if (p.isAwake()) {
                 awakeCount++;
             }
         }
         return (awakeCount == players.size());
     }
 
-    public boolean onePlayerAsleep(ArrayList<Player> players){
+    public boolean onePlayerAsleep(ArrayList<Player> players) {
         int asleepCount = 0;
-        for(Player p : players){
-            if(!p.isAwake()){
+        for (Player p : players) {
+            if (!p.isAwake()) {
                 asleepCount++;
             }
         }
         return (asleepCount == 1);
     }
 
-    private void useDreamTile(Player player, ArrayList<Player> players, Nightmare nightmare, DreamTileBoard dreamTileBoard, DreamTile tile){
+    private void useDreamTile(Player player, ArrayList<Player> players, Nightmare nightmare,
+            DreamTileBoard dreamTileBoard, DreamTile tile) {
         // PlayerBoard board = player.getBoard();
         // int playerPos = board.getIndex();
         // DreamTile tile = dreamTileBoard.getTile(playerPos);
         tile.removePlayerToken(player);
         player.setZtokens(player.getZtokens() + 1);
         tile.useTile(player, players, nightmare, dreamTileBoard);
-        // make DreamTilePlayer throw exceptions for different scenarios of bad things that can occur?
-        // go to the useTile function in each of the tiles to 
+        // make DreamTilePlayer throw exceptions for different scenarios of bad things
+        // that can occur?
+        // go to the useTile function in each of the tiles to
     }
 
     private int askCardChoice() {
@@ -251,9 +250,9 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
         int secondAbility = cardPlayer.getValidCardOptions(pickedCard);
         PlayerBoard board = currentPlayer.getBoard();
 
-        if(!pickedCard.bothConditions()) {
+        if (!pickedCard.bothConditions()) {
             racingPhaseViewer.displayAbilityOptions(secondAbility);
-            abilityChoice = racingPhaseViewer.getAbilityChoice(secondAbility);
+            abilityChoice = racingPhaseViewer.getAbilityChoice();
             validInput = cardPlayer.isAbilityChoiceValid(abilityChoice, secondAbility);
 
             do {
@@ -263,11 +262,12 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
 
             validInput = false;
 
-            // if ability choice == 1 and getMoveAmount > 1 then need to ask for the length that the user wants to travel
+            // if ability choice == 1 and getMoveAmount > 1 then need to ask for the length
+            // that the user wants to travel
             // then this info could be passed to a different playCard method
             if (abilityChoice == 1) {
                 int[] moves = pickedCard.getMoves();
-                if (cardPlayer.getMovesLength(moves) > 1) {
+                if (moves.length > 1) {
                     int selectedMove = racingPhaseViewer.getSpecificMove(moves);
                     validInput = cardPlayer.isSpecificMoveValid(selectedMove, moves);
 
@@ -300,38 +300,39 @@ public class RacingPhaseController /**implements ModelListenerRacingPhase, Model
                 response = cardPlayer.playCard(pickedCard, currentPlayer, nightmare, abilityChoice);
             }
         } else {
-            // make a racingphaseviewer method to print "All abilities on the card will be played"
+            // make a racingphaseviewer method to print "All abilities on the card will be
+            // played"
             int[] moves = pickedCard.getMoves();
-                if (cardPlayer.getMovesLength(moves) > 1) {
-                    int selectedMove = racingPhaseViewer.getSpecificMove(moves);
+            if (moves.length > 1) {
+                int selectedMove = racingPhaseViewer.getSpecificMove(moves);
+                validInput = cardPlayer.isSpecificMoveValid(selectedMove, moves);
+
+                do {
+                    selectedMove = racingPhaseViewer.getSpecificMoveOnError(moves);
                     validInput = cardPlayer.isSpecificMoveValid(selectedMove, moves);
+                } while (!validInput);
 
-                    do {
-                        selectedMove = racingPhaseViewer.getSpecificMoveOnError(moves);
-                        validInput = cardPlayer.isSpecificMoveValid(selectedMove, moves);
-                    } while (!validInput);
+                validInput = false;
+                moveAmount = selectedMove;
+            } else {
+                moveAmount = moves[0];
+            }
 
-                    validInput = false;
-                    moveAmount = selectedMove;
-                } else {
-                    moveAmount = moves[0];
-                }
+            if (board.isCrossing(moveAmount)) {
+                int wakingUp = racingPhaseViewer.getPlayOrCallNight();
+                validInput = cardPlayer.isWakingUpValid(wakingUp);
 
-                if (board.isCrossing(moveAmount)) {
-                    int wakingUp = racingPhaseViewer.getPlayOrCallNight();
+                do {
+                    wakingUp = racingPhaseViewer.getPlayOrCallNightOnError();
                     validInput = cardPlayer.isWakingUpValid(wakingUp);
+                } while (!validInput);
 
-                    do {
-                        wakingUp = racingPhaseViewer.getPlayOrCallNightOnError();
-                        validInput = cardPlayer.isWakingUpValid(wakingUp);
-                    } while (!validInput);
+                cardPlayer.resolveFenceCrossing(currentPlayer, wakingUp);
+            }
 
-                    cardPlayer.resolveFenceCrossing(currentPlayer, wakingUp);
-                }
-
-                response = cardPlayer.movePlayer(currentPlayer, nightmare, board, moveAmount);
-                response += cardPlayer.playCard(pickedCard, currentPlayer, nightmare, secondAbility);
-                racingPhaseViewer.printCardPlayResponse(response);
+            response = cardPlayer.movePlayer(currentPlayer, nightmare, board, moveAmount);
+            response += cardPlayer.playCard(pickedCard, currentPlayer, nightmare, secondAbility);
+            racingPhaseViewer.printCardPlayResponse(response);
         }
     }
 

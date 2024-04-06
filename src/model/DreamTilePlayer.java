@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+
 /**
  * DreamTilePlayer Model Class
  * 
@@ -9,12 +10,12 @@ import java.util.ArrayList;
  */
 
 public class DreamTilePlayer {
-    public final int DONT_USE_TILE = 0;
-    public final int USE_TILE = 1;
+    private final int DONT_USE_TILE = 0;
+    private final int USE_TILE = 1;
 
     private DreamTileBoard dreamTileBoard;
 
-    public DreamTilePlayer (DreamTileBoard dreamTileBoard) {
+    public DreamTilePlayer(DreamTileBoard dreamTileBoard) {
         this.dreamTileBoard = dreamTileBoard;
     }
 

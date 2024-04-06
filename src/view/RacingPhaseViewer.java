@@ -1,41 +1,43 @@
 package view;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import model.DreamTile;
 
 public class RacingPhaseViewer {
-    // public final int FIRST_CARD = 0;
-    // public final int SECOND_CARD = 1;
-    // public final int MOVE_ABILITY = 1;
-    public final int WINK_ABILITY = 2;
-    public final int KEEP_PLAY = 0;
-    public final int CALL_NIGHT = 1;
-    
-    Scanner scanner = new Scanner(System.in); //maybe move all this to a turnviewer class?
-    
-    
+    // private final int FIRST_CARD = 0;
+    // private final int SECOND_CARD = 1;
+    // private final int MOVE_ABILITY = 1;
+    private final int WINK_ABILITY = 2;
+    // private final int KEEP_PLAY = 0;
+    // private final int CALL_NIGHT = 1;
+
+    private Scanner scanner = new Scanner(System.in); // maybe move all this to a turnviewer class?
+
     public int getCardChoice() {
-        int cardChoice = -1;
         System.out.print("Input which card you would like to choose from your hand. 0 or 1: ");
-        cardChoice = scanner.nextInt();
-        System.out.println("");
+        return getCardChoice();
+    }
 
-        /** while (cardChoice != FIRST_CARD && cardChoice != SECOND_CARD) {
-            System.out.print("You did not enter a valid number. Please type in either 0 or 1");
-            cardChoice = scanner.nextInt();
-            System.out.println("");
-        }*/
-
-        return cardChoice;
+    private int getIntegerInput() {
+        int userInput = 0;
+        boolean valid = false;
+        System.out.print("Your Choice: ");
+        do {
+            try {
+                userInput = scanner.nextInt();
+                valid = true;
+            } catch (InputMismatchException ime) {
+                System.out.print("\nInvalid Input: Please enter integer value only: ");
+            }
+        } while (!valid);
+        return userInput;
     }
 
     public int getCardChoiceOnError() {
-        int cardChoice = -1;
-        System.out.print("You did not enter a valid number. Please type in either 0 or 1");
-        cardChoice = scanner.nextInt();
-        System.out.println("");
-        return cardChoice;
+        System.out.print("You did not enter a valid number. Please type in either 0 or 1: ");
+        return getIntegerInput();
     }
 
     public void displayAbilityOptions(int secondAbility) {
@@ -50,92 +52,48 @@ public class RacingPhaseViewer {
         System.out.println("");
     }
 
-    public int getAbilityChoice(int secondAbility) {
-        int abilityChoice = 0;
-        System.out.print("Your choice: ");
-        abilityChoice = scanner.nextInt();
-        System.out.println("");
-
-        /** while (abilityChoice != MOVE_ABILITY && abilityChoice != secondAbility) {
-            System.out.println("You did not enter a valid number. Please type in either 1 or " + String.valueOf(secondAbility));
-            System.out.print("Your choice: ");
-            abilityChoice = scanner.nextInt();
-            System.out.println("");
-        }*/
-
-        return abilityChoice;
+    public int getAbilityChoice() {
+        return getIntegerInput();
     }
 
     public int getAbilityChoiceOnError(int secondAbility) {
-        int abilityChoice = 0;
-        System.out.println("You did not enter a valid number. Please type in either 1 or " + String.valueOf(secondAbility));
-        System.out.print("Your choice: ");
-        abilityChoice = scanner.nextInt();
-        System.out.println("");
-        return abilityChoice;
+        System.out.println(
+                "You did not enter a valid number. Please type in either 1 or " + String.valueOf(secondAbility));
+        return getIntegerInput();
     }
 
     public int getSpecificMove(int[] moves) {
-        // int firstMove = moves[0];
-        // int secondMove = moves[1];
 
-        System.out.println("How many steps would you like to move? Input the corresponding number to the amount of steps.");
-        for(int i = 0; i < moves.length; i++){
+        System.out.println(
+                "How many steps would you like to move? Input the corresponding number to the amount of steps.");
+        for (int i = 0; i < moves.length; i++) {
             System.out.println(i + " - " + moves[i] + "steps");
         }
 
-        System.out.print("Your choice: ");
-        int selectedMove = scanner.nextInt();
-        System.out.println("");
-        
-        /** while (selectedMove != firstMove && selectedMove != secondMove) {
-            System.out.print("You did not enter a valid number. Please type in either " + String.valueOf(firstMove) + " or " + String.valueOf(secondMove));
-            System.out.print("Your choice: ");
-            selectedMove = scanner.nextInt();
-            System.out.println("");
-        }*/
-
-        return selectedMove;
+        return getIntegerInput();
     }
 
     public int getSpecificMoveOnError(int[] moves) {
         int firstMove = moves[0];
         int secondMove = moves[1];
 
-        System.out.print("You did not enter a valid number. Please type in either " + String.valueOf(firstMove) + " or " + String.valueOf(secondMove));
-        System.out.print("Your choice: ");
-        int selectedMove = scanner.nextInt();
-        System.out.println("");
-
-        return selectedMove;
+        System.out.print("You did not enter a valid number. Please type in either " + String.valueOf(firstMove) + " or "
+                + String.valueOf(secondMove));
+        return getIntegerInput();
     }
 
     public int getPlayOrCallNight() {
         System.out.println("You've crossed the fence. Would you like to call it a night, or keep playing?");
         System.out.println("Enter 0 to Keep playing");
         System.out.println("Enter 1 to Call it a night");
-        System.out.print("Your choice: ");
-        int playOrCallNight = scanner.nextInt();
-
-        /** while (playOrCallNight != KEEP_PLAY && playOrCallNight != CALL_NIGHT) {
-            System.out.println("You did not enter a valid number. Please type in either 0 or 1");
-            System.out.print("Your choice: ");
-            playOrCallNight = scanner.nextInt();
-            System.out.println("");
-        }*/
-
-        return playOrCallNight;
+        return getIntegerInput();
     }
 
     public int getPlayOrCallNightOnError() {
         System.out.println("You did not enter a valid number. Please type in either 0 or 1");
         System.out.println("Enter 0 to Keep playing");
         System.out.println("Enter 1 to Call it a night");
-        System.out.print("Your choice: ");
-        int playOrCallNight = scanner.nextInt();
-        System.out.println("");
-
-        return playOrCallNight;
+        return getIntegerInput();
     }
 
     public int getUseTileChoice(DreamTile dreamTile) {
@@ -145,11 +103,7 @@ public class RacingPhaseViewer {
         System.out.println("You have a Ztoken on this dream tile. Would you like to use it?");
         System.out.println("Enter 0 for No");
         System.out.println("Enter 1 for Yes");
-        System.out.print("Your choice: ");
-        int useTile = scanner.nextInt();
-        System.out.println("");
-
-        return useTile;
+        return getIntegerInput();
     }
 
     public int getUseTileChoiceOnError(DreamTile dreamTile) {
@@ -157,11 +111,7 @@ public class RacingPhaseViewer {
         System.out.println("");
         System.out.println("Enter 0 for No");
         System.out.println("Enter 1 for Yes");
-        System.out.print("Your choice: ");
-        System.out.println("");
-        int useTile = scanner.nextInt();
-
-        return useTile;
+        return getIntegerInput();
     }
 
     public void printCardInHand(String playerName, int cardInHand) {
