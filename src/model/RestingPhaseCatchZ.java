@@ -2,10 +2,12 @@ package model;
 
 import model.exception.BoardIndexOutOfBoundsException;
 import model.exception.EmptyBoardIndexException;
-import model.exception.IllegalZTokenCatchException;
+import model.exception.IllegalZTokenAmountException;
 
 /**
- * Class that is responsible for catching Z Token on the dreamTile located on board
+ * Class that is responsible for catching Z Token on the dreamTile located on
+ * board
+ * 
  * @author Dylan Kim
  * @version 1.0
  */
@@ -19,7 +21,8 @@ public class RestingPhaseCatchZ extends RestingPhaseAction {
 
     /**
      * Method to catch a desired amount of Z Token on the desired DreamTile
-     * @param location index number of the desired DreamTile
+     * 
+     * @param location  index number of the desired DreamTile
      * @param numZToken desired amount of Z Token
      * 
      * @throw BoardIndexOutOfBoundsException If the player input is out of boundary [1,10]
@@ -34,7 +37,7 @@ public class RestingPhaseCatchZ extends RestingPhaseAction {
         } else if (!board.occupied(location)) {
             throw new EmptyBoardIndexException("There is no Dream Tile on this location, please choose other location!");
         } else if (numZToken < 1 || numZToken > 2) {
-            throw new IllegalZTokenCatchException("You can put either 1 or 2 Z Tokens!");
+            throw new IllegalZTokenAmountException("You can put either 1 or 2 Z Tokens!");
         }
 
         catchZ(location - 1, numZToken, false);

@@ -4,7 +4,7 @@ import model.Player;
 import java.util.ArrayList;
 
 /**
- * Superfactory of all LoficFactories
+ * Superfactory of all Multi-player scoring logic Factories
  * @author Dylan Kim
  * @version 1.0
  */

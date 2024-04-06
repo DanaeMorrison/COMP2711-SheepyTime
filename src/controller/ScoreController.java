@@ -12,7 +12,7 @@ import view.ScoreViewer;
 import model.Player;
 
 /**
- * 
+ * Controller class that manages the scoring process after each racing phase
  * @author Dylan Kim
  * @version 1.0
  */
@@ -41,18 +41,17 @@ public class ScoreController {
         }
     }
 
-    public void updateScore() {
+    /**
+     * Method that updates the score of each player, and then returns whether there is any winner or not
+     * @return true if there is a winner, false otherwise
+     */
+    public boolean checkWinner() {
         scoreLogic.updateScore();
         if(scoreLogic.getWinner().equals("")){
             scoreViewer.showContinue();
-            shiftPhase();
+            return false;
         }
-        else{
-            scoreViewer.showWinner(scoreLogic.getWinner(), isSolo);
-        }
-    }
-
-    private void shiftPhase(){
-        //Move to the RestingPhase
+        scoreViewer.showWinner(scoreLogic.getWinner(), isSolo);
+        return true;
     }
 }

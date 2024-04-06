@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class RestingPhase {
 
+    private final int MARKET_SIZE = 4;
     private ArrayList<Player> players;
     private DreamTileCollection dreamTiles;
     private ArrayList<DreamTile> market;
@@ -25,11 +26,14 @@ public class RestingPhase {
     /**
      * Method that checks whether user's input for choosing behaviour(catchZ or putNewTile) is valid or not
      * @param userChoice user's choice
-     * @param numOption number of options for user
+     * @param canPutTile whether user is allowed to put new tile or not
      * @return whether the user's choice is valid or not
      */
-    public boolean isChoiceValid(int userChoice, int numOption) {
-        return ((userChoice >= 0) && (userChoice < numOption));
+    public boolean isChoiceValid(int userChoice, boolean canPutTile) {
+        if(canPutTile){
+            return (userChoice ==1)||(userChoice == 2);
+        }
+        return userChoice == 1;
     }
 
     /**
@@ -58,7 +62,7 @@ public class RestingPhase {
      */
     private void createMarket() {
         market = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < MARKET_SIZE; i++) {
             market.add(dreamTiles.takeTile());
         }
     }
@@ -68,7 +72,7 @@ public class RestingPhase {
      * 
      */
     public void fillMarket() {
-        if (market.size() == 4) {
+        if (market.size() == MARKET_SIZE) {
             return;
         }
         market.add(dreamTiles.takeTile());
@@ -81,6 +85,14 @@ public class RestingPhase {
      */
     public ArrayList<DreamTile> getMarket() {
         return market;
+    }
+
+    /**
+     * getter method for market size
+     * @return market size = 4
+     */
+    public int getMarketSize(){
+        return MARKET_SIZE;
     }
            
 }
