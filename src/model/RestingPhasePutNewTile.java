@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+
 import model.exception.AlreadyOccupiedOnBoardException;
 import model.exception.EmptyMarketIndexException;
 import model.exception.MarketIndexOutOfBoundsException;

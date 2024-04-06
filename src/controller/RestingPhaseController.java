@@ -32,8 +32,8 @@ public class RestingPhaseController {
     private boolean isSolo = false;
 
     public RestingPhaseController(DreamTileBoard tileBoard, DreamTileBoardViewer boardViewer, ArrayList<Player> players,
-        DreamTileCollection dreamTiles, DreamTileViewer tileViewer) {
-        phase = new RestingPhase(players, dreamTiles);
+        DreamTileCollection dreamTiles, DreamTileViewer tileViewer, RestingPhase phase) {
+        this.phase = phase;
         if (players.size() == 1) {
             isSolo = true;
         }
