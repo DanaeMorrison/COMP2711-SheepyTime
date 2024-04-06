@@ -12,7 +12,7 @@ import model.Player;
 public class TrioLogicFactory extends MultiPlayerLogicFactory {
 
     @Override
-    protected MultiPlayerLogic createLogic(ArrayList<Player> players) {
+    protected TrioLogic createLogic(ArrayList<Player> players) {
         return new TrioLogic(players);
     }
 

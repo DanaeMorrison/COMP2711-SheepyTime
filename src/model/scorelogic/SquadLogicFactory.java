@@ -12,7 +12,7 @@ import model.Player;
 public class SquadLogicFactory extends MultiPlayerLogicFactory {
 
     @Override
-    protected MultiPlayerLogic createLogic(ArrayList<Player> players) {
+    protected SquadLogic createLogic(ArrayList<Player> players) {
         return new SquadLogic(players);
     }
 
