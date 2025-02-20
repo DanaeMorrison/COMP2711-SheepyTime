@@ -1,6 +1,6 @@
 #Sheepy Time
 
-This repository contains the first project I worked on utilizing GitHub for collaboration with a team. We developed a digital version of a board game called Sheepy Time.
+This repository contains the first project I worked on utilizing GitHub for collaboration with a team. We developed a digital version of a board game called Sheepy Time in Java.
 
 In this class, we delved deeply into object-oriented programming and implemented various design patterns such as the factory, builder, and decorator patterns to make our code clean and reusable.
 
